@@ -50,10 +50,10 @@ venn.diagram(
   output=TRUE,
   lwd = 2,
   fill=myCol,
-  cex=0.6,
+  cex=0.8,
   fontface="bold",
   fontfamily="sans",
-  cat.cex=0.6,
+  cat.cex=0.8,
   cat.fontface="bold",
   cat.fontfamily="sans"
 )
