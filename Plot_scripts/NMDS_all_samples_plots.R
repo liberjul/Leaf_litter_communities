@@ -3,19 +3,20 @@ library(ggpubr)
 library(vegan)
 library(patchwork)
 
-setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communites")
+setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
 sl <- c(1:9, 11, 13:21, 25:36, 38, 40:44, 48:55, 57:58) # Slice for non-negative or failed samples
 otu_dat <- read.table("./Data/all_OTUS_R1_clean.txt", sep="\t", header=TRUE) # Read OTU table with contaminants removed
 rownames(otu_dat) <- otu_dat[,1] # Rename rows with OTU number
 otu_dat <- otu_dat[,order(colnames(otu_dat))] # Reorder by OTU number
-colnames(otu_dat) <- c("OTU_ID", colnames(map)) # OTU_ID as first column, sample IDs as rest of columns
-otu_dat_wo_negs <- as.matrix(otu_dat[,sl + 1]) # Keep non-negative samples for OTU table
 map <- t(read.table("./Data/DEM_map_mod3.csv", fill = TRUE, sep=",", header=TRUE)) # Read the map file
 colnames(map) <- map[1,] # Colnames are now by Sample ID
 rownames(map) <- c("SampleID", rownames(map)[2:23]) # Rownames are now site/sample variables
 map_wo_negs <- map[,sl] # Keep non-negative samples for map table
+colnames(otu_dat) <- c("OTU_ID", colnames(map)) # OTU_ID as first column, sample IDs as rest of columns
+otu_dat_wo_negs <- as.matrix(otu_dat[,sl + 1]) # Keep non-negative samples for OTU table
 rare_otu <- t(rrarefy(t(otu_dat_wo_negs), # Rarefy by the lowest read count in non-negative sample
               min(colSums(otu_dat_wo_negs))))
+
 
 
 veganCovEllipse<-function (cov, center = c(0, 0), scale = 1, npoints = 100)  # Make ellipses plottable
@@ -34,6 +35,7 @@ NMDS_bray = data.frame(MDS1 = MDS_points[,1], # Make dataframe for plotting
                   group=MDS_dat_df$Soil_Leaf_Litter_Leaf_swab,
                   species=MDS_dat_df$Plant_species,
                   site=MDS_dat_df$Site)
+plot.new()
 ord<-ordiellipse(MDS_dat, MDS_dat_df$Soil_Leaf_Litter_Leaf_swab, display = "sites", kind = "se", conf = 0.97, label = T) # Calculate ellipses
 df_ell_bc <- data.frame() # Dataframe for storing ellipses
 for(g in levels(MDS_dat_df$Soil_Leaf_Litter_Leaf_swab)){
@@ -93,3 +95,4 @@ p_jac
 
 combined_NMDS <- p_bc + p_jac + plot_layout(guides="collect")
 ggsave("Combined_NMDS_w_site.png", combined_NMDS, height=6, width=8, units="in")
+
