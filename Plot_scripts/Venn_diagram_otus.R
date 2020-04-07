@@ -12,10 +12,12 @@ map <- t(read.table("./Data/DEM_map_mod3.csv", fill = TRUE, sep=",", header=TRUE
 colnames(map) <- map[1,] # Colnames are now by Sample ID
 rownames(map) <- c("SampleID", rownames(map)[2:23]) # Rownames are now site/sample variables
 map_wo_negs <- map[,sl] # Keep non-negative samples for map table
+rare_otu <- t(rrarefy(t(otu_dat_wo_negs), # Rarefy by the lowest read count in non-negative sample
+              min(colSums(otu_dat_wo_negs))))
 
-otu_dat_trim <- otu_dat_wo_negs # Copy OTU table
-otu_dat_trim[otu_dat_wo_negs < 5] <- 0 # Remove values less than 5
-otu_dat_trim <- otu_dat_trim[rowSums(otu_dat_wo_negs)>9,] # Keep rows with more than 9 total
+otu_dat_trim <- rare_otu # Copy OTU table
+otu_dat_trim[rare_otu < 5] <- 0 # Remove values less than 5
+otu_dat_trim <- otu_dat_trim[rowSums(rare_otu)>9,] # Keep rows with more than 9 total
 otu_dat_trim # Check table
 
 pie_df <- data.frame(dim(otu_dat_trim)[1]) # New dataframe for proportions
@@ -46,7 +48,7 @@ myCol <- brewer.pal(4, "Pastel2")
 venn.diagram(
   x = list(Ep_names, En_names, Li_names, So_names),
   category.names = c("Epiphytes", "Endophytes", "Litter", "Soil"),
-  filename = "OTU_venn_diagram.png",
+  filename = "./Figures/OTU_venn_diagram.png",
   output=TRUE,
   lwd = 2,
   fill=myCol,

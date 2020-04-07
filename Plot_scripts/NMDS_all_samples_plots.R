@@ -4,7 +4,7 @@ library(vegan)
 library(patchwork)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
-sl <- c(1:9, 11, 13:21, 25:36, 38, 40:44, 48:55, 57:58) # Slice for non-negative or failed samples
+sl <- c(1:9, 11, 13:14, 16:21, 25:36, 38, 40:44, 48:55, 57:58) # Slice for non-negative or failed samples
 otu_dat <- read.table("./Data/all_OTUS_R1_clean.txt", sep="\t", header=TRUE) # Read OTU table with contaminants removed
 rownames(otu_dat) <- otu_dat[,1] # Rename rows with OTU number
 otu_dat <- otu_dat[,order(colnames(otu_dat))] # Reorder by OTU number
@@ -16,8 +16,6 @@ colnames(otu_dat) <- c("OTU_ID", colnames(map)) # OTU_ID as first column, sample
 otu_dat_wo_negs <- as.matrix(otu_dat[,sl + 1]) # Keep non-negative samples for OTU table
 rare_otu <- t(rrarefy(t(otu_dat_wo_negs), # Rarefy by the lowest read count in non-negative sample
               min(colSums(otu_dat_wo_negs))))
-
-
 
 veganCovEllipse<-function (cov, center = c(0, 0), scale = 1, npoints = 100)  # Make ellipses plottable
 {
@@ -50,7 +48,8 @@ p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
   geom_path(data=df_ell_bc, aes(x=NMDS1, y=NMDS2,color=group), size=1, linetype=2) +
   labs(alpha="Host species", color="Substrate", shape="Site") +
   scale_shape_manual(values = 21:25) +
-  scale_alpha_manual(values=c(0,1)) +
+  scale_alpha_manual(values=c(0,1), guide =
+                         guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic"))) +
   theme_pubr() +
   guides(fill=FALSE) +
   ggtitle("Bray-Curtis") +
@@ -83,7 +82,8 @@ p_jac <- ggplot(data = NMDS_jac, aes(MDS1, MDS2)) + # Make plot
   geom_path(data=df_ell_jac, aes(x=NMDS1, y=NMDS2,color=group), size=1, linetype=2) +
   labs(alpha="Host species", color="Substrate", shape="Site") +
   scale_shape_manual(values = 21:25) +
-  scale_alpha_manual(values=c(0,1)) +
+  scale_alpha_manual(values=c(0,1), guide =
+                       guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic"))) +
   guides(fill=FALSE) +
   ggtitle("Jaccard") +
   theme_pubr() +
@@ -94,5 +94,4 @@ p_jac <- ggplot(data = NMDS_jac, aes(MDS1, MDS2)) + # Make plot
 p_jac
 
 combined_NMDS <- p_bc + p_jac + plot_layout(guides="collect")
-ggsave("Combined_NMDS_w_site.png", combined_NMDS, height=6, width=8, units="in")
-
+ggsave("./Figures/Combined_NMDS_w_site.png", combined_NMDS, height=6, width=8, units="in")

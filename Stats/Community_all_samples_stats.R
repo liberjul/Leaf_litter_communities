@@ -1,8 +1,8 @@
 library(ggplot2)
-library(ggpubr)
-library(gplots)
 library(vegan)
-library(scales)
+library(phyloseq)
+library(ggpubr)
+library(lme4)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
 sl <- c(1:9, 11, 13:21, 25:36, 38, 40:44, 48:55, 57:58) # Slice for non-negative or failed samples
@@ -15,16 +15,5 @@ rownames(map) <- c("SampleID", rownames(map)[2:23]) # Rownames are now site/samp
 map_wo_negs <- map[,sl] # Keep non-negative samples for map table
 colnames(otu_dat) <- c("OTU_ID", colnames(map)) # OTU_ID as first column, sample IDs as rest of columns
 otu_dat_wo_negs <- as.matrix(otu_dat[,sl + 1]) # Keep non-negative samples for OTU table
-
 rare_otu <- t(rrarefy(t(otu_dat_wo_negs), # Rarefy by the lowest read count in non-negative sample
-              min(colSums(otu_dat_wo_negs))))
-
-cor_mat_otu <- cor(rare_otu) # Correlation matrix
-samp_names <- map_wo_negs["Short_name",] # Sample names for axis labels
-png("corr_heatmap.png", width = 800, height = 800) # Open png for output
-heatmap.2(cor_mat_otu, scale= "none", # Make heatmap
-          trace = "none", density.info = "none",
-          col=viridis_pal(),
-          labRow = samp_names,
-          labCol = samp_names)
-dev.off()
+                      min(colSums(otu_dat_wo_negs))))

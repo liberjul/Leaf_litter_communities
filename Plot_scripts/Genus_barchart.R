@@ -4,8 +4,8 @@ library(dplyr)
 library(tidyr)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
-sl <- c(1:9, 11, 13:21, 25:36, 38, 40:44, 48:55, 57:58) # Slice for non-negative or failed samples
-wts_wo_negs <- c(rep(19,19), rep(10,10), rep(8, 8), rep(10, 10)) # Vector for weighting abundance by number of samples per substrate
+sl <- c(1:9, 11, 13:14, 16:21, 25:36, 38, 40:44, 48:55, 57:58) # Slice for non-negative or failed samples
+wts_wo_negs <- c(rep(18,18), rep(10,10), rep(8, 8), rep(10, 10)) # Vector for weighting abundance by number of samples per substrate
 otu_dat <- read.table("./Data/all_OTUS_R1_clean.txt", sep="\t", header=TRUE) # Read OTU table with contaminants removed
 rownames(otu_dat) <- otu_dat[,1] # Rename rows with OTU number
 otu_dat <- otu_dat[,order(colnames(otu_dat))] # Reorder by OTU number
@@ -16,17 +16,20 @@ map_wo_negs <- map[,sl] # Keep non-negative samples for map table
 colnames(otu_dat) <- c("OTU_ID", colnames(map)) # OTU_ID as first column, sample IDs as rest of columns
 otu_dat_wo_negs <- as.matrix(otu_dat[,sl + 1]) # Keep non-negative samples for OTU table
 
+rare_otu <- t(rrarefy(t(otu_dat_wo_negs), # Rarefy by the lowest read count in non-negative sample
+              min(colSums(otu_dat_wo_negs))))
+
 taxa_table <- read.delim("./Data/consensus_taxonomy_constax.txt") # Load CONSTAX classifications
 rownames(taxa_table) <- taxa_table$OTU_ID # Rename rows with the OTU_ID
 
-prop_otu_dat <- otu_dat_wo_negs # Assign the table to new df to maintain shape
+prop_otu_dat <- rare_otu # Assign the table to new df to maintain shape
 
-for (i in 1:dim(otu_dat_wo_negs)[2]){ # for each column
-  prop_otu_dat[,i] <- otu_dat_wo_negs[,i]/(sum(otu_dat_wo_negs[,i])*wts_wo_negs[i]) # Calculate proportions and scale by # of samples per substrate
+for (i in 1:dim(rare_otu)[2]){ # for each column
+  prop_otu_dat[,i] <- rare_otu[,i]/(sum(rare_otu[,i])*wts_wo_negs[i]) # Calculate proportions and scale by # of samples per substrate
 }
 prop_otu_dat <- as.data.frame(prop_otu_dat) # Convert matrix to df
-prop_otu_dat$OTU_name <- rownames(otu_dat_wo_negs) # Same rownames as OTU table
-taxa_tab_trim <- taxa_table[rownames(otu_dat_wo_negs),] # Reorder taxa table by otu table order
+prop_otu_dat$OTU_name <- rownames(rare_otu) # Same rownames as OTU table
+taxa_tab_trim <- taxa_table[rownames(rare_otu),] # Reorder taxa table by otu table order
 prop_otu_dat <- cbind(prop_otu_dat, taxa_tab_trim) # Combine dataframes
 
 prop_otu_long <- prop_otu_dat %>% # Pivot by sample name to make long
@@ -79,4 +82,4 @@ genus_barplot <- ggplot(prop_long_gen_filt, # Ggplot barplot of proportions
 
 # genus_barplot # Show plot
 
-ggsave("top30_genera_gg_constax.png", genus_barplot, width=14, height = 8, units="in") # Save plot
+ggsave("./Figures/top30_genera_gg_constax.png", genus_barplot, width=14, height = 8, units="in") # Save plot
