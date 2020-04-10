@@ -23,12 +23,15 @@ rownames(map) <- c("SampleID", rownames(map)[2:23]) # Rownames are now site/samp
 map_wo_negs <- map[,sl] # Keep non-negative samples for map table
 colnames(otu_dat) <- c("OTU_ID", colnames(map)) # OTU_ID as first column, sample IDs as rest of columns
 otu_dat_wo_negs <- as.matrix(otu_dat[,sl + 1]) # Keep non-negative samples for OTU table
-rare_otu <- t(rrarefy(t(otu_dat_wo_negs), # Rarefy by the lowest read count in non-negative sample
-                      min(colSums(otu_dat_wo_negs))))
-write.table(as.data.frame(rare_otu), # Export rarified otu table for all analyses
-            file = "./Data/Rare_otu_table.csv", na = "", sep=",", quote = F)
-write.table(as.data.frame(map_wo_negs), # Export map without negatives
-            file = "./Data/DEM_map_wo_negs.csv", na = "", sep=",", quote = F)
+# rare_otu <- t(rrarefy(t(otu_dat_wo_negs), # Rarefy by the lowest read count in non-negative sample
+#                       min(colSums(otu_dat_wo_negs))))
+# write.table(as.data.frame(rare_otu), # Export rarified otu table for all analyses
+#             file = "./Data/Rare_otu_table.csv", na = "", sep=",", quote = F)
+# write.table(as.data.frame(map_wo_negs), # Export map without negatives
+#             file = "./Data/DEM_map_wo_negs.csv", na = "", sep=",", quote = F)
+
+map_wo_negs <- as.matrix(read.csv("./Data/DEM_map_wo_negs.csv", stringsAsFactors = F))
+rare_otu <- as.matrix(read.csv("./Data/Rare_otu_table.csv"))
 
 clr_otu <- clr(otu_dat_wo_negs)
 clr_otu_df <- as.data.frame(clr_otu)
@@ -158,20 +161,24 @@ MDS_points <- MDS_dat$points
 MDS_dat_df <- as.data.frame(MDS_points)
 MDS_dat_df <- cbind(MDS_dat_df, t(map_wo_negs))
 
-ado_bray <- adonis2(t(rare_otu) ~ Soil_Leaf_Litter_Leaf_swab + Plant_species + Site, MDS_dat_df, method="bray")
+ado_bray <- adonis2(t(rare_otu) ~ Substrate + Plant_species + Site,
+                    MDS_dat_df, method="bray")
 ado_bray
-ado_jac <- adonis2(t(rare_otu) ~ Soil_Leaf_Litter_Leaf_swab + Plant_species + Site, MDS_dat_df, method="jaccard")
+ado_jac <- adonis2(t(rare_otu) ~ Substrate + Plant_species + Site,
+                   MDS_dat_df, method="jaccard")
 ado_jac
 
-ado_bray_int <- adonis2(t(rare_otu) ~ Soil_Leaf_Litter_Leaf_swab * Plant_species * Site, MDS_dat_df, method="bray")
+ado_bray_int <- adonis2(t(rare_otu) ~ Substrate * Plant_species * Site,
+                        MDS_dat_df, method="bray")
 ado_bray_int
-ado_jac_int <- adonis2(t(rare_otu) ~ Soil_Leaf_Litter_Leaf_swab * Plant_species * Site, MDS_dat_df, method="jaccard")
-ado_jac_int
-a <- pairwise.perm.manova(dist,MDS_dat_df$Soil_Leaf_Litter_Leaf_swab,nperm=999)
-a$p.value
+ado_jac_int <- adonis2(t(rare_otu) ~ Substrate * Plant_species * Site,
+                       MDS_dat_df, method="jaccard")
+ado_jac_int$`Pr(>F)`
+a <- pairwise.perm.manova(dist_bray,MDS_dat_df$Substrate,nperm=999)
+a
 
 
-am_model <- anosim(dist, grouping=MDS_dat_df$Soil_Leaf_Litter_Leaf_swab,permutations=1000)
+am_model <- anosim(dist_bray, grouping=MDS_dat_df$Substrate,permutations=1000)
 am_model
 #norm_otu <- decostand(otu_dat_wo_negs, method = "log", MARGIN = 2)
 #colSums(norm_otu)
