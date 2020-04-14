@@ -13,6 +13,7 @@ library(caret)
 library(purrr)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
+wts_wo_negs <- c(rep(18,18), rep(10,10), rep(8, 8), rep(10, 10)) # Vector for weighting abundance by number of samples per substrate
 sl <- c(1:9, 11, 13:14, 16:21, 25:36, 38, 40:44, 48:55, 57:58) # Slice for non-negative or failed samples
 otu_dat <- read.table("./Data/all_OTUS_R1_clean.txt", sep="\t", header=TRUE) # Read OTU table with contaminants removed
 rownames(otu_dat) <- otu_dat[,1] # Rename rows with OTU number
@@ -164,34 +165,93 @@ MDS_dat_df <- cbind(MDS_dat_df, t(map_wo_negs))
 ado_bray <- adonis2(t(rare_otu) ~ Substrate + Plant_species + Site,
                     MDS_dat_df, method="bray")
 ado_bray
+write.csv(ado_bray, "./Stats/ado_bray_stats_table.csv")
 ado_jac <- adonis2(t(rare_otu) ~ Substrate + Plant_species + Site,
                    MDS_dat_df, method="jaccard")
 ado_jac
-
+write.csv(ado_jac, "./Stats/ado_jac_stats_table.csv")
 ado_bray_int <- adonis2(t(rare_otu) ~ Substrate * Plant_species * Site,
                         MDS_dat_df, method="bray")
 ado_bray_int
+write.csv(ado_bray_int, "./Stats/ado_bray_int_stats_table.csv")
 ado_jac_int <- adonis2(t(rare_otu) ~ Substrate * Plant_species * Site,
                        MDS_dat_df, method="jaccard")
-ado_jac_int$`Pr(>F)`
+ado_jac_int
+write.csv(ado_jac_int, "./Stats/ado_jac_int_stats_table.csv")
+
 a <- pairwise.perm.manova(dist_bray,MDS_dat_df$Substrate,nperm=999)
 a
 
 
 am_model <- anosim(dist_bray, grouping=MDS_dat_df$Substrate,permutations=1000)
 am_model
-#norm_otu <- decostand(otu_dat_wo_negs, method = "log", MARGIN = 2)
-#colSums(norm_otu)
 
-library(stats)
-
-otu_mp <- multipatt(as.data.frame(t(rare_otu)), map_wo_negs["Soil_Leaf_Litter_Leaf_swab",], control=how(nperm=9999))
+### Indicator Species Analysis
+otu_mp <- multipatt(as.data.frame(t(rare_otu)), map_wo_negs["Substrate",], control=how(nperm=9999))
 summary(otu_mp, indvalcomp=TRUE)
-write.table(as.data.frame(otu_mp$sign), file = "OTU_indicspecies.tsv", na = "", sep="\t", quote = F)
+write.table(as.data.frame(otu_mp$sign), file = "./Stats/OTU_indicspecies.csv", na = "", sep=",", quote = F)
 otu_mp -> otu_mp_fdr
 otu_mp_fdr$sign$p.value <- p.adjust(otu_mp$sign$p.value, "fdr")
 summary(otu_mp_fdr)
 
-write.table(as.data.frame(otu_mp_fdr$sign), file = "OTU_indicspecies_fdr.tsv", na = "", sep="\t", quote = F)
+write.table(as.data.frame(otu_mp_fdr$sign), file = "./Stats/OTU_indicspecies_fdr.csv", na = "", sep=",", quote = F)
 otu_mp_fdr$sign
-colnames(t(rare_otu))
+
+### Shared OTUs table
+otu_dat_trim <- rare_otu # Copy OTU table
+otu_dat_trim[rare_otu < 5] <- 0 # Remove values less than 5
+otu_dat_trim <- otu_dat_trim[rowSums(rare_otu) > dim(rare_otu)[2]*1,] # Keep rows with more than 1 per sample
+otu_dat_trim # Check table
+
+pie_df <- data.frame(dim(otu_dat_trim)[1]) # New dataframe for proportions
+for (subst in unique(map_wo_negs["Substrate",])){ # For each substrate
+  pie_col <- rowSums(otu_dat_trim[,map_wo_negs["Substrate",] == subst]) # Take total reads per substrate
+  pie_df <- cbind(pie_df, pie_col) # Add column to df
+}
+pie_df <- pie_df[,2:5] # take the data columns
+colnames(pie_df) <- unique(map_wo_negs["Substrate",]) # Rename columns with substrate
+
+pie_df <- pie_df[rowSums(pie_df) > 0,]
+
+shared_otu_df <- data.frame(total= c(dim(pie_df %>% filter(Epi > 0))[1],
+                                     dim(pie_df %>% filter(Endo > 0))[1],
+                                     dim(pie_df %>% filter(Lit > 0))[1],
+                                     dim(pie_df %>% filter(Soil > 0))[1]),
+                            uniq = c(sum(rowSums(pie_df) == pie_df$Epi),
+                                     sum(rowSums(pie_df) == pie_df$Endo),
+                                     sum(rowSums(pie_df) == pie_df$Lit),
+                                     sum(rowSums(pie_df) == pie_df$Soil)),
+                            epi_shared = c(NA,
+                                            dim(intersect(pie_df %>% filter(Epi > 0), pie_df %>% filter(Endo > 0)))[1],
+                                            dim(intersect(pie_df %>% filter(Epi > 0), pie_df %>% filter(Lit > 0)))[1],
+                                            dim(intersect(pie_df %>% filter(Epi > 0), pie_df %>% filter(Soil > 0)))[1]),
+                            endo_shared = c(dim(intersect(pie_df %>% filter(Endo > 0), pie_df %>% filter(Epi > 0)))[1],
+                                            NA,
+                                            dim(intersect(pie_df %>% filter(Endo > 0), pie_df %>% filter(Lit > 0)))[1],
+                                            dim(intersect(pie_df %>% filter(Endo > 0), pie_df %>% filter(Soil > 0)))[1]),
+                            lit_shared = c(dim(intersect(pie_df %>% filter(Lit > 0), pie_df %>% filter(Epi > 0)))[1],
+                                           dim(intersect(pie_df %>% filter(Lit > 0), pie_df %>% filter(Endo > 0)))[1],
+                                           NA,
+                                           dim(intersect(pie_df %>% filter(Lit > 0), pie_df %>% filter(Soil > 0)))[1])
+                              )
+shared_otu_df$shared <- shared_otu_df$total-shared_otu_df$uniq
+
+shared_percent <- vector(length = 4)
+for (i in 1:4){
+  shared_percent[i] <- sprintf("%.0f (%.0f",
+                               shared_otu_df$shared[i],
+                               shared_otu_df$shared[i]/shared_otu_df$total[i]*100)
+  shared_percent[i] <- paste(shared_percent[i], "%)", sep="")
+}
+shared_percent
+shared_otu_df$shared <- shared_percent
+
+rownames(shared_otu_df) <- c("Epiphyte", "Endophyte", "Litter", "Soil")
+
+out_df <- t(shared_otu_df)
+out_df
+rownames(out_df) <- c("Total OTUs", "Unique OTUs",
+                      "Shared with Epiphytes", "Shared with Endophytes",
+                      "Shared with Litter", "Total Shared")
+out_df <- replace_na(out_df, "-")
+write.csv(out_df, "./Tables/Shared_otus.csv")
