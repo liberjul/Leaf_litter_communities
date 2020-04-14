@@ -44,7 +44,7 @@ richness <- richness +
   labs(x = "Swab Material", color = "Swab Material") +
   theme(legend.position = "none")
 richness
-ggsave("./Figures/Richness_metrics.png", richness, width = 8, height = 6, units = "in")
+ggsave("./Figures/Richness_metrics_swab_type.png", richness, width = 8, height = 6, units = "in")
 
 swab_df <- data.frame(Swab_type=c(rep("Cotton", length(cot)),
                                   rep("Synthetic", length(syn))),
