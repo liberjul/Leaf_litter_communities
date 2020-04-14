@@ -53,18 +53,18 @@ ggsave("./Figures/density_shared_OTUs.png", g, width = 6, height = 6, units="in"
 # Histograms to show belongingness of 2-substrate OTUs where one substrate is litter
 N_L_hist <- ggplot(am.coords[am.coords$Epi_Litter == -1 & abs(am.coords$End_Soil) < 1,],
                    aes(End_Soil)) +
-  geom_histogram() + labs(x="Litter - Endophyte") + theme_pubr() + xlim(-1, 1)
+  geom_histogram() + labs(x="Litter - Endophyte", y = "OTU Count") + theme_pubr() + xlim(-1, 1)
 # S_P_hist <- ggplot(am.coords[am.coords$Epi_Litter == 1 & abs(am.coords$End_Soil) < 1,],
 #                    aes(End_Soil)) +
 #   geom_histogram() + labs(x="Soil - Epiphyte") + theme_pubr()  + xlim(-1, 1)
 L_S_hist <- ggplot(am.coords[am.coords$End_Soil == -1 & abs(am.coords$Epi_Litter) < 1,],
                    aes(Epi_Litter)) +
-  geom_histogram() + scale_y_log10() + labs(x="Litter - Soil") + theme_pubr()
+  geom_histogram() + scale_y_log10() + labs(x="Litter - Soil", y = "OTU Count") + theme_pubr()
 # N_P_hist <- ggplot(am.coords[am.coords$End_Soil == 1,], aes(Epi_Litter)) +
 #   geom_histogram() + scale_y_log10() + labs(x="Endophyte - Epiphyte") + theme_pubr()
 L_P_hist <- ggplot(am.coords[am.coords$End_Soil == am.coords$Epi_Litter & abs(am.coords$End_Soil) < 1,],
                    aes(End_Soil)) +
-  geom_histogram() + labs(x="Litter - Epiphyte")  + theme_pubr()  + xlim(-1, 1)
+  geom_histogram() + labs(x="Litter - Epiphyte", y = "OTU Count")  + theme_pubr()  + xlim(-1, 1)
 L_P_hist
 
 density_excl <- g | (N_L_hist / L_S_hist /  L_P_hist )#/ S_P_hist / N_P_hist )
