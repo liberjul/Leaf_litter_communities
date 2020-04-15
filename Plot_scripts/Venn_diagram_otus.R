@@ -26,7 +26,7 @@ pie_df <- pie_df[,2:5] # take the data columns
 
 colnames(pie_df) <- unique(map_wo_negs["Substrate",]) # Rename columns with substrate
 
-
+dim(pie_df)
 # Take non-zeroed reads
 Ep_names <- rownames(pie_df)[pie_df$Epi > 0]
 Ep_names <- Ep_names[!is.na(Ep_names)]
@@ -78,22 +78,27 @@ shared_otu_df <- data.frame(total= c(dim(pie_df %>% filter(Epi > 0))[1],
                               )
 shared_otu_df$shared <- shared_otu_df$total-shared_otu_df$uniq
 
-shared_percent <- vector(length = 4)
-for (i in 1:4){
-  shared_percent[i] <- sprintf("%.0f (%.0f",
-                               shared_otu_df$shared[i],
-                               shared_otu_df$shared[i]/shared_otu_df$total[i]*100)
-  shared_percent[i] <- paste(shared_percent[i], "%)", sep="")
+for (col in colnames(shared_otu_df)[2:length(shared_otu_df)]){
+  percent <- vector(length = 4)
+  for (i in 1:4){
+    percent[i] <- paste(sprintf("%.0f (%.0f",
+                                       shared_otu_df[i, col],
+                                       shared_otu_df[i, col]/shared_otu_df$total[i]*100),
+                               "%)", sep="")
+  }
+  shared_otu_df[[col]] <- percent
 }
-shared_percent
-shared_otu_df$shared <- shared_percent
+
+
+shared_otu_df
 
 rownames(shared_otu_df) <- c("Epiphyte", "Endophyte", "Litter", "Soil")
 
 out_df <- t(shared_otu_df)
 out_df
+out_df[out_df == "NA (NA%)"] <- "-"
 rownames(out_df) <- c("Total OTUs", "Unique OTUs",
                       "Shared with Epiphytes", "Shared with Endophytes",
                       "Shared with Litter", "Total Shared")
-out_df <- replace_na(out_df, "-")
+out_df
 write.csv(out_df, "./Tables/Shared_otus.csv")
