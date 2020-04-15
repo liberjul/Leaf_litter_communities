@@ -24,6 +24,10 @@ rownames(map) <- c("SampleID", rownames(map)[2:23]) # Rownames are now site/samp
 map_wo_negs <- map[,sl] # Keep non-negative samples for map table
 colnames(otu_dat) <- c("OTU_ID", colnames(map)) # OTU_ID as first column, sample IDs as rest of columns
 otu_dat_wo_negs <- as.matrix(otu_dat[,sl + 1]) # Keep non-negative samples for OTU table
+
+#################
+# ONLY RUN ONCE #
+#################
 # rare_otu <- t(rrarefy(t(otu_dat_wo_negs), # Rarefy by the lowest read count in non-negative sample
 #                       min(colSums(otu_dat_wo_negs))))
 # write.table(as.data.frame(rare_otu), # Export rarified otu table for all analyses
@@ -150,6 +154,11 @@ sim_out <- simper(t(rare_otu), as.factor(map_wo_negs["Soil_Leaf_Litter_Leaf_swab
 dist_bray <- vegdist(t(rare_otu), method="bray")
 dist_jac <- vegdist(t(rare_otu), method="jaccard")
 
+bc.pcoa <- cmdscale(dist_bray, eig=T)
+ax1.v.bc=bc.pcoa$eig[1]/sum(bc.pcoa$eig)
+ax2.v.bc=bc.pcoa$eig[2]/sum(bc.pcoa$eig)
+ax2.v.bc
+
 bd_out <- betadisper(dist_bray, as.factor(map_wo_negs["Soil_Leaf_Litter_Leaf_swab",]))
 model <- anova(bd_out)
 boxplot(bd_out, xlab="Substrate")
@@ -161,6 +170,18 @@ MDS_dat <- metaMDS(t(rare_otu))
 MDS_points <- MDS_dat$points
 MDS_dat_df <- as.data.frame(MDS_points)
 MDS_dat_df <- cbind(MDS_dat_df, t(map_wo_negs))
+round(MDS_dat$eig*100/sum(MDS_dat$eig),1)
+### Code from: https://stackoverflow.com/questions/49223740/cumulative-variance-explained-for-nmds-in-r
+n = 10
+stress <- vector(length = n)
+for (i in 1:n) {
+  stress[i] <- metaMDS(t(rare_otu), distance = "jaccard", k = i)$stress
+}
+names(stress) <- paste0(1:n, "Dim")
+# x11(width = 10/2.54, height = 7/2.54)
+par(mar = c(3.5,3.5,1,1), mgp = c(2, 0.6, 0), cex = 0.8, las = 2)
+barplot(stress, ylab = "stress")
+###
 
 ado_bray <- adonis2(t(rare_otu) ~ Substrate + Plant_species + Site,
                     MDS_dat_df, method="bray")
@@ -199,19 +220,25 @@ otu_mp_fdr$sign
 
 ### Shared OTUs table
 otu_dat_trim <- rare_otu # Copy OTU table
-otu_dat_trim[rare_otu < 5] <- 0 # Remove values less than 5
-otu_dat_trim <- otu_dat_trim[rowSums(rare_otu) > dim(rare_otu)[2]*1,] # Keep rows with more than 1 per sample
-otu_dat_trim # Check table
+# otu_dat_trim[rare_otu < 5] <- 0 # Remove values less than 5
+# otu_dat_trim <- otu_dat_trim[rowSums(rare_otu) > dim(rare_otu)[2]*1,] # Keep rows with more than 1 per sample
+# otu_dat_trim # Check table
 
 pie_df <- data.frame(dim(otu_dat_trim)[1]) # New dataframe for proportions
 for (subst in unique(map_wo_negs["Substrate",])){ # For each substrate
   pie_col <- rowSums(otu_dat_trim[,map_wo_negs["Substrate",] == subst]) # Take total reads per substrate
   pie_df <- cbind(pie_df, pie_col) # Add column to df
 }
-pie_df <- pie_df[,2:5] # take the data columns
-colnames(pie_df) <- unique(map_wo_negs["Substrate",]) # Rename columns with substrate
 
-pie_df <- pie_df[rowSums(pie_df) > 0,]
+pie_df <- pie_df[,2:5] # take the data columns
+pie_df <- pie_df %>% filter_all(any_vars(abs(.) > 5))
+
+colnames(pie_df) <- unique(map_wo_negs["Substrate",]) # Rename columns with substrate
+row_sums <- rowSums(pie_df) # rowsums to scale
+for (i in colnames(pie_df)){ # scale abundance by total in reads in dataset
+  pie_df[,i] <- pie_df[,i]/row_sums
+}
+dim(pie_df)
 
 shared_otu_df <- data.frame(total= c(dim(pie_df %>% filter(Epi > 0))[1],
                                      dim(pie_df %>% filter(Endo > 0))[1],
@@ -255,3 +282,16 @@ rownames(out_df) <- c("Total OTUs", "Unique OTUs",
                       "Shared with Litter", "Total Shared")
 out_df <- replace_na(out_df, "-")
 write.csv(out_df, "./Tables/Shared_otus.csv")
+
+diver_df <- data.frame(shannon = diversity(t(rare_otu), index = "shannon"),
+                       inv_simp = diversity(t(rare_otu), index = "inv"),
+                       Substrate = map_wo_negs["Substrate",],
+                       Plant_species = map_wo_negs["Plant_species",],
+                       Site = map_wo_negs["Site",])
+diver_df     
+
+model <- aov(shannon ~ Substrate + Plant_species + Site, diver_df)
+summary(model)
+
+model <- aov(inv_simp ~ Substrate + Plant_species + Site, diver_df)
+summary(model)

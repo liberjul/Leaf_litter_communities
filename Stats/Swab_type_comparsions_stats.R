@@ -3,6 +3,7 @@ library(vegan)
 library(phyloseq)
 library(ggpubr)
 library(lme4)
+library(lmerTest)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
 sl <- c(1:9, 11, 13:14, 16:21, 25:36, 38, 40:44, 48:55, 57:58) # Slice for non-negative or failed samples
@@ -49,3 +50,30 @@ adonis(dist_swab ~ Swab_type, MDS_dat_df[1:18,])
 bd_out_swab <- betadisper(dist_swab, as.factor(MDS_dat_df[1:18,"Swab_type"]))
 model <- TukeyHSD(bd_out_swab)
 model
+
+
+phy_swab <- phyloseq(otu_table(rare_otu[,union(cot_r, syn_r) + 1], taxa_are_rows = T))
+
+phy_sam_table <- sample_data(
+  data.frame(
+    row.names = sample_names(phy_swab),
+    Swab_type=c(rep("Cotton", length(cot)),
+                rep("Synthetic", length(syn))),
+    Leaf = c(1:5, 7:10, 1:6, 8:10),
+    stringsAsFactors=FALSE))
+
+phy_swab <- merge_phyloseq(phy_swab, phy_sam_table)
+
+diver_df <- cbind(estimate_richness(phy_swab, measures = c("Shannon", "InvSimpson")),
+                  sample_data(phy_swab))
+
+diver_df                       
+m1 <- lmer(Shannon ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
+summary(m1)
+confint(m1)
+anova(m1)
+
+m2 <- lmer(InvSimpson ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
+summary(m2)
+confint(m2)
+anova(m2)
