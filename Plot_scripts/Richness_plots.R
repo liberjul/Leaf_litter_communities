@@ -20,9 +20,11 @@ phy_sample_table <- sample_data(data.frame(Substrate = map_wo_negs["Substrate",]
 
 physeq1 <- merge_phyloseq(physeq, phy_sample_table) # Merge sample data to physeq object
 
-ps_rich <- plot_richness(physeq1, x = "Substrate", color = "Plant_species")
+ps_rich <- plot_richness(physeq1, x = "Substrate", color = "Plant_species", measures=c("Shannon", "InvSimpson"))
 ps_rich <- ps_rich + geom_boxplot(alpha=0) +
+  scale_x_discrete(labels=c("Epiphytes", "Endophytes", "Litter", "Soil")) +
   scale_color_manual(values=c("#11875d","#632de9"), guide =
                        guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic")))+
   labs(color = "Plant Species")
-ggsave("./Figures/Richness_metrics_substrate.png", ps_rich, width=12, height = 8, units="in") # Save plot
+ggsave("./Figures/Richness_metrics_substrate.png", ps_rich, width=8, height = 6, units="in") # Save plot
+ps_rich

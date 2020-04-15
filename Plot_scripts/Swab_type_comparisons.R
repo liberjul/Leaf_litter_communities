@@ -33,15 +33,18 @@ phy_sam_table <- sample_data(
     row.names = sample_names(phy_swab),
     Swab_type=c(rep("Cotton", length(cot)),
                 rep("Synthetic", length(syn))),
+    Leaf = c(1:5, 7:10, 1:6, 8:10),
     stringsAsFactors=FALSE))
 class(phy_sam_table)
 
 phy_swab <- merge_phyloseq(phy_swab, phy_sam_table)
 phy_swab
 
-richness <- plot_richness(phy_swab, x="Swab_type", color="Swab_type")
-richness <- richness +
+richness <- plot_richness(phy_swab, x="Swab_type", color="Swab_type", measures=c("Observed", "Shannon", "InvSimpson"))
+richness <- richness + geom_boxplot(alpha=0) + #geom_jitter() +
   labs(x = "Swab Material", color = "Swab Material") +
+  scale_color_manual(values = c("#11875d","#632de9"))+
+  theme_pubr() +
   theme(legend.position = "none")
 richness
 ggsave("./Figures/Richness_metrics_swab_type.png", richness, width = 8, height = 6, units = "in")
