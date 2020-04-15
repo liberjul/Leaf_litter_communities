@@ -4,29 +4,28 @@ library(dplyr)
 library(vegan)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
+wts_wo_negs <- c(rep(18,18), rep(10,10), rep(8, 8), rep(10, 10)) # Vector for weighting abundance by number of samples per substrate
 map_wo_negs <- as.matrix(read.csv("./Data/DEM_map_wo_negs.csv", stringsAsFactors = F))
 rare_otu <- as.matrix(read.csv("./Data/Rare_otu_table.csv"))
 
-otu_dat_trim <- rare_otu # Copy OTU table
-# otu_dat_trim[rare_otu < 5] <- 0 # Remove values less than 5
-# otu_dat_trim <- otu_dat_trim[rowSums(rare_otu)>9,] # Keep rows with more than 9 total
-# otu_dat_trim # Check table
+prop_otu_dat <- rare_otu # Assign the table to new df to maintain shape
 
-pie_df <- data.frame(dim(otu_dat_trim)[1]) # New dataframe for proportions
+for (i in 1:dim(rare_otu)[2]){ # for each column
+  prop_otu_dat[,i] <- rare_otu[,i]/(sum(rare_otu[,i])*wts_wo_negs[i]) # Calculate proportions and scale by # of samples per substrate
+}
+prop_otu_dat_trim <- prop_otu_dat[rowSums(prop_otu_dat) > 4 * 0.0001,]
+
+
+pie_df <- data.frame(dim(prop_otu_dat_trim)[1]) # New dataframe for proportions
 for (subst in unique(map_wo_negs["Substrate",])){ # For each substrate
-  pie_col <- rowSums(otu_dat_trim[,map_wo_negs["Substrate",] == subst]) # Take total reads per substrate
+  pie_col <- rowSums(prop_otu_dat_trim[,map_wo_negs["Substrate",] == subst]) # Take total reads per substrate
   pie_df <- cbind(pie_df, pie_col) # Add column to df
 }
 
 pie_df <- pie_df[,2:5] # take the data columns
-pie_df <- pie_df %>% filter_all(any_vars(abs(.) > 5))
 
 colnames(pie_df) <- unique(map_wo_negs["Substrate",]) # Rename columns with substrate
-row_sums <- rowSums(pie_df) # rowsums to scale
-for (i in colnames(pie_df)){ # scale abundance by total in reads in dataset
-  pie_df[,i] <- pie_df[,i]/row_sums
-}
-dim(pie_df)
+
 
 # Take non-zeroed reads
 Ep_names <- rownames(pie_df)[pie_df$Epi > 0]
