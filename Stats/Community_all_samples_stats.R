@@ -2,10 +2,8 @@ library(ggplot2)
 library(vegan)
 library(RVAideMemoire)
 library(indicspecies)
-library(SpiecEasi)
-library(huge)
-library(MASS)
 library(ggpubr)
+library(bbmle)
 library(randomForest)
 library(rfUtilities)
 library(compositions)
@@ -150,7 +148,7 @@ RF_sig_Comp_optm <- rf.significance(x=RF_501_optm, xdata=otus_clr_Comp[,1:(ncol(
 RF_sig_Comp_optm
 
 ### Hypothesis testing for all samples and groupings
-sim_out <- simper(t(rare_otu), as.factor(map_wo_negs["Soil_Leaf_Litter_Leaf_swab",]), permutations = 100, parallel = 2)
+sim_out <- simper(t(rare_otu), as.factor(map_wo_negs["Substrate",]), permutations = 100, parallel = 2)
 dist_bray <- vegdist(t(rare_otu), method="bray")
 dist_jac <- vegdist(t(rare_otu), method="jaccard")
 
@@ -159,12 +157,17 @@ ax1.v.bc=bc.pcoa$eig[1]/sum(bc.pcoa$eig)
 ax2.v.bc=bc.pcoa$eig[2]/sum(bc.pcoa$eig)
 ax2.v.bc
 
-bd_out <- betadisper(dist_bray, as.factor(map_wo_negs["Soil_Leaf_Litter_Leaf_swab",]))
+bd_out <- betadisper(dist_bray, as.factor(map_wo_negs["Substrate",]))
 model <- anova(bd_out)
+model
+
+bd_out <- betadisper(dist_bray, as.factor(map_wo_negs["Plant_species",]))
+model <- anova(bd_out)
+model
+
 boxplot(bd_out, xlab="Substrate")
 TukeyHSD(bd_out)
-summary(model)
-model
+
 
 MDS_dat <- metaMDS(t(rare_otu))
 MDS_points <- MDS_dat$points
@@ -285,13 +288,16 @@ write.csv(out_df, "./Tables/Shared_otus.csv")
 
 diver_df <- data.frame(shannon = diversity(t(rare_otu), index = "shannon"),
                        inv_simp = diversity(t(rare_otu), index = "inv"),
-                       Substrate = map_wo_negs["Substrate",],
-                       Plant_species = map_wo_negs["Plant_species",],
-                       Site = map_wo_negs["Site",])
-diver_df     
+                       Substrate = as.factor(map_wo_negs["Substrate",]),
+                       Plant_species = as.factor(map_wo_negs["Plant_species",]),
+                       Site = as.factor(map_wo_negs["Site",]))
+tibble(diver_df)     
 
-model <- aov(shannon ~ Substrate + Plant_species + Site, diver_df)
-summary(model)
+m1 <- lm(shannon ~ Substrate + Plant_species + Site, diver_df)
+summary(m1)
 
-model <- aov(inv_simp ~ Substrate + Plant_species + Site, diver_df)
-summary(model)
+m2 <- aov(shannon ~ Substrate + Plant_species + Site, diver_df)
+summary(m2)
+
+m3 <- aov(inv_simp ~ Substrate + Plant_species + Site, diver_df)
+summary(m3)
