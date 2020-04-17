@@ -74,13 +74,14 @@ veganCovEllipse<-function (cov, center = c(0, 0), scale = 1, npoints = 100)  # M
 
 MDS_dat_swab <- metaMDS(t(rare_otu[,1:18]), distance = "bray")
 MDS_points <- MDS_dat_swab$points
+MDS_stress <- MDS_dat_swab$stress
 MDS_dat_df <- as.data.frame(MDS_points)
 MDS_dat_df <- cbind(MDS_dat_df, t(map_wo_negs[,1:18]))
 NMDS_swab = data.frame(MDS1 = MDS_points[,1],
-                  MDS2 = MDS_points[,2],
-                  group=MDS_dat_df$Swab_type,
-                  species=MDS_dat_df$Plant_species,
-                  site=MDS_dat_df$Site)
+                       MDS2 = MDS_points[,2],
+                       group=MDS_dat_df$Swab_type,
+                       species=MDS_dat_df$Plant_species,
+                       site=MDS_dat_df$Site)
 NMDS_swab.mean=aggregate(NMDS_swab[,1:2],list(group = MDS_dat_df$Soil_Leaf_Litter_Leaf_swab),mean)
 plot.new()
 ord<-ordiellipse(MDS_dat_swab, MDS_dat_df$Swab_type, display = "sites", kind = "se", conf = 0.97, label = T)
@@ -101,7 +102,8 @@ p_bray_swab <- ggplot(data = NMDS_swab, aes(x=MDS1, y=MDS2)) +
   scale_alpha_manual(values=c(0,1), guide =
                        guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic"))) +
   guides(fill=FALSE) +
-  labs(shape="Site", color="Substrate", alpha="Host species")
+  labs(shape="Site", color="Swab Material", alpha="Host Species")
 p_bray_swab
 
+MDS_stress
 ggsave("./Figures/bc_swab_NMDS_plot.png", p_bray_swab, height=6, width=8, units="in")

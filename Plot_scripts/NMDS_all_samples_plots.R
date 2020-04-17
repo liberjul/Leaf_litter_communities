@@ -15,7 +15,7 @@ map_wo_negs <- map[,sl] # Keep non-negative samples for map table
 colnames(otu_dat) <- c("OTU_ID", colnames(map)) # OTU_ID as first column, sample IDs as rest of columns
 otu_dat_wo_negs <- as.matrix(otu_dat[,sl + 1]) # Keep non-negative samples for OTU table
 rare_otu <- t(rrarefy(t(otu_dat_wo_negs), # Rarefy by the lowest read count in non-negative sample
-              min(colSums(otu_dat_wo_negs))))
+                      min(colSums(otu_dat_wo_negs))))
 
 veganCovEllipse<-function (cov, center = c(0, 0), scale = 1, npoints = 100)  # Make ellipses plottable
 {
@@ -26,20 +26,21 @@ veganCovEllipse<-function (cov, center = c(0, 0), scale = 1, npoints = 100)  # M
 
 MDS_dat <- metaMDS(t(rare_otu)) # Calculate NMDS axes, using Bray-Curtis as default
 MDS_points <- MDS_dat$points # Extract coordinates
+MDS_stress <- MDS_dat$stress
 MDS_dat_df <- as.data.frame(MDS_points) # Convert to a df
 MDS_dat_df <- cbind(MDS_dat_df, t(map_wo_negs)) # Add map data
 NMDS_bray = data.frame(MDS1 = MDS_points[,1], # Make dataframe for plotting
-                  MDS2 = MDS_points[,2],
-                  group=MDS_dat_df$Soil_Leaf_Litter_Leaf_swab,
-                  species=MDS_dat_df$Plant_species,
-                  site=MDS_dat_df$Site)
+                       MDS2 = MDS_points[,2],
+                       group=MDS_dat_df$Soil_Leaf_Litter_Leaf_swab,
+                       species=MDS_dat_df$Plant_species,
+                       site=MDS_dat_df$Site)
 plot.new()
 ord<-ordiellipse(MDS_dat, MDS_dat_df$Soil_Leaf_Litter_Leaf_swab, display = "sites", kind = "se", conf = 0.97, label = T) # Calculate ellipses
 df_ell_bc <- data.frame() # Dataframe for storing ellipses
 for(g in levels(MDS_dat_df$Soil_Leaf_Litter_Leaf_swab)){
   df_ell_bc <- rbind(df_ell_bc, cbind(as.data.frame(with(MDS_dat_df[MDS_dat_df$Soil_Leaf_Litter_Leaf_swab==g,], # Add ellipse values
-                                                   veganCovEllipse(ord[[g]]$cov,ord[[g]]$center,ord[[g]]$scale)))
-                                ,group=g))
+                                                         veganCovEllipse(ord[[g]]$cov,ord[[g]]$center,ord[[g]]$scale)))
+                                      ,group=g))
 }
 NMDS_bray.mean=aggregate(NMDS_bray[,1:2],list(group=NMDS_bray$group),mean) # Calculate mean for groups
 p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
@@ -49,7 +50,7 @@ p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
   labs(alpha="Host species", color="Substrate", shape="Site") +
   scale_shape_manual(values = 21:25) +
   scale_alpha_manual(values=c(0,1), guide =
-                         guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic"))) +
+                       guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic"))) +
   theme_pubr() +
   guides(fill=FALSE) +
   # ggtitle("Bray-Curtis") +
@@ -60,22 +61,22 @@ p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
 p_bc
 
 ggsave("./Figures/bc_NDMS_all_samples.png", p_bc, width = 8, height = 6, units="in")
-
+MDS_stress
 MDS_dat <- metaMDS(t(rare_otu), distance = "jaccard") # Calculate NMDS axes, using Jaccard distance
 MDS_points <- MDS_dat$points # Extract coordinates
 MDS_dat_df <- as.data.frame(MDS_points) # Convert to a df
 MDS_dat_df <- cbind(MDS_dat_df, t(map_wo_negs)) # Add map data
 NMDS_jac = data.frame(MDS1 = MDS_points[,1],  # Make dataframe for plotting
-                  MDS2 = MDS_points[,2],
-                  group=MDS_dat_df$Soil_Leaf_Litter_Leaf_swab,
-                  species=MDS_dat_df$Plant_species,
-                  site=MDS_dat_df$Site)
+                      MDS2 = MDS_points[,2],
+                      group=MDS_dat_df$Soil_Leaf_Litter_Leaf_swab,
+                      species=MDS_dat_df$Plant_species,
+                      site=MDS_dat_df$Site)
 ord<-ordiellipse(MDS_dat, MDS_dat_df$Soil_Leaf_Litter_Leaf_swab, display = "sites", kind = "se", conf = 0.97, label = T) # Calculate ellipses
 df_ell_jac <- data.frame()  # Dataframe for storing ellipses
 for(g in levels(MDS_dat_df$Soil_Leaf_Litter_Leaf_swab)){
   df_ell_jac <- rbind(df_ell_jac, cbind(as.data.frame(with(MDS_dat_df[MDS_dat_df$Soil_Leaf_Litter_Leaf_swab==g,], # Add ellipse values
-                                                   veganCovEllipse(ord[[g]]$cov,ord[[g]]$center,ord[[g]]$scale)))
-                                ,group=g))
+                                                           veganCovEllipse(ord[[g]]$cov,ord[[g]]$center,ord[[g]]$scale)))
+                                        ,group=g))
 }
 NMDS_jac.mean=aggregate(NMDS_jac[,1:2],list(group=NMDS_jac$group),mean) # Calculate mean for groups
 # p_jac <- ggplot(data = NMDS_jac, aes(MDS1, MDS2)) + # Make plot
@@ -151,5 +152,5 @@ pcoa_bc
 ggsave("./Figures/bc_pcoa_all_samples.png", pcoa_bc, width = 8, height=6, units="in")
 
 ado_bray_pcoa <- adonis2(t(rare_otu) ~ substrate * species * site,
-                    bc.pcoa_df, method="bray")
+                         bc.pcoa_df, method="bray")
 ado_bray_pcoa
