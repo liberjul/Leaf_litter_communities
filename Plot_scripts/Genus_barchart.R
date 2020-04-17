@@ -21,7 +21,7 @@ prop_otu_dat <- as.data.frame(prop_otu_dat) # Convert matrix to df
 prop_otu_dat$OTU_name <- rownames(rare_otu) # Same rownames as OTU table
 taxa_tab_trim <- taxa_table[rownames(rare_otu),] # Reorder taxa table by otu table order
 prop_otu_dat <- cbind(prop_otu_dat, taxa_tab_trim) # Combine dataframes
-
+colnames(prop_otu_dat)
 prop_otu_long <- prop_otu_dat %>% # Pivot by sample name to make long
   pivot_longer(cols=starts_with("2"), names_to="Sample")
 
@@ -34,7 +34,7 @@ if ("" %in% genus_top$Genus){ # If unnamed is in the top 30, drop it
   genus_top <- genus_top[genus_top$Genus != "",]
 }
 # genus_top # check table
-
+colnames(prop_otu_long)
 prop_long_gen_filt <- prop_otu_long %>% # take proportions for samples in top 30 genera
   select(Genus, Sample, value) %>%
   filter(Genus %in% genus_top$Genus)
@@ -48,20 +48,44 @@ other_tab <- prop_otu_long %>% # Table for the sum of the other genera
 other_tab$Genus <- rep("Other", dim(other_tab)[1]) # Set name to other
 
 prop_long_gen_filt <- rbind(prop_long_gen_filt, other_tab) # Add "Other" table to proportion table
+subs <- vector(length = dim(prop_long_gen_filt)[1])
+sites <- subs
+hosts <- subs
+short <- subs
+for (i in 1:dim(prop_long_gen_filt)[1]){
+  subs[i] <- map_wo_negs["Substrate", prop_long_gen_filt$Sample[i]]
+  sites[i] <- map_wo_negs["Site", prop_long_gen_filt$Sample[i]]
+  hosts[i] <- map_wo_negs["Plant_species", prop_long_gen_filt$Sample[i]]
+  short[i] <- map_wo_negs["Short_name", prop_long_gen_filt$Sample[i]]
+}
+prop_long_gen_filt <- prop_long_gen_filt %>%
+  mutate(Substrate = subs,
+         Site = sites,
+         Host = hosts,
+         Name = paste(Site,
+                      unlist(strsplit(Host, " "))[c(T, F)],
+                      sep = "-"))
+
 palette_CB9 <- c('#5e0215', '#1d0f6f', '#03149c', '#761c47', '#08926d', '#557741', # Custom color pallete for 31 samples
                  '#3c16c2', '#98433c', '#c64f11', '#70a228', '#bf8c01', '#1788b3',
                  '#79de00', '#8e15b8', '#4c64ae', '#5ce331', '#49e26e', '#fe159a',
                  '#c6955d', '#fd8355', '#63b3e1', '#ebd34d', '#a96bfe', '#a3f08d',
                  '#c0adb4', '#8dd2c8', '#d8e587', '#d59eed', '#fe71f4', '#b1dcf0',
                  '#d8e9c7')
-
+colnames(prop_long_gen_filt)
+facet_labs <- c(Epi = "Epiphyte", Endo = "Endophyte", Lit = "Litter", Soil = "Soil") # Change facet labels
 genus_barplot <- ggplot(prop_long_gen_filt, # Ggplot barplot of proportions
                         aes(x = Sample, y = value, fill = Genus)) +
   geom_bar(position = position_fill(reverse=TRUE), stat="identity") + # Stacked bars
+  facet_grid(~Substrate,
+            switch = "x",
+            scales = "free_x",
+            space = "free_x",
+            labeller = labeller(Substrate=facet_labs)) +
   theme_pubr() +
   scale_fill_manual(values= palette_CB9) + # Use palette
-  scale_x_discrete(limits = map_wo_negs["SampleID",], # Replace sample names with shortened sample descriptions
-                   labels = map_wo_negs["Short_name",]) +
+  scale_x_discrete(breaks = prop_long_gen_filt$Sample, # Replace sample names with shortened sample descriptions
+                   labels = prop_long_gen_filt$Name) +
   ylim(0,1) +
   labs(y = "Proportion of Reads Per Sample", fill = "Genus") + # Change variable labels
   theme(legend.position = "right", # Legend, ticks, and text adjustments
@@ -70,6 +94,6 @@ genus_barplot <- ggplot(prop_long_gen_filt, # Ggplot barplot of proportions
         axis.text.x = element_text(angle=90, vjust=0.5, hjust=1)) +
   guides(fill = guide_legend(reverse = TRUE)) # Reverse legend to match
 
-# genus_barplot # Show plot
+genus_barplot # Show plot
 
 ggsave("./Figures/top30_genera_gg_constax.png", genus_barplot, width=14, height = 8, units="in") # Save plot
