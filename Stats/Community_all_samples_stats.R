@@ -75,7 +75,7 @@ plot(RF_1001)
 
 importance(RF_501)
 ##Plot  Mean Decrease Gini and Mean Decrease Accuracy 
-varImpPlot(RF_501) 
+varImpPlot(RF_501) # From caret
 ### Model Fit Analysis
 oob_error_data_Comp <- data.frame(
   Trees=rep(1:nrow(RF_501$err.rate), times=5),
