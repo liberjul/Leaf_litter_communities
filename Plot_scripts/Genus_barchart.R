@@ -64,7 +64,14 @@ prop_long_gen_filt <- prop_long_gen_filt %>%
          Host = hosts,
          Name = paste(Site,
                       unlist(strsplit(Host, " "))[c(T, F)],
-                      sep = "-"))
+                      sep = "-")) %>%
+  arrange(Substrate, Host, Site)
+
+lookup <- tibble(Sample = unique(prop_long_gen_filt$Sample)) %>%
+  mutate(ind = row_number())
+lookup
+prop_long_gen_filt <- prop_long_gen_filt %>%
+  inner_join(., lookup)
 
 palette_CB9 <- c('#5e0215', '#1d0f6f', '#03149c', '#761c47', '#08926d', '#557741', # Custom color pallete for 31 samples
                  '#3c16c2', '#98433c', '#c64f11', '#70a228', '#bf8c01', '#1788b3',
@@ -74,9 +81,13 @@ palette_CB9 <- c('#5e0215', '#1d0f6f', '#03149c', '#761c47', '#08926d', '#557741
                  '#d8e9c7')
 colnames(prop_long_gen_filt)
 facet_labs <- c(Epi = "Epiphyte", Endo = "Endophyte", Lit = "Litter", Soil = "Soil") # Change facet labels
+prop_long_gen_filt
 genus_barplot <- ggplot(prop_long_gen_filt, # Ggplot barplot of proportions
-                        aes(x = Sample, y = value, fill = Genus)) +
+                        aes(x = reorder(Sample, ind), y = value, fill = Genus)) +
   geom_bar(position = position_fill(reverse=TRUE), stat="identity") + # Stacked bars
+  scale_x_discrete(#limits = prop_long_gen_filt$Sample,
+                   breaks = prop_long_gen_filt$Sample, # Replace sample names with shortened sample descriptions
+                   labels = prop_long_gen_filt$Name) +
   facet_grid(~Substrate,
             switch = "x",
             scales = "free_x",
@@ -84,10 +95,9 @@ genus_barplot <- ggplot(prop_long_gen_filt, # Ggplot barplot of proportions
             labeller = labeller(Substrate=facet_labs)) +
   theme_pubr() +
   scale_fill_manual(values= palette_CB9) + # Use palette
-  scale_x_discrete(breaks = prop_long_gen_filt$Sample, # Replace sample names with shortened sample descriptions
-                   labels = prop_long_gen_filt$Name) +
+  
   ylim(0,1) +
-  labs(y = "Proportion of Reads Per Sample", fill = "Genus") + # Change variable labels
+  labs(y = "Proportion of Reads Per Sample", fill = "Genus", x = "Sample") + # Change variable labels
   theme(legend.position = "right", # Legend, ticks, and text adjustments
         axis.line.x.bottom = element_blank(),
         axis.ticks.x = element_blank(),
