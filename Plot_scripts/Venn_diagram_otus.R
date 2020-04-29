@@ -42,7 +42,10 @@ myCol <- brewer.pal(4, "Pastel2")
 # Make and ave diagram
 venn.diagram(
   x = list(Ep_names, En_names, Li_names, So_names),
-  category.names = c("Epiphytes", "Endophytes", "Litter", "Soil"),
+  category.names = c(paste("Epiphytes (", length(Ep_names), ")", sep = ""),
+                     paste("Endophytes (", length(En_names), ")", sep = ""),
+                     paste("Litter (", length(Li_names), ")", sep = ""),
+                     paste("Soil (", length(So_names), ")", sep = "")),
   filename = "./Figures/OTU_venn_diagram.png",
   output=TRUE,
   lwd = 2,
@@ -50,7 +53,7 @@ venn.diagram(
   cex=0.8,
   fontface="bold",
   fontfamily="sans",
-  cat.cex=0.8,
+  cat.cex=0.7,
   cat.fontface="bold",
   cat.fontfamily="sans"
 )
