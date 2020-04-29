@@ -47,10 +47,18 @@ p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
   geom_point(aes(color = group, shape = site),size=3) +
   geom_point(aes(color = group, fill = group, alpha = species, shape=site),size=3) +
   geom_path(data=df_ell_bc, aes(x=NMDS1, y=NMDS2,color=group), size=1, linetype=2) +
-  labs(alpha="Host species", color="Substrate", shape="Site") +
+  labs(alpha="Host species", color="Substrate", shape="Site",
+       x = "NMDS1", y = "NMDS2") +
   scale_shape_manual(values = 21:25) +
   scale_alpha_manual(values=c(0,1), guide =
-                       guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic"))) +
+                       guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic"),
+                                    override.aes = list(pch = 21,
+                                                        color = 1,
+                                                        alpha = 1,
+                                                        fill = c(NA, 1)))) +
+  annotate(geom = "text", hjust = 0,
+           x = min(NMDS_bray$MDS1), y = min(NMDS_bray$MDS2),
+           label = paste("Stress =", round(MDS_stress, 4))) +
   theme_pubr() +
   guides(fill=FALSE) +
   # ggtitle("Bray-Curtis") +

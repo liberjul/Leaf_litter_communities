@@ -100,9 +100,17 @@ p_bray_swab <- ggplot(data = NMDS_swab, aes(x=MDS1, y=MDS2)) +
   theme(plot.title = element_text(hjust=0.5), legend.position = "right") +
   scale_shape_manual(values = 21:25) +
   scale_alpha_manual(values=c(0,1), guide =
-                       guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic"))) +
+                       guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic"),
+                                    override.aes = list(pch = 21,
+                                                        color = 1,
+                                                        alpha = 1,
+                                                        fill = c(NA, 1)))) +
+  annotate(geom = "text", hjust = 0,
+           x = min(NMDS_swab$MDS1), y = min(NMDS_swab$MDS2),
+           label = paste("Stress =", round(MDS_stress, 4))) +
   guides(fill=FALSE) +
-  labs(shape="Site", color="Swab Material", alpha="Host Species")
+  labs(shape="Site", color="Swab Material", alpha="Host Species",
+       x = "NMDS1", y = "NMDS2")
 p_bray_swab
 
 MDS_stress
