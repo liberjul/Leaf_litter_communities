@@ -8,7 +8,6 @@ library(randomForest)
 library(rfUtilities)
 library(compositions)
 library(caret)
-library(purrr)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
 wts_wo_negs <- c(rep(18,18), rep(10,10), rep(8, 8), rep(10, 10)) # Vector for weighting abundance by number of samples per substrate
@@ -173,18 +172,6 @@ MDS_dat <- metaMDS(t(rare_otu))
 MDS_points <- MDS_dat$points
 MDS_dat_df <- as.data.frame(MDS_points)
 MDS_dat_df <- cbind(MDS_dat_df, t(map_wo_negs))
-round(MDS_dat$eig*100/sum(MDS_dat$eig),1)
-### Code from: https://stackoverflow.com/questions/49223740/cumulative-variance-explained-for-nmds-in-r
-n = 10
-stress <- vector(length = n)
-for (i in 1:n) {
-  stress[i] <- metaMDS(t(rare_otu), distance = "jaccard", k = i)$stress
-}
-names(stress) <- paste0(1:n, "Dim")
-# x11(width = 10/2.54, height = 7/2.54)
-par(mar = c(3.5,3.5,1,1), mgp = c(2, 0.6, 0), cex = 0.8, las = 2)
-barplot(stress, ylab = "stress")
-###
 
 ado_bray <- adonis2(t(rare_otu) ~ Substrate + Plant_species + Site,
                     MDS_dat_df, method="bray")
@@ -231,10 +218,19 @@ tibble(diver_df)
 
 m1 <- lm(shannon ~ Substrate + Plant_species + Site, diver_df)
 summary(m1)
-
-m2 <- aov(shannon ~ Substrate + Plant_species + Site, diver_df)
+m2 <- lm(shannon ~ Substrate * Plant_species * Site, diver_df)
 summary(m2)
-
-m3 <- aov(inv_simp ~ Substrate + Plant_species + Site, diver_df)
+m3 <- lm(inv_simp ~ Substrate + Plant_species + Site, diver_df)
 summary(m3)
+m4 <- lm(inv_simp ~ Substrate * Plant_species * Site, diver_df)
+summary(m4)
+
+AICctab(m1, m2)
+AICctab(m3, m4)
+
+a1 <- aov(shannon ~ Substrate + Plant_species + Site, diver_df)
+summary(a1)
+
+a2 <- aov(inv_simp ~ Substrate + Plant_species + Site, diver_df)
+summary(a2)
 
