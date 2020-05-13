@@ -58,7 +58,8 @@ rc_gplot <- ggplot(data = alldata,
   theme(legend.position = "right") +
   labs(x = "Read Count", y = "Observed OTUs") +
   scale_color_discrete(breaks = c("Endo", "Epi", "Lit", "Soil"),
-                     labels = c("Endophyte", "Epiphyte", "Litter", "Soil"))
+                     labels = c("Endophyte", "Epiphyte", "Litter", "Soil")) +
+  geom_vline(xintercept = 5926, linetype = "dashed")
 
 rc_gplot
-ggsave("Rarefaction_curve.png", rc_gplot, width=6, height=6, units="in")
+ggsave("./Figures/Rarefaction_curve.png", rc_gplot, width=6, height=6, units="in")
