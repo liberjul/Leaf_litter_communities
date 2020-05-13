@@ -45,7 +45,7 @@ g <- ggplot(am.coords, aes(x=Epi_Litter, y=End_Soil)) +
   coord_fixed(ratio=1, xlim=c(-1.2, 1.2), ylim=c(-1.1, 1.1)) +
   geom_point(alpha=0.1) +
   theme_pubr() +
-  labs(x=NULL, y=NULL)
+  labs(x="(Epi + Soil) - (Endo + Lit)", y="(Endo + Epi) - (Lit + Soil)")
   # theme(axis.ticks=element_blank(),
   #       axis.line=element_blank(),
   #       axis.text.x=element_blank(),
