@@ -107,3 +107,96 @@ genus_barplot <- ggplot(prop_long_gen_filt, # Ggplot barplot of proportions
 genus_barplot # Show plot
 
 ggsave("./Figures/top30_genera_gg_constax.png", genus_barplot, width=14, height = 8, units="in") # Save plot
+
+
+### Specific genera proportions
+# prop_long_gen_filt %>%
+#   filter(Substrate == "Endo",
+#          Host == "Acer rubrum",
+#          Genus == "Ramularia") %>%
+#   summarize(sum(value))
+# 
+# prop_otu_long %>%
+#   filter(Substrate == "Endo",
+#          Host == "Acer rubrum",
+#          Genus == "Pestalotiopsis") %>%
+#   summarize(sum(value))
+# 
+# acer_endo_by_gen <- prop_otu_long %>%
+#   filter(Sample %in% c(249:252, 254),
+#          Genus %in% c("Phyllosticta", "Ramularia",
+#                       "Colletotrichum", "Plagiostoma", "Pestalotiopsis")) %>%
+#   group_by(Genus) %>%
+#   summarize(sum(value))
+# acer_endo_by_gen
+# 
+# acer_endo_by_gen <- prop_otu_long %>%
+#   filter(Sample %in% c(244, 245, 247),
+#          Genus %in% c("Colletotrichum")) %>%
+#   group_by(Genus) %>%
+#   summarize(sum(value))
+# acer_endo_by_gen
+# 
+# carya_sum <- prop_long_gen_filt %>%
+#   filter(Substrate == "Epi",
+#          Host == "Carya ovata")%>%
+#   .[,"value"] %>%
+#   sum()
+# carya_sum
+# 
+# acer_sum <- prop_long_gen_filt %>%
+#   filter(Substrate == "Epi",
+#          Host == "Acer rubrum")%>%
+#   .[,"value"] %>%
+#   sum()
+# acer_sum
+# 
+# prop_long_gen_filt %>%
+#   filter(Substrate == "Epi",
+#          Host == "Carya ovata") %>%
+#   group_by(Genus) %>%
+#   summarize(gen_sum = sum(value) / carya_sum *100) %>%
+#   arrange(-gen_sum)
+# 
+# prop_long_gen_filt %>%
+#   filter(Substrate == "Epi",
+#          Host == "Acer rubrum",
+#          Genus == c("Erysiphe", "Golubevia")) %>%
+#   group_by(Genus) %>%
+#   summarize(gen_sum = sum(value)/ acer_sum *100) %>%
+#   arrange(-gen_sum)
+# 
+#   
+# 
+# prop_otu_long %>%
+#   filter(Sample %in% c(244, 245, 247),
+#          Genus %in% c("Erysiphe")) %>%
+#   summarize(sum(value)) /
+#   
+#   prop_otu_long %>%
+#   filter(Sample %in% c(244, 245, 247)) %>%
+#   summarize(sum(value))
+# 
+# 
+# prop_otu_long %>%
+#   filter(Sample %in% c(249:252, 254),
+#          Genus %in% c("Exobasidium")) %>%
+#   group_by(Genus) %>%
+#   summarize(sum(value)) /
+#   
+#   prop_otu_long %>%
+#   filter(Sample %in% c(249:252, 254)) %>%
+#   summarize(sum(value))
+# 
+# 
+# 
+# prop_otu_long %>%
+#   filter(#Substrate == "Soil",
+#          # Host == "Carya ovata",
+#          Genus %in% c("Phyllosticta", "Ramularia",
+#                       "Colletotrichum", "Plagiostoma", "Pestalotiopsis")) %>%
+#   group_by(Genus) %>%
+#   summarize(sum(value))
+# 
+# prop_otu_long %>%
+#   filter(Sample %in% c(249:252, 254))
