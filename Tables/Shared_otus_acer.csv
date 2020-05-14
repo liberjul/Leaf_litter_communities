@@ -1,0 +1,7 @@
+"","Epiphyte","Endophyte","Litter","Soil"
+"Total OTUs","187","139","331","275"
+"Unique OTUs","5 (3%)","9 (6%)","100 (30%)","191 (69%)"
+"Shared with Epiphytes","-","114 (82%)","155 (47%)","23 (8%)"
+"Shared with Endophytes","114 (61%)","-","108 (33%)","18 (7%)"
+"Shared with Litter","155 (83%)","108 (78%)","-","78 (28%)"
+"Total Shared","182 (97%)","130 (94%)","231 (70%)","84 (31%)"
