@@ -68,98 +68,45 @@ CalcTurn <- function(df){
   df_all <- rbind(df_tot, df_app, df_dis)
   return(df_all)
 }
-## H1 endo -> epi -> litter -> soil
-turndf_ITS_exp1_long %>%
-  mutate(Substrate = as.numeric(recode_factor(Substrate,
-                                   "Endo" = "1",
-                                   "Epi" = "2",
-                                   "Lit" = "3",
-                                   "Soil" = "4"))) %>%
-  CalcTurn %>%
-  mutate(Substrate = recode_factor(Substrate,
-                                   "1" = "Endo",
-                                   "2" = "Epi",
-                                   "3" = "Lit",
-                                   "4" = "Soil")) %>%
-  ggplot(aes(x = Substrate,
-             y = turnover,
-             color = metric)) +
-  labs(x = "Substrate", y = "Turnover", color = "Metric") +
-  geom_point() +
-  geom_boxplot(alpha = 0) +
-  theme_pubr() +
-  theme(legend.position = "right") -> h1_plot
-h1_plot
-## H2 epi -> endo -> soil -> litter
-turndf_ITS_exp1_long %>%
-  mutate(Substrate = as.numeric(recode_factor(Substrate,
-                                              "Epi" = "1",
-                                              "Endo" = "2",
-                                              "Soil" = "3",
-                                              "Lit" = "4"))) %>%
-  CalcTurn %>%
-  mutate(Substrate = recode_factor(Substrate,
-                                   "1" = "Epi",
-                                   "2" = "Endo",
-                                   "3" = "Soil",
-                                   "4" = "Lit")) %>%
-  ggplot(aes(x = Substrate,
-             y = turnover,
-             color = metric)) +
-  labs(x = "Substrate", y = NULL, color = "Metric") +
-  geom_point() +
-  geom_boxplot(alpha = 0) +
-  theme_pubr() +
-  theme(legend.position = "right") -> h2_plot
-h2_plot
-## H3 litter -> endophyte -> soil -> epi
-turndf_ITS_exp1_long %>%
-  mutate(Substrate = as.numeric(recode_factor(Substrate,
-                                              "Lit" = "1",
-                                              "Endo" = "2",
-                                              "Soil" = "3",
-                                              "Epi" = "4"))) %>%
-  CalcTurn %>%
-  mutate(Substrate = recode_factor(Substrate,
-                                   "1" = "Lit",
-                                   "2" = "Endo",
-                                   "3" = "Soil",
-                                   "4" = "Epi")) %>%
-  ggplot(aes(x = Substrate,
-             y = turnover,
-             color = metric)) +
-  labs(x = "Substrate", y = "Turnover", color = "Metric") +
-  geom_point() +
-  geom_boxplot(alpha = 0) +
-  theme_pubr() +
-  theme(legend.position = "right") -> h3_plot
-h3_plot
-## H4 epi -> endo -> lit -> soil
-turndf_ITS_exp1_long %>%
-  mutate(Substrate = as.numeric(recode_factor(Substrate,
-                                              "Epi" = "1",
-                                              "Endo" = "2",
-                                              "Lit" = "3",
-                                              "Soil" = "4"))) %>%
-  CalcTurn %>%
-  mutate(Substrate = recode_factor(Substrate,
-                                   "1" = "Epi",
-                                   "2" = "Endo",
-                                   "3" = "Lit",
-                                   "4" = "Soil")) %>%
-  ggplot(aes(x = Substrate,
-             y = turnover,
-             color = metric)) +
-  labs(x = "Substrate", y = NULL, color = "Metric") +
-  geom_point() +
-  geom_boxplot(alpha = 0) +
-  theme_pubr() +
-  # scale_x_discrete(limits = c("Epi", "Endo", "Lit", "Soil"),
-  #                  breaks = c("Epi", "Endo", "Lit", "Soil")) +
-  theme(legend.position = "right") -> h4_plot
-h4_plot
 
+combs <- c()
+subs <- unique(turndf_ITS_exp1_long$Substrate)
+turn_df_paired <- data.frame()
+for (i in subs){
+  for (j in subs){
+    if (i != j & ! paste(j, i, sep="-") %in% combs){
+      turndf_ITS_exp1_long %>%
+        mutate(Substrate = as.character(Substrate)) %>%
+        filter(Substrate %in% c(i, j)) %>%
+        mutate(Substrate = as.numeric(recode_factor(Substrate,
+                                                    i = "1", j = "2"))) %>%
+        CalcTurn %>%
+        mutate(Substrate = recode_factor(Substrate,
+                                         "1" = i, "2" = j),
+               Paired_sub = paste(i, Substrate, sep="-")) %>%
+        bind_rows(turn_df_paired) -> turn_df_paired
+      
+      word <- paste(i, j, sep="-")
+      combs <- c(combs, word)
+      print(word) 
+    }
+  }
+}
+turn_df_paired
 
-g <- (h1_plot + h2_plot) /
-  (h3_plot + h4_plot) + plot_layout(guides = "collect")
-ggsave("./Figures/Turnover_4hypos.png", g, width = 12, height = 10, units = "in")
+paired_plot <- turn_df_paired %>%
+  mutate(metric = recode_factor(metric,
+                "drop" = "Drop",
+                "gain" = "Gain",
+                "total" = "Total")) %>%
+  ggplot(aes(x = Paired_sub, y = turnover, color = metric)) +
+  geom_point() +
+  geom_boxplot(alpha = 0) +
+  theme_pubr() +
+  scale_color_manual(values = c("#332288","#88CCEE","black")) +
+  ylim(0, 1) +
+  theme(legend.position = "right") +
+  labs(x = "Paired substrates", y = "Turnover", color = "Metric")
+paired_plot
+
+ggsave("./Figures/Turnover_paired.png", paired_plot, width = 8, height = 6, units="in")
