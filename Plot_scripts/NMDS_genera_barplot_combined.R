@@ -135,11 +135,26 @@ for(g in levels(MDS_dat_df$Soil_Leaf_Litter_Leaf_swab)){
                                                          veganCovEllipse(ord[[g]]$cov,ord[[g]]$center,ord[[g]]$scale)))
                                       ,group=g))
 }
-NMDS_bray.mean=aggregate(NMDS_bray[,1:2],list(group=NMDS_bray$group),mean) # Calculate mean for groups
+NMDS_bray.mean<-aggregate(NMDS_bray[,1:2],  # Calculate mean for groups
+                          list(group=NMDS_bray$group),mean)
+
+NMDS_bray.mean
+
+scrs <- cbind(as.data.frame(MDS_points), group=NMDS_bray$group)
+segs <- merge(scrs, setNames(NMDS_bray.mean,
+                             c("group", "MDS1", "MDS2")),
+              by = "group", sort = FALSE)
+
 p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
   geom_point(aes(color = group, shape = site),size=3) +
   geom_point(aes(color = group, fill = group, alpha = species, shape=site),size=3) +
   geom_path(data=df_ell_bc, aes(x=NMDS1, y=NMDS2,color=group), size=1, linetype=2) +
+  geom_segment(data = segs,
+               mapping = aes(x = MDS1.x, y = MDS2.x,
+                             xend = MDS1.y, yend = MDS2.y,
+                             color = group)) +
+  geom_text(data = NMDS_bray.mean,
+            aes(x = MDS1, y = MDS2, label = c("Endophytes","Epiphytes","Litter", "Soil"))) +
   labs(alpha="Host species", color="Substrate", shape="Site",
        x = "NMDS1", y = "NMDS2") +
   scale_shape_manual(values = 21:25) +
@@ -173,7 +188,6 @@ NMDS_swab = data.frame(MDS1 = MDS_points[,1],
                        group=MDS_dat_df$Swab_type,
                        species=MDS_dat_df$Plant_species,
                        site=MDS_dat_df$Site)
-NMDS_swab.mean=aggregate(NMDS_swab[,1:2],list(group = MDS_dat_df$Soil_Leaf_Litter_Leaf_swab),mean)
 plot.new()
 ord<-ordiellipse(MDS_dat_swab, MDS_dat_df$Swab_type, display = "sites", kind = "se", conf = 0.97, label = T)
 df_ell <- data.frame()
@@ -183,10 +197,22 @@ for(g in levels(MDS_dat_df$Swab_type)){
                                 ,group=g))
 }
 NMDS_swab.mean=aggregate(NMDS_swab[,1:2],list(group=NMDS_swab$group),mean)
+
+scrs <- cbind(as.data.frame(MDS_points), group=NMDS_swab$group)
+segs <- merge(scrs, setNames(NMDS_swab.mean,
+                             c("group", "MDS1", "MDS2")),
+              by = "group", sort = FALSE)
+
 p_bray_swab <- ggplot(data = NMDS_swab, aes(x=MDS1, y=MDS2)) +
   geom_point(aes(color=group, shape=site), size=3) +
   geom_point(aes(color = group, fill = group, alpha = species, shape=site),size=3) +
   geom_path(data=df_ell, aes(x=NMDS1, y=NMDS2,color=group), size=1, linetype=2) +
+  geom_segment(data = segs,
+               mapping = aes(x = MDS1.x, y = MDS2.x,
+                             xend = MDS1.y, yend = MDS2.y,
+                             color = group)) +
+  geom_text(data = NMDS_swab.mean,
+            aes(x = MDS1, y = MDS2, label = group)) +
   theme_pubr() +
   theme(plot.title = element_text(hjust=0.5), legend.position = "right") +
   scale_shape_manual(values = 21:25) +
@@ -195,10 +221,10 @@ p_bray_swab <- ggplot(data = NMDS_swab, aes(x=MDS1, y=MDS2)) +
                                     override.aes = list(pch = 21,
                                                         color = 1,
                                                         alpha = 1,
-                                                        fill = c(NA, 1)))) +
+                                                        fill = c(NA, 1)),
+                                    order=1)) +
   guides(color = guide_legend(order=2),
-         shape = guide_legend(order=3),
-         alpha = guide_legend(order=1)) +
+         shape = guide_legend(order=3)) +
   annotate(geom = "text", hjust = 0,
            x = min(NMDS_swab$MDS1), y = min(NMDS_swab$MDS2),
            label = paste("Stress =", round(MDS_stress, 4))) +
@@ -212,3 +238,4 @@ g <- (genus_barplot + labs(tag = "A")) / ((p_bc + labs(tag = "B")) +
                                             (p_bray_swab + labs(tag = "C")))
 g
 ggsave("./Figures/NMDS_genera_barplot_combined.png", g, width = 15, height = 13, units = "in")
+
