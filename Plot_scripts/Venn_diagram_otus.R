@@ -40,13 +40,13 @@ So_names <- So_names[!is.na(So_names)]
 # Color palette
 myCol <- brewer.pal(4, "Pastel2")
 # Make and ave diagram
-venn.diagram(
+temp <- venn.diagram(
   x = list(Ep_names, En_names, Li_names, So_names),
   category.names = c(paste("Epiphytes (", length(Ep_names), ")", sep = ""),
                      paste("Endophytes (", length(En_names), ")", sep = ""),
                      paste("Litter (", length(Li_names), ")", sep = ""),
                      paste("Soil (", length(So_names), ")", sep = "")),
-  filename = "./Figures/OTU_venn_diagram.png",
+  filename = NULL,
   output=TRUE,
   lwd = 2,
   fill=myCol,
@@ -57,6 +57,32 @@ venn.diagram(
   cat.fontface="bold",
   cat.fontfamily="sans"
 )
+pdf("./Figures_Color/Figure 2.pdf")
+grid.draw(temp)
+dev.off()
+
+myCol <- brewer.pal(4, "Greys")
+temp <- venn.diagram(
+  x = list(Ep_names, En_names, Li_names, So_names),
+  category.names = c(paste("Epiphytes (", length(Ep_names), ")", sep = ""),
+                     paste("Endophytes (", length(En_names), ")", sep = ""),
+                     paste("Litter (", length(Li_names), ")", sep = ""),
+                     paste("Soil (", length(So_names), ")", sep = "")),
+  filename = NULL,
+  output=TRUE,
+  lwd = 2,
+  fill=myCol,
+  cex=0.8,
+  fontface="bold",
+  fontfamily="sans",
+  cat.cex=0.7,
+  cat.fontface="bold",
+  cat.fontfamily="sans"
+)
+
+pdf("./Figures_Numbered/Figure 2.pdf")
+grid.draw(temp)
+dev.off()
 
 shared_otu_df <- data.frame(total= c(dim(pie_df %>% filter(Epi > 0))[1],
                                      dim(pie_df %>% filter(Endo > 0))[1],

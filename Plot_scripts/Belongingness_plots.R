@@ -73,3 +73,4 @@ L_P_hist
 density_excl <- g + labs(tag="A") | (N_L_hist / L_P_hist /  L_S_hist ) #/ S_P_hist / N_P_hist )
 density_excl
 ggsave("./Figures/density_shared_and_excl_OTUs.png", density_excl, width = 12, height = 8, units="in")
+ggsave("./Figures/density_shared_and_excl_OTUs.pdf", density_excl, width = 12, height = 8, units="in")
