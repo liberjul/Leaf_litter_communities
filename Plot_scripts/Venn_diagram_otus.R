@@ -57,7 +57,7 @@ temp <- venn.diagram(
   cat.fontface="bold",
   cat.fontfamily="sans"
 )
-pdf("./Figures_Color/Figure 2.pdf")
+pdf("./Figures_Color/Figure 2.pdf", width = 7.48, height = 7.48)
 grid.draw(temp)
 dev.off()
 
@@ -80,7 +80,7 @@ temp <- venn.diagram(
   cat.fontfamily="sans"
 )
 
-pdf("./Figures_Numbered/Figure 2.pdf")
+pdf("./Figures_Numbered/Figure 2.pdf", width = 7.48, height = 7.48)
 grid.draw(temp)
 dev.off()
 

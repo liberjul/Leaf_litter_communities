@@ -100,13 +100,34 @@ paired_plot <- turn_df_paired %>%
                 "gain" = "Gain",
                 "total" = "Total")) %>%
   ggplot(aes(x = Paired_sub, y = turnover, color = metric)) +
-  geom_point() +
+  geom_point(size = 0.5) +
   geom_boxplot(alpha = 0) +
   theme_pubr() +
   scale_color_manual(values = c("#332288","#88CCEE","black")) +
   ylim(0, 1) +
-  theme(legend.position = "right") +
+  theme(legend.position = "right",
+        text = element_text(size = 10),
+        axis.text.x.bottom = element_text(angle=45, vjust=1, hjust=1, size = 10)) +
   labs(x = "Paired substrates", y = "Turnover", color = "Metric")
 paired_plot
 
 ggsave("./Figures/Turnover_paired.png", paired_plot, width = 8, height = 6, units="in")
+ggsave("./Figures_Color/Figure 4.pdf", paired_plot, width = 90, height = 80, units = "mm")
+
+paired_plot_gray <- turn_df_paired %>%
+  mutate(metric = recode_factor(metric,
+                                "drop" = "Drop",
+                                "gain" = "Gain",
+                                "total" = "Total")) %>%
+  ggplot(aes(x = Paired_sub, y = turnover, color = metric)) +
+  geom_point(size = 0.5) +
+  geom_boxplot(alpha = 0) +
+  theme_pubr() +
+  scale_color_manual(values = c("#a6a6a6","#595959","black")) +
+  ylim(0, 1) +
+  theme(legend.position = "right",
+        text = element_text(size = 10),
+        axis.text.x.bottom = element_text(angle=45, vjust=1, hjust=1, size = 10)) +
+  labs(x = "Paired substrates", y = "Turnover", color = "Metric")
+paired_plot_gray
+ggsave("./Figures_Numbered/Figure 4.pdf", paired_plot_gray, width = 90, height = 80, units = "mm")

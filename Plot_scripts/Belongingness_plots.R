@@ -41,11 +41,12 @@ corners <- data.frame(x=c(-1, -1, 1, 1),
                       labels = c("Litter", "Endophytes", "Soil", "Epiphytes"))
 
 g <- ggplot(am.coords, aes(x=Epi_Litter, y=End_Soil)) +
-  geom_text(data=corners, aes(x=x,y=y,label=labels)) +
+  geom_text(data=corners, aes(x=x,y=y,label=labels), size = 8*(5/14)) +
   coord_fixed(ratio=1, xlim=c(-1.2, 1.2), ylim=c(-1.1, 1.1)) +
   geom_point(alpha=0.1) +
   theme_pubr() +
-  labs(x="(Epi + Soil) - (Endo + Lit)", y="(Endo + Epi) - (Lit + Soil)")
+  labs(x="(Epi + Soil) - (Endo + Lit)", y="(Endo + Epi) - (Lit + Soil)") +
+  theme(text = element_text(size = 10))
   # theme(axis.ticks=element_blank(),
   #       axis.line=element_blank(),
   #       axis.text.x=element_blank(),
@@ -56,21 +57,26 @@ ggsave("./Figures/density_shared_OTUs.png", g, width = 6, height = 6, units="in"
 # Histograms to show belongingness of 2-substrate OTUs where one substrate is litter
 N_L_hist <- ggplot(am.coords[am.coords$Epi_Litter == -1 & abs(am.coords$End_Soil) < 1,],
                    aes(End_Soil)) +
-  geom_histogram() + labs(x="Litter - Endophyte", y = "OTU Count", tag = "B") + theme_pubr() + xlim(-1, 1)
+  geom_histogram() + labs(x="Litter - Endophyte", y = "OTU Count", tag = "B") + theme_pubr() + xlim(-1, 1) +
+  theme(text = element_text(size = 10))
 # S_P_hist <- ggplot(am.coords[am.coords$Epi_Litter == 1 & abs(am.coords$End_Soil) < 1,],
 #                    aes(End_Soil)) +
 #   geom_histogram() + labs(x="Soil - Epiphyte") + theme_pubr()  + xlim(-1, 1)
 L_S_hist <- ggplot(am.coords[am.coords$End_Soil == -1 & abs(am.coords$Epi_Litter) < 1,],
                    aes(Epi_Litter)) +
-  geom_histogram() + scale_y_log10() + labs(x="Litter - Soil", y = "OTU Count") + theme_pubr()
+  geom_histogram() + labs(x="Litter - Epiphyte", y = "OTU Count")  + theme_pubr()  + xlim(-1, 1) +
+  theme(text = element_text(size = 10))
 # N_P_hist <- ggplot(am.coords[am.coords$End_Soil == 1,], aes(Epi_Litter)) +
 #   geom_histogram() + scale_y_log10() + labs(x="Endophyte - Epiphyte") + theme_pubr()
 L_P_hist <- ggplot(am.coords[am.coords$End_Soil == am.coords$Epi_Litter & abs(am.coords$End_Soil) < 1,],
                    aes(End_Soil)) +
-  geom_histogram() + labs(x="Litter - Epiphyte", y = "OTU Count")  + theme_pubr()  + xlim(-1, 1)
+  geom_histogram() + labs(x="Litter - Epiphyte", y = "OTU Count")  + theme_pubr()  + xlim(-1, 1) +
+  theme(text = element_text(size = 10))
 L_P_hist
 
 density_excl <- g + labs(tag="A") | (N_L_hist / L_P_hist /  L_S_hist ) #/ S_P_hist / N_P_hist )
 density_excl
 ggsave("./Figures/density_shared_and_excl_OTUs.png", density_excl, width = 12, height = 8, units="in")
 ggsave("./Figures/density_shared_and_excl_OTUs.pdf", density_excl, width = 12, height = 8, units="in")
+ggsave("./Figures_Color/Figure 3.pdf", density_excl, width = 190, height = 100, units="mm")
+ggsave("./Figures_Numbered/Figure 3.pdf", density_excl, width = 190, height = 100, units="mm")

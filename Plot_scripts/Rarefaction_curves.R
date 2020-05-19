@@ -11,7 +11,7 @@ rownames(otu_dat) <- otu_dat[,1] # Rename rows with OTU number
 otu_dat <- otu_dat[,order(colnames(otu_dat))] # Reorder by OTU number
 map <- t(read.table("./Data/DEM_map_mod3.csv", fill = TRUE, sep=",", header=TRUE)) # Read the map file
 colnames(map) <- map[1,] # Colnames are now by Sample ID
-rownames(map) <- c("SampleID", rownames(map)[2:23]) # Rownames are now site/sample variables
+rownames(map) <- c("SampleID", rownames(map)[2:24]) # Rownames are now site/sample variables
 map_wo_negs <- map[,sl] # Keep non-negative samples for map table
 colnames(otu_dat) <- c("OTU_ID", colnames(map)) # OTU_ID as first column, sample IDs as rest of columns
 otu_dat_wo_negs <- as.matrix(otu_dat[,sl + 1]) # Keep non-negative samples for OTU table
@@ -57,9 +57,10 @@ rc_gplot <- ggplot(data = alldata,
   theme_pubr() +
   theme(legend.position = "right") +
   labs(x = "Read Count", y = "Observed OTUs") +
-  scale_color_discrete(breaks = c("Endo", "Epi", "Lit", "Soil"),
+  scale_color_manual(breaks = c("Endo", "Epi", "Lit", "Soil"),
                      labels = c("Endophyte", "Epiphyte", "Litter", "Soil")) +
   geom_vline(xintercept = 5926, linetype = "dashed")
 
 rc_gplot
 ggsave("./Figures/Rarefaction_curve.png", rc_gplot, width=6, height=6, units="in")
+ggsave("./Figures_Color/Supp Figure 2.pdf", rc_gplot, width=190, height=190, units="mm")

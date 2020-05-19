@@ -62,8 +62,27 @@ ps_heatmap <- ps_heatmap + facet_grid(~Substrate,
                                       scales = "free_x",
                                       space = "free_x",
                                       labeller = labeller(Substrate=facet_labs)) + # Add facets for Substrate
-  theme(axis.text.x.bottom = element_text(angle=90, vjust=0.5, hjust=1)) + # Adjust the column labels
+  theme(axis.text.x.bottom = element_text(angle=90, vjust=0.5, hjust=1, size = 8)) + # Adjust the column labels
   labs(fill = "Proportion\n of Substrate") # Change x label
 ps_heatmap$scales$scales[[1]]$name <- "Sample" # Change x axis name
 ps_heatmap
 ggsave("./Figures/physeq_heatmap.png", ps_heatmap, width=12, height = 8, units="in") # Save plot
+ggsave("./Figures/physeq_heatmap.pdf", ps_heatmap, width=190, height = 130, units="mm") # Save plot
+
+ps_heatmap <- plot_heatmap(physeq1, method = NULL, distance = NULL, "Name",
+                           taxa.order = taxa.order, # With manual OTU sorting
+                           low="white", high="black", na.value="white") # Make heatmap
+facet_labs <- c(Epi = "Epiphyte", Endo = "Endophyte", Lit = "Litter", Soil = "Soil") # Change facet labels
+ps_heatmap
+
+ps_heatmap <- ps_heatmap + facet_grid(~Substrate,
+                                      switch = "x",
+                                      scales = "free_x",
+                                      space = "free_x",
+                                      labeller = labeller(Substrate=facet_labs)) + # Add facets for Substrate
+  theme(axis.text.x.bottom = element_text(angle=90, vjust=0.5, hjust=1, size = 8)) + # Adjust the column labels
+  labs(fill = "Proportion\n of Substrate") # Change x label
+ps_heatmap$scales$scales[[1]]$name <- "Sample" # Change x axis name
+ps_heatmap
+ggsave("./Figures/physeq_heatmap_bw.png", ps_heatmap, width=12, height = 8, units="in") # Save plot
+ggsave("./Figures/physeq_heatmap_bw.pdf", ps_heatmap, width=190, height = 130, units="mm") # Save plot
