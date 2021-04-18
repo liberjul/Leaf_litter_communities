@@ -49,7 +49,7 @@ otus_clr_Comp$Substrate <- as.factor(map_wo_negs_t[rownames(otus_clr_Comp), "Sub
 otus_clr_Comp$Substrate
 head(otus_clr_Comp)
 
-### TRain the RF model
+### Train the RF model
 set.seed(4563)
 RF_501 <- randomForest(x=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
                        y=otus_clr_Comp$Substrate,
@@ -207,6 +207,20 @@ summary(otu_mp_fdr)
 
 write.table(as.data.frame(otu_mp_fdr$sign), file = "./Stats/OTU_indicspecies_fdr.csv", na = "", sep=",", quote = F)
 otu_mp_fdr$sign
+
+host_mp <- multipatt(as.data.frame(t(rare_otu)),
+                     paste(map_wo_negs["Substrate",],
+                           map_wo_negs["Plant_species",]),
+                     control=how(nperm=9999),
+                     duleg = TRUE)
+summary(host_mp, indvalcomp=TRUE)
+host_mp -> host_mp_fdr
+host_mp_fdr$sign$p.value <- p.adjust(host_mp$sign$p.value, "fdr")
+summary(host_mp_fdr)
+write.table(as.data.frame(host_mp_fdr$sign), file = "./Stats/OTU_indicspecies_host_fdr.csv", na = "", sep=",", quote = F)
+
+host_mp_w_id <- read.csv("./Stats/indic_species_5_per_host.csv")
+
 
 ### Alpha Diversity Analysis
 diver_df <- data.frame(shannon = diversity(t(rare_otu), index = "shannon"),

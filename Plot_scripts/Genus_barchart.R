@@ -9,7 +9,8 @@ map_wo_negs <- as.matrix(read.csv("./Data/DEM_map_wo_negs.csv", stringsAsFactors
 rare_otu <- as.matrix(read.csv("./Data/Rare_otu_table.csv"))
 colnames(map_wo_negs) <- map_wo_negs["SampleID",]
 colnames(rare_otu) <- map_wo_negs["SampleID",]
-taxa_table <- read.delim("./Data/consensus_taxonomy_constax.txt") # Load CONSTAX classifications
+# taxa_table <- read.delim("./Data/consensus_taxonomy_constax.txt") # Load CONSTAX classifications
+taxa_table <- read.delim("./Data/constax_taxonomy.txt") # Load CONSTAX classifications
 rownames(taxa_table) <- taxa_table$OTU_ID # Rename rows with the OTU_ID
 
 prop_otu_dat <- rare_otu # Assign the table to new df to maintain shape
@@ -36,7 +37,7 @@ if ("" %in% genus_top$Genus){ # If unnamed is in the top 30, drop it
 # genus_top # check table
 colnames(prop_otu_long)
 prop_long_gen_filt <- prop_otu_long %>% # take proportions for samples in top 30 genera
-  select(Genus, Sample, value) %>%
+  dplyr::select(Genus, Sample, value) %>%
   filter(Genus %in% genus_top$Genus)
 # prop_long_gen_filt # Check prop table
 
@@ -109,94 +110,105 @@ genus_barplot # Show plot
 ggsave("./Figures/top30_genera_gg_constax.png", genus_barplot, width=14, height = 8, units="in") # Save plot
 
 
-### Specific genera proportions
-# prop_long_gen_filt %>%
-#   filter(Substrate == "Endo",
-#          Host == "Acer rubrum",
-#          Genus == "Ramularia") %>%
-#   summarize(sum(value))
-# 
-# prop_otu_long %>%
-#   filter(Substrate == "Endo",
-#          Host == "Acer rubrum",
-#          Genus == "Pestalotiopsis") %>%
-#   summarize(sum(value))
-# 
-# acer_endo_by_gen <- prop_otu_long %>%
-#   filter(Sample %in% c(249:252, 254),
-#          Genus %in% c("Phyllosticta", "Ramularia",
-#                       "Colletotrichum", "Plagiostoma", "Pestalotiopsis")) %>%
-#   group_by(Genus) %>%
-#   summarize(sum(value))
-# acer_endo_by_gen
-# 
-# acer_endo_by_gen <- prop_otu_long %>%
-#   filter(Sample %in% c(244, 245, 247),
-#          Genus %in% c("Colletotrichum")) %>%
-#   group_by(Genus) %>%
-#   summarize(sum(value))
-# acer_endo_by_gen
-# 
-# carya_sum <- prop_long_gen_filt %>%
-#   filter(Substrate == "Epi",
-#          Host == "Carya ovata")%>%
-#   .[,"value"] %>%
-#   sum()
-# carya_sum
-# 
-# acer_sum <- prop_long_gen_filt %>%
-#   filter(Substrate == "Epi",
-#          Host == "Acer rubrum")%>%
-#   .[,"value"] %>%
-#   sum()
-# acer_sum
-# 
-# prop_long_gen_filt %>%
-#   filter(Substrate == "Epi",
-#          Host == "Carya ovata") %>%
-#   group_by(Genus) %>%
-#   summarize(gen_sum = sum(value) / carya_sum *100) %>%
-#   arrange(-gen_sum)
-# 
-# prop_long_gen_filt %>%
-#   filter(Substrate == "Epi",
-#          Host == "Acer rubrum",
-#          Genus == c("Erysiphe", "Golubevia")) %>%
-#   group_by(Genus) %>%
-#   summarize(gen_sum = sum(value)/ acer_sum *100) %>%
-#   arrange(-gen_sum)
-# 
-#   
-# 
-# prop_otu_long %>%
-#   filter(Sample %in% c(244, 245, 247),
-#          Genus %in% c("Erysiphe")) %>%
-#   summarize(sum(value)) /
-#   
-#   prop_otu_long %>%
-#   filter(Sample %in% c(244, 245, 247)) %>%
-#   summarize(sum(value))
-# 
-# 
-# prop_otu_long %>%
-#   filter(Sample %in% c(249:252, 254),
-#          Genus %in% c("Exobasidium")) %>%
-#   group_by(Genus) %>%
-#   summarize(sum(value)) /
-#   
-#   prop_otu_long %>%
-#   filter(Sample %in% c(249:252, 254)) %>%
-#   summarize(sum(value))
-# 
-# 
-# 
-# prop_otu_long %>%
-#   filter(#Substrate == "Soil",
-#          # Host == "Carya ovata",
-#          Genus %in% c("Phyllosticta", "Ramularia",
-#                       "Colletotrichum", "Plagiostoma", "Pestalotiopsis")) %>%
-#   group_by(Genus) %>%
-#   summarize(sum(value))
-# 
-# prop_otu_long %>%
-#   filter(Sample %in% c(249:252, 254))
+# Differential taxa by host
+out_tab <- data.frame(Genus = sort(unique(prop_long_gen_filt$Genus)))
+for (host in c("Acer rubrum", "Carya ovata")){
+  for (substrate in c("Endo", "Epi", "Lit", "Soil")){
+    col_name <- paste(tolower(strsplit(host, " ")[[1]][c(T,F)]),
+                      "_",
+                      tolower(substrate),
+                      sep = "")
+    sum_sub <- prop_long_gen_filt %>%
+      filter(Substrate == substrate,
+             Host == host)%>%
+      .[,"value"] %>%
+      sum()
+    
+    prop_long_gen_filt %>%
+      filter(Substrate == substrate,
+             Host == host) %>%
+      group_by(Genus) %>%
+      summarize(gen_sum = sum(value)/ sum_sub *100) %>%
+      as.data.frame() -> temp_df
+    cbind(out_tab, temp_df[2]) %>%
+    rename(!!col_name := "gen_sum") -> out_tab
+    print(col_name)
+  }
+}
+out_tab %>%
+  write.csv("./Tables/genera_by_host_substrate_top30.csv")
+### All genera
+prop_long_gen_all <- prop_otu_long %>% # take proportions for samples in top 30 genera
+  dplyr::select(Genus, Sample, value) # %>%
+
+# prop_long_gen_filt <- rbind(prop_long_gen_filt, other_tab) # Add "Other" table to proportion table
+subs <- vector(length = dim(prop_long_gen_all)[1])
+sites <- subs
+hosts <- subs
+short <- subs
+for (i in 1:dim(prop_long_gen_all)[1]){
+  subs[i] <- map_wo_negs["Substrate", prop_long_gen_all$Sample[i]]
+  sites[i] <- map_wo_negs["Site", prop_long_gen_all$Sample[i]]
+  hosts[i] <- map_wo_negs["Plant_species", prop_long_gen_all$Sample[i]]
+  short[i] <- map_wo_negs["Short_name", prop_long_gen_all$Sample[i]]
+}
+prop_long_gen_all <- prop_long_gen_all %>%
+  mutate(Substrate = subs,
+         Site = sites,
+         Host = hosts,
+         Name = paste(Site,
+                      unlist(strsplit(Host, " "))[c(T, F)],
+                      sep = "-")) %>%
+  arrange(Substrate, Host, Site)
+
+lookup <- tibble(Sample = unique(prop_long_gen_all$Sample)) %>%
+  mutate(ind = row_number())
+lookup
+prop_long_gen_all <- prop_long_gen_all %>%
+  inner_join(., lookup)
+
+out_tab <- data.frame(Genus = sort(unique(prop_long_gen_all$Genus)))
+for (host in c("Acer rubrum", "Carya ovata")){
+  for (substrate in c("Endo", "Epi", "Lit", "Soil")){
+    col_name <- paste(tolower(strsplit(host, " ")[[1]][c(T,F)]),
+                      "_",
+                      tolower(substrate),
+                      sep = "")
+    sum_sub <- prop_long_gen_all %>%
+      filter(Substrate == substrate,
+             Host == host)%>%
+      .[,"value"] %>%
+      sum()
+    
+    prop_long_gen_all %>%
+      filter(Substrate == substrate,
+             Host == host) %>%
+      group_by(Genus) %>%
+      summarize(gen_sum = sum(value)/ sum_sub *100) %>%
+      as.data.frame() -> temp_df
+    cbind(out_tab, temp_df[2]) %>%
+      rename(!!col_name := "gen_sum") -> out_tab
+    print(col_name)
+  }
+}
+levels(out_tab$Genus)[levels(out_tab$Genus) == ""] <- "Not assigned"
+
+out_tab %>%
+  write.csv("./Tables/genera_by_host_substrate_all.csv")
+
+# Proportion of OTUs found by U'Ren et al. 2012
+sum_sub <- prop_long_gen_all %>%
+  filter(Substrate == "Endo",
+         Host == "Acer rubrum")%>%
+  .[,"value"] %>%
+  sum()
+
+prop_long_gen_all %>%
+  filter(Substrate == "Endo",
+         Host == "Acer rubrum",
+         Genus %in% c("Phyllosticta", "Ramularia",
+                      "Colletotrichum", "Plagiostoma",
+                      "Pestalotiopsis")) %>%
+  group_by(Genus) %>%
+  summarize(gen_sum = sum(value)/ sum_sub *100) %>%
+  summarize(sum(gen_sum))

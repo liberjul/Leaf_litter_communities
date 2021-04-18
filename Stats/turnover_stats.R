@@ -113,6 +113,7 @@ paired_plot
 
 ggsave("./Figures/Turnover_paired.png", paired_plot, width = 8, height = 6, units="in")
 ggsave("./Figures_Color/Figure 4.pdf", paired_plot, width = 90, height = 80, units = "mm")
+ggsave("./Figures_Color/Figure 4.eps", paired_plot, width = 90, height = 80, units = "mm")
 
 paired_plot_gray <- turn_df_paired %>%
   mutate(metric = recode_factor(metric,

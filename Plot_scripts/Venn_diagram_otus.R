@@ -25,7 +25,7 @@ for (subst in unique(map_wo_negs["Substrate",])){ # For each substrate
 pie_df <- pie_df[,2:5] # take the data columns
 
 colnames(pie_df) <- unique(map_wo_negs["Substrate",]) # Rename columns with substrate
-
+pie_df_all <- pie_df
 dim(pie_df)
 # Take non-zeroed reads
 Ep_names <- rownames(pie_df)[pie_df$Epi > 0]
@@ -49,17 +49,26 @@ temp <- venn.diagram(
   filename = NULL,
   output=TRUE,
   lwd = 2,
-  fill=myCol,
+  fill=NULL,
   cex=0.8,
   fontface="bold",
-  fontfamily="sans",
-  cat.cex=0.7,
   cat.fontface="bold",
-  cat.fontfamily="sans"
+  fontfamily="sans",
+  cat.fontfamily="sans",
+  # fontfamily="ComputerModern",
+  # cat.fontfamily="ComputerModern",
+  # fill=myCol,
+  cat.cex=0.7
 )
+setEPS()
+postscript(file = "./Figures_Color/Figure 2.eps", width = 7.48, height = 7.48, fonts="sans", )
+grid.draw(temp)
+dev.off()
+
 pdf("./Figures_Color/Figure 2.pdf", width = 7.48, height = 7.48)
 grid.draw(temp)
 dev.off()
+
 
 myCol <- brewer.pal(4, "Greys")
 temp <- venn.diagram(
@@ -156,7 +165,7 @@ for (subst in unique(map_wo_negs_a["Substrate",])){ # For each substrate
 pie_df <- pie_df[,2:5] # take the data columns
 
 colnames(pie_df) <- unique(map_wo_negs_a["Substrate",]) # Rename columns with substrate
-
+pie_df_acer <- pie_df
 dim(pie_df)
 # Take non-zeroed reads
 Ep_names <- rownames(pie_df)[pie_df$Epi > 0]
@@ -260,7 +269,7 @@ for (subst in unique(map_wo_negs_h["Substrate",])){ # For each substrate
 pie_df <- pie_df[,2:5] # take the data columns
 
 colnames(pie_df) <- unique(map_wo_negs_h["Substrate",]) # Rename columns with substrate
-
+pie_df_carya <- pie_df
 dim(pie_df)
 # Take non-zeroed reads
 Ep_names <- rownames(pie_df)[pie_df$Epi > 0]
@@ -340,3 +349,11 @@ rownames(out_df) <- c("Total OTUs", "Unique OTUs",
                       "Shared with Litter", "Total Shared")
 out_df
 write.csv(out_df, "./Tables/Shared_otus_carya.csv")
+
+# Shared litter otus between maple and hickory
+acer_lit_uniq <- rownames(pie_df_acer[rowSums(pie_df_acer) == pie_df_acer$Lit,])
+carya_lit_uniq <- rownames(pie_df_carya[rowSums(pie_df_carya) == pie_df_carya$Lit,])
+all_lit_uniq <- rownames(pie_df_all[rowSums(pie_df_all) == pie_df_all$Lit,])
+shared_carya_acer_lit <- intersect(acer_lit_uniq, carya_lit_uniq)
+
+length(shared_carya_acer_lit) / length(all_lit_uniq)

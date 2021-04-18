@@ -12,7 +12,8 @@ map_wo_negs <- as.matrix(read.csv("./Data/DEM_map_wo_negs.csv", stringsAsFactors
 rare_otu <- as.matrix(read.csv("./Data/Rare_otu_table.csv"))
 colnames(map_wo_negs) <- map_wo_negs["SampleID",]
 colnames(rare_otu) <- map_wo_negs["SampleID",]
-taxa_table <- read.delim("./Data/consensus_taxonomy_constax.txt") # Load CONSTAX classifications
+# taxa_table <- read.delim("./Data/consensus_taxonomy_constax.txt") # Load CONSTAX classifications
+taxa_table <- read.delim("./Data/constax_taxonomy.txt") # Load CONSTAX classifications
 rownames(taxa_table) <- taxa_table$OTU_ID # Rename rows with the OTU_ID
 
 prop_otu_dat <- rare_otu # Assign the table to new df to maintain shape
@@ -39,7 +40,7 @@ if ("" %in% genus_top$Genus){ # If unnamed is in the top 30, drop it
 # genus_top # check table
 colnames(prop_otu_long)
 prop_long_gen_filt <- prop_otu_long %>% # take proportions for samples in top 30 genera
-  select(Genus, Sample, value) %>%
+  dplyr::select(Genus, Sample, value) %>%
   filter(Genus %in% genus_top$Genus)
 # prop_long_gen_filt # Check prop table
 
@@ -98,20 +99,20 @@ genus_barplot <- ggplot(prop_long_gen_filt, # Ggplot barplot of proportions
             labeller = labeller(Substrate=facet_labs)) +
   theme_pubr() +
   scale_fill_manual(values= palette_CB9) + # Use palette
-
   ylim(0,1) +
   labs(y = "Proportion of Reads Per Sample", fill = "Genus", x = "Sample") + # Change variable labels
   theme(legend.position = "right", # Legend, ticks, and text adjustments
         axis.line.x.bottom = element_blank(),
         axis.ticks.x = element_blank(),
         axis.text.x = element_text(angle=90, vjust=0.5, hjust=1),
-        legend.text = element_text(size=6),
-        text = element_text(size = 8),
+        legend.text = element_text(size = 10),
+        text = element_text(size = 10),
         legend.key.size = unit(.5, "line"),
-        legend.margin = margin(t = 30, unit = "pt")) +
+        legend.margin = margin(t = 30, unit = "pt"),
+        legend.spacing.y = unit(5.0, 'pt')) +
   guides(fill = guide_legend(reverse = TRUE, ncol =1)) # Reverse legend to match
 
-genus_barplot # Show plot
+#genus_barplot # Show plot
 
 # ggsave("./Figures/top30_genera_gg_constax.png", genus_barplot, width=14, height = 8, units="in") # Save plot
 
@@ -151,8 +152,8 @@ segs <- merge(scrs, setNames(NMDS_bray.mean,
               by = "group", sort = FALSE)
 
 p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
-  geom_point(aes(color = group, shape = site),size=1) +
-  geom_point(aes(color = group, fill = group, alpha = species, shape=site),size=1) +
+  geom_point(aes(color = group, shape = site),size = 3) +
+  geom_point(aes(color = group, fill = group, alpha = species, shape=site),size = 3) +
   geom_path(data=df_ell_bc, aes(x=NMDS1, y=NMDS2,color=group), size=0.5, linetype=2) +
   geom_segment(data = segs,
                mapping = aes(x = MDS1.x, y = MDS2.x,
@@ -160,12 +161,12 @@ p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
                              color = group)) +
   geom_text(data = NMDS_bray.mean,
             aes(x = MDS1, y = MDS2, label = c("Endophytes","Epiphytes","Litter", "Soil")),
-            size = 7*(5/14)) +
+            size = 10*(5/14)) +
   labs(alpha="Host species", color="Substrate", shape="Site",
        x = "NMDS1", y = "NMDS2") +
   scale_shape_manual(values = 21:25) +
   scale_alpha_manual(values=c(0,1), guide =
-                       guide_legend(label.theme = element_text(size = 7, angle = 0, face = "italic"),
+                       guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic"),
                                     override.aes = list(pch = 21,
                                                         color = 1,
                                                         alpha = 1,
@@ -173,7 +174,7 @@ p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
   annotate(geom = "text", hjust = 0,
            x = min(NMDS_bray$MDS1), y = min(NMDS_bray$MDS2),
            label = paste("Stress =", round(MDS_stress, 4)),
-           size = 7*(5/14)) +
+           size = 10*(5/14)) +
   theme_pubr() +
   guides(fill=FALSE) +
   # ggtitle("Bray-Curtis") +
@@ -183,15 +184,15 @@ p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
   #       legend.text = element_text(size=7),
   #       legend.spacing = unit(0, "pt"),
   #       legend.key.height = unit(10, "pt"),
-  #       text = element_text(size = 7),
+  #       text = element_text(size = 10),
   #       legend.margin=margin(t = 0, unit='pt')) +
   theme(plot.title = element_text(hjust=0.5),
         legend.position = "right",
         legend.justification = "left",
-        legend.text = element_text(size=7),
+        legend.text = element_text(size = 10),
         legend.spacing = unit(0, "pt"),
         legend.key.height = unit(12, "pt"),
-        text = element_text(size = 7),
+        text = element_text(size = 10),
         legend.margin=margin(t = 0, unit='pt')) +
   scale_color_discrete(labels=c("Endophytes","Epiphytes","Litter", "Soil"))
 p_bc
@@ -224,8 +225,8 @@ segs <- merge(scrs, setNames(NMDS_swab.mean,
               by = "group", sort = FALSE)
 
 p_bray_swab <- ggplot(data = NMDS_swab, aes(x=MDS1, y=MDS2)) +
-  geom_point(aes(color=group, shape=site), size=1) +
-  geom_point(aes(color = group, fill = group, alpha = species, shape=site),size=1) +
+  geom_point(aes(color=group, shape=site), size = 3) +
+  geom_point(aes(color = group, fill = group, alpha = species, shape=site),size = 3) +
   geom_path(data=df_ell, aes(x=NMDS1, y=NMDS2,color=group), size=0.5, linetype=2) +
   geom_segment(data = segs,
                mapping = aes(x = MDS1.x, y = MDS2.x,
@@ -234,11 +235,11 @@ p_bray_swab <- ggplot(data = NMDS_swab, aes(x=MDS1, y=MDS2)) +
                size = 0.1) +
   geom_text(data = NMDS_swab.mean,
             aes(x = MDS1, y = MDS2, label = group),
-            size = 7*(5/14)) +
+            size = 10*(5/14)) +
   theme_pubr() +
   scale_shape_manual(values = 21:25) +
   scale_alpha_manual(values=c(0,1), guide =
-                       guide_legend(label.theme = element_text(size = 7, angle = 0, face = "italic"),
+                       guide_legend(label.theme = element_text(size = 10, angle = 0, face = "italic"),
                                     override.aes = list(pch = 21,
                                                         color = 1,
                                                         alpha = 1,
@@ -249,14 +250,14 @@ p_bray_swab <- ggplot(data = NMDS_swab, aes(x=MDS1, y=MDS2)) +
   annotate(geom = "text", hjust = 0,
            x = min(NMDS_swab$MDS1), y = min(NMDS_swab$MDS2),
            label = paste("Stress =", round(MDS_stress, 4)),
-           size = 7*(5/14)) +
+           size = 10*(5/14)) +
   theme(plot.title = element_text(hjust=0.5),
         legend.position = "right",
         legend.justification = "left",
-        legend.text = element_text(size=7),
+        legend.text = element_text(size = 10),
         legend.spacing = unit(0, "pt"),
         legend.key.height = unit(12, "pt"),
-        text = element_text(size = 7),
+        text = element_text(size = 10),
         legend.margin=margin(t = 0, unit='pt')) +
   guides(fill=FALSE) +
   labs(shape="Site", color="Swab Material", alpha="Host Species",
@@ -267,5 +268,9 @@ g <- (genus_barplot + labs(tag = "A")) / ((p_bc + labs(tag = "B")) +
                                             (p_bray_swab + labs(tag = "C")))
 # g
 ggsave("./Figures/NMDS_genera_barplot_combined.png", g, width = 15, height = 13, units = "in")
-ggsave("./Figures/NMDS_genera_barplot_combined.pdf", g, width = 190, height = 190,
+ggsave("./Figures/NMDS_genera_barplot_combined.eps", g, width = 190, height = 190,
        units = "mm", dpi=1000)
+ggsave("./Figures_Color/Figure 5.eps", g, width = 190, height = 190,
+       units = "mm", dpi=1000)
+ggsave("./Figures_Color/Figure 5.eps", g, width = 15, height = 13, units = "in")
+ggsave("./Figures_Color/Figure 5.pdf", g, width = 15, height = 13, units = "in")

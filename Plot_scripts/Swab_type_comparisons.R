@@ -8,6 +8,9 @@ map_wo_negs <- as.matrix(read.csv("./Data/DEM_map_wo_negs.csv", stringsAsFactors
 rare_otu <- as.matrix(read.csv("./Data/Rare_otu_table.csv"))
 colnames(map_wo_negs) <- map_wo_negs["SampleID",]
 colnames(rare_otu) <- map_wo_negs["SampleID",]
+otu_dat <- read.table("./Data/all_OTUS_R1_clean.txt", sep="\t", header=TRUE) # Read OTU table with contaminants removed
+rownames(otu_dat) <- otu_dat[,1] # Rename rows with OTU number
+otu_dat <- otu_dat[,order(colnames(otu_dat))] # Reorder by OTU number
 
 syn <- c(2, 4, 6, 8, 11, 13, 17, 19, 21) # Synthetic indexes
 cot <- c(1, 3, 5, 7, 9, 14, 16, 18, 20) # Cotton indexes
@@ -47,20 +50,32 @@ ggsave("./Figures_Numbered/Figure 6.pdf",
 ggsave("./Figures_Color/Figure 6.pdf",
        richness + scale_color_manual(values = c("#88CCEE","#332288")),
        width = 90, height = 60, units = "mm")
+ggsave("./Figures_Color/Figure 6.eps",
+       richness + scale_color_manual(values = c("#88CCEE","#332288")),
+       width = 90, height = 60, units = "mm")
 
 swab_df <- data.frame(Swab_type=c(rep("Cotton", length(cot)),
                                   rep("Synthetic", length(syn))),
                       Read_count = c(colSums(otu_dat[cot+1]), colSums(otu_dat[syn+1])),
                       Leaf = c(1:5, 7:10, 1:6, 8:10))
 
-swab_bp <- ggplot(swab_df, aes(x=Swab_type, y=Read_count, fill=Swab_type, pch=Swab_type)) +
+swab_df %>%
+  group_by(Swab_type) %>%
+  summarise(mean = mean(Read_count),
+            sd = sd(Read_count)) -> swab_df_sum
+swab_bp <- ggplot(swab_df,
+                  aes(x=Swab_type, y=Read_count, color=Swab_type)) +
   geom_boxplot() +
-  geom_jitter() +
+  geom_point(size = 2, alpha = 0.3) +
+  geom_point(data = swab_df_sum,
+             aes(x = Swab_type,
+                 y = mean),
+             size = 3) +
   labs(x="Swab Material", y="Read Count") +
   theme_pubr() +
   theme(legend.position = "none")
 swab_bp
-ggsave("./Figures/swab_read_count_boxplot.png", swab_bp, width = 6, height = 6, units = "in")
+ggsave("./Figures/swab_read_count_boxplot.png", swab_bp, width = 6, height = 4, units = "in")
 
 
 

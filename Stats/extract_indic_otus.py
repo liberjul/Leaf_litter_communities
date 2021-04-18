@@ -12,13 +12,25 @@ with open("../Data/otus_R1.fasta", "r") as ifasta:
             seq += line
             line = ifasta.readline()
         otu_dict[name] = seq
-unite_ids = pd.read_csv("../Data/allrank_otus_R1.fasta_classified_unite.csv")
+constax_dict = {}
+with open("../Data/constax_taxonomy.txt", "r") as ifile:
+    line = ifile.readline()
+    while line != "":
+        spl = line.strip().split("\t")
+        print(spl)
+        if len(spl) == 8:
+            tax = spl[7].replace(" ", "_")
+        else:
+            tax = F"{spl[-1]}_sp"
+        constax_dict[spl[0]] = tax
+        line = ifile.readline()
+
 indic_dat = pd.read_csv("OTU_indicspecies_fdr.csv")
 indic_sig = indic_dat[indic_dat["p.value"] <= 0.05]
 indic_sig.sort_values(["s.Endo", "s.Epi", "s.Lit", "s.Soil", "p.value"], inplace = True)
 categ_dict = {}
 fa_buf = ""
-csv_buf = "OTU," + ",".join(indic_dat.columns) + "\n"
+csv_buf = ",OTU," + ",".join(indic_dat.columns) + ",taxonomic_id\n"
 for i in range(len(indic_sig)):
     id = tuple(indic_sig.iloc[i, 0:4])
     if id not in categ_dict.keys():
@@ -29,7 +41,7 @@ for i in range(len(indic_sig)):
         continue
     name = indic_sig.index[i]
     fa_buf += F">{name}\n{otu_dict[name]}"
-    csv_buf += F"{name},{str(list(indic_sig.iloc[i]))[1:-1].replace(', ', ',')},{unite_ids.loc[name, 'Species']}\n"
+    csv_buf += F"{i},{name},{str(list(indic_sig.iloc[i]))[1:-1].replace(', ', ',')},{constax_dict[name]}\n"
 with open("indic_species_5_per.csv", "w") as ocsv:
     ocsv.write(csv_buf)
 with open("indic_species_5_per.fasta", "w") as ofasta:

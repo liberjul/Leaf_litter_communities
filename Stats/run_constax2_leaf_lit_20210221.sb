@@ -1,0 +1,24 @@
+#!/bin/bash --login
+########## Define Resources Needed with SBATCH Lines ##########
+
+#SBATCH --time=8:00:00             # limit of wall clock time - how long the job will run (same as -t)
+#SBATCH --ntasks=1                 # number of tasks - how many tasks (nodes) that you require (same as -n)
+#SBATCH --cpus-per-task=16          # number of CPUs (or cores) per task (same as -c)
+#SBATCH --mem=32G                   # memory required per node - amount of memory (in bytes)
+#SBATCH --job-name constax2_leaf_lit_2021_02_21          # you can give your job a name for easier identification (same as -J)
+#SBATCH --output=%x-%j.SLURMout
+
+########## Command Lines to Run ##########
+
+cd ${SLURM_SUBMIT_DIR}
+
+/mnt/research/bonito_lab/CONSTAX_May2020/constax.sh -c 0.8 \
+-b -i otus_R1.fasta \
+-n $SLURM_CPUS_PER_TASK \
+-d /mnt/ufs18/rs-022/bonito_lab/CONSTAX_May2020/UNITE_Fungi_tf/sh_general_release_fungi_35077_RepS_04.02.2020.fasta \
+-f /mnt/ufs18/rs-022/bonito_lab/CONSTAX_May2020/UNITE_Fungi_tf --mem $SLURM_MEM_PER_NODE -m 5 \
+-x ./tax_leaf_lit \
+-o ./out_leaf_lit \
+--msu_hpcc
+
+scontrol show job $SLURM_JOB_ID     ### write job information to output file

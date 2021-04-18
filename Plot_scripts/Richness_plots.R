@@ -33,5 +33,5 @@ ps_rich <- ps_rich + geom_boxplot(alpha=0) +
         axis.text.x.bottom = element_text(angle=90, vjust=0.5, hjust=1))
 ps_rich
 ggsave("./Figures/Richness_metrics_substrate.png", ps_rich, width=8, height = 6, units="in") # Save plot
-ggsave("./Figures_Color/Supp Figure 3.pdf", ps_rich, width = 190, height = 160, units = "mm")
+ggsave("./Figures_Color/Supp Figure 3.eps", ps_rich, width = 190, height = 160, units = "mm")
 ggsave("./Figures_Numbered/Supp Figure 3.pdf", ps_rich, width = 190, height = 160, units = "mm")

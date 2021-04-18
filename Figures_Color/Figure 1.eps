@@ -1,0 +1,4357 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%DocumentNeededResources: font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Helvetica-Oblique
+%%+ font Helvetica-BoldOblique
+%%+ font Symbol
+%%Title: R Graphics Output
+%%Creator: R Software
+%%Pages: (atend)
+%%BoundingBox: 0 0 539 369
+%%EndComments
+%%BeginProlog
+/bp  { gs sRGB gs } def
+% begin .ps.prolog
+/gs  { gsave } bind def
+/gr  { grestore } bind def
+/ep  { showpage gr gr } bind def
+/m   { moveto } bind def
+/l  { rlineto } bind def
+/np  { newpath } bind def
+/cp  { closepath } bind def
+/f   { fill } bind def
+/o   { stroke } bind def
+/c   { newpath 0 360 arc } bind def
+/r   { 4 2 roll moveto 1 copy 3 -1 roll exch 0 exch rlineto 0 rlineto -1 mul 0 exch rlineto closepath } bind def
+/p1  { stroke } bind def
+/p2  { gsave bg fill grestore newpath } bind def
+/p3  { gsave bg fill grestore stroke } bind def
+/p6  { gsave bg eofill grestore newpath } bind def
+/p7  { gsave bg eofill grestore stroke } bind def
+/t   { 5 -2 roll moveto gsave rotate
+       1 index stringwidth pop
+       mul neg 0 rmoveto show grestore } bind def
+/ta  { 4 -2 roll moveto gsave rotate show } bind def
+/tb  { 2 -1 roll 0 rmoveto show } bind def
+/cl  { grestore gsave newpath 3 index 3 index moveto 1 index
+       4 -1 roll lineto  exch 1 index lineto lineto
+       closepath clip newpath } bind def
+/rgb { setrgbcolor } bind def
+/s   { scalefont setfont } bind def
+% end   .ps.prolog
+/sRGB { [ /CIEBasedABC
+          << /DecodeLMN
+               [ { dup 0.03928 le
+                        {12.92321 div}
+                        {0.055 add 1.055 div 2.4 exp }
+                     ifelse
+                 } bind dup dup
+               ]
+             /MatrixLMN [0.412457 0.212673 0.019334
+                         0.357576 0.715152 0.119192
+                         0.180437 0.072175 0.950301]
+             /WhitePoint [0.9505 1.0 1.0890]
+           >>
+         ] setcolorspace } bind def
+/srgb { setcolor } bind def
+% begin encoding
+/WinAnsiEncoding [
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright
+ /parenleft /parenright /asterisk /plus /comma /minus /period /slash
+ /zero /one /two /three /four /five /six /seven
+ /eight /nine /colon /semicolon /less /equal /greater /question
+ /at /A /B /C /D /E /F /G
+ /H /I /J /K /L /M /N /O
+ /P /Q /R /S /T /U /V /W
+ /X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
+ /grave /a /b /c /d /e /f /g
+ /h /i /j /k /l /m /n /o
+ /p /q /r /s /t /u /v /w
+ /x /y /z /braceleft /bar /braceright /asciitilde /.notdef
+ /Euro /.notdef /quotesinglbase /florin /quotedblbase /ellipsis /dagger /daggerdbl
+ /circumflex /perthousand /Scaron /guilsinglleft /OE /.notdef /Zcaron /.notdef
+ /.notdef /quoteleft /quoteright /quotedblleft /quotedblright /bullet /endash /emdash
+ /tilde /trademark /scaron /guilsinglright /oe /.notdef /zcaron /Ydieresis
+ /space /exclamdown /cent /sterling /currency /yen /brokenbar /section
+ /dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron
+ /degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /periodcentered
+ /cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown
+ /Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla
+ /Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis
+ /Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply
+ /Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls
+ /agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla
+ /egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis
+ /eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide
+ /oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis
+]
+ def
+% end encoding
+%%IncludeResource: font Helvetica
+/Helvetica findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+  end
+/Font1 exch definefont pop
+%%IncludeResource: font Helvetica-Bold
+/Helvetica-Bold findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+  end
+/Font2 exch definefont pop
+%%IncludeResource: font Helvetica-Oblique
+/Helvetica-Oblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+  end
+/Font3 exch definefont pop
+%%IncludeResource: font Helvetica-BoldOblique
+/Helvetica-BoldOblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+  end
+/Font4 exch definefont pop
+%%IncludeResource: font Symbol
+/Symbol findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  currentdict
+  end
+/Font5 exch definefont pop
+%%EndProlog
+%%Page: 1 1
+bp
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+/bg { 1 1 1 srgb } def
+1 1 1 srgb
+1.07 setlinewidth
+[] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+0.00 0.00 538.58 368.50 r p3
+0.00 0.00 538.58 368.50 cl
+42.87 73.44 107.93 363.02 cl
+/bg { 0.9216 0.9216 0.9216 srgb } def
+42.87 73.44 65.06 289.59 r p2
+1 1 1 srgb
+1.07 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+42.87 74.56 m
+65.06 0 l
+o
+np
+42.87 76.44 m
+65.06 0 l
+o
+np
+42.87 78.32 m
+65.06 0 l
+o
+np
+42.87 80.20 m
+65.06 0 l
+o
+np
+42.87 82.08 m
+65.06 0 l
+o
+np
+42.87 83.95 m
+65.06 0 l
+o
+np
+42.87 85.83 m
+65.06 0 l
+o
+np
+42.87 87.71 m
+65.06 0 l
+o
+np
+42.87 89.59 m
+65.06 0 l
+o
+np
+42.87 91.47 m
+65.06 0 l
+o
+np
+42.87 93.34 m
+65.06 0 l
+o
+np
+42.87 95.22 m
+65.06 0 l
+o
+np
+42.87 97.10 m
+65.06 0 l
+o
+np
+42.87 98.98 m
+65.06 0 l
+o
+np
+42.87 100.86 m
+65.06 0 l
+o
+np
+42.87 102.73 m
+65.06 0 l
+o
+np
+42.87 104.61 m
+65.06 0 l
+o
+np
+42.87 106.49 m
+65.06 0 l
+o
+np
+42.87 108.37 m
+65.06 0 l
+o
+np
+42.87 110.25 m
+65.06 0 l
+o
+np
+42.87 112.12 m
+65.06 0 l
+o
+np
+42.87 114.00 m
+65.06 0 l
+o
+np
+42.87 115.88 m
+65.06 0 l
+o
+np
+42.87 117.76 m
+65.06 0 l
+o
+np
+42.87 119.64 m
+65.06 0 l
+o
+np
+42.87 121.51 m
+65.06 0 l
+o
+np
+42.87 123.39 m
+65.06 0 l
+o
+np
+42.87 125.27 m
+65.06 0 l
+o
+np
+42.87 127.15 m
+65.06 0 l
+o
+np
+42.87 129.03 m
+65.06 0 l
+o
+np
+42.87 130.90 m
+65.06 0 l
+o
+np
+42.87 132.78 m
+65.06 0 l
+o
+np
+42.87 134.66 m
+65.06 0 l
+o
+np
+42.87 136.54 m
+65.06 0 l
+o
+np
+42.87 138.42 m
+65.06 0 l
+o
+np
+42.87 140.29 m
+65.06 0 l
+o
+np
+42.87 142.17 m
+65.06 0 l
+o
+np
+42.87 144.05 m
+65.06 0 l
+o
+np
+42.87 145.93 m
+65.06 0 l
+o
+np
+42.87 147.81 m
+65.06 0 l
+o
+np
+42.87 149.68 m
+65.06 0 l
+o
+np
+42.87 151.56 m
+65.06 0 l
+o
+np
+42.87 153.44 m
+65.06 0 l
+o
+np
+42.87 155.32 m
+65.06 0 l
+o
+np
+42.87 157.20 m
+65.06 0 l
+o
+np
+42.87 159.07 m
+65.06 0 l
+o
+np
+42.87 160.95 m
+65.06 0 l
+o
+np
+42.87 162.83 m
+65.06 0 l
+o
+np
+42.87 164.71 m
+65.06 0 l
+o
+np
+42.87 166.59 m
+65.06 0 l
+o
+np
+42.87 168.46 m
+65.06 0 l
+o
+np
+42.87 170.34 m
+65.06 0 l
+o
+np
+42.87 172.22 m
+65.06 0 l
+o
+np
+42.87 174.10 m
+65.06 0 l
+o
+np
+42.87 175.98 m
+65.06 0 l
+o
+np
+42.87 177.85 m
+65.06 0 l
+o
+np
+42.87 179.73 m
+65.06 0 l
+o
+np
+42.87 181.61 m
+65.06 0 l
+o
+np
+42.87 183.49 m
+65.06 0 l
+o
+np
+42.87 185.37 m
+65.06 0 l
+o
+np
+42.87 187.24 m
+65.06 0 l
+o
+np
+42.87 189.12 m
+65.06 0 l
+o
+np
+42.87 191.00 m
+65.06 0 l
+o
+np
+42.87 192.88 m
+65.06 0 l
+o
+np
+42.87 194.76 m
+65.06 0 l
+o
+np
+42.87 196.63 m
+65.06 0 l
+o
+np
+42.87 198.51 m
+65.06 0 l
+o
+np
+42.87 200.39 m
+65.06 0 l
+o
+np
+42.87 202.27 m
+65.06 0 l
+o
+np
+42.87 204.15 m
+65.06 0 l
+o
+np
+42.87 206.02 m
+65.06 0 l
+o
+np
+42.87 207.90 m
+65.06 0 l
+o
+np
+42.87 209.78 m
+65.06 0 l
+o
+np
+42.87 211.66 m
+65.06 0 l
+o
+np
+42.87 213.54 m
+65.06 0 l
+o
+np
+42.87 215.41 m
+65.06 0 l
+o
+np
+42.87 217.29 m
+65.06 0 l
+o
+np
+42.87 219.17 m
+65.06 0 l
+o
+np
+42.87 221.05 m
+65.06 0 l
+o
+np
+42.87 222.93 m
+65.06 0 l
+o
+np
+42.87 224.80 m
+65.06 0 l
+o
+np
+42.87 226.68 m
+65.06 0 l
+o
+np
+42.87 228.56 m
+65.06 0 l
+o
+np
+42.87 230.44 m
+65.06 0 l
+o
+np
+42.87 232.32 m
+65.06 0 l
+o
+np
+42.87 234.19 m
+65.06 0 l
+o
+np
+42.87 236.07 m
+65.06 0 l
+o
+np
+42.87 237.95 m
+65.06 0 l
+o
+np
+42.87 239.83 m
+65.06 0 l
+o
+np
+42.87 241.71 m
+65.06 0 l
+o
+np
+42.87 243.58 m
+65.06 0 l
+o
+np
+42.87 245.46 m
+65.06 0 l
+o
+np
+42.87 247.34 m
+65.06 0 l
+o
+np
+42.87 249.22 m
+65.06 0 l
+o
+np
+42.87 251.10 m
+65.06 0 l
+o
+np
+42.87 252.97 m
+65.06 0 l
+o
+np
+42.87 254.85 m
+65.06 0 l
+o
+np
+42.87 256.73 m
+65.06 0 l
+o
+np
+42.87 258.61 m
+65.06 0 l
+o
+np
+42.87 260.49 m
+65.06 0 l
+o
+np
+42.87 262.36 m
+65.06 0 l
+o
+np
+42.87 264.24 m
+65.06 0 l
+o
+np
+42.87 266.12 m
+65.06 0 l
+o
+np
+42.87 268.00 m
+65.06 0 l
+o
+np
+42.87 269.88 m
+65.06 0 l
+o
+np
+42.87 271.75 m
+65.06 0 l
+o
+np
+42.87 273.63 m
+65.06 0 l
+o
+np
+42.87 275.51 m
+65.06 0 l
+o
+np
+42.87 277.39 m
+65.06 0 l
+o
+np
+42.87 279.27 m
+65.06 0 l
+o
+np
+42.87 281.14 m
+65.06 0 l
+o
+np
+42.87 283.02 m
+65.06 0 l
+o
+np
+42.87 284.90 m
+65.06 0 l
+o
+np
+42.87 286.78 m
+65.06 0 l
+o
+np
+42.87 288.66 m
+65.06 0 l
+o
+np
+42.87 290.53 m
+65.06 0 l
+o
+np
+42.87 292.41 m
+65.06 0 l
+o
+np
+42.87 294.29 m
+65.06 0 l
+o
+np
+42.87 296.17 m
+65.06 0 l
+o
+np
+42.87 298.05 m
+65.06 0 l
+o
+np
+42.87 299.92 m
+65.06 0 l
+o
+np
+42.87 301.80 m
+65.06 0 l
+o
+np
+42.87 303.68 m
+65.06 0 l
+o
+np
+42.87 305.56 m
+65.06 0 l
+o
+np
+42.87 307.44 m
+65.06 0 l
+o
+np
+42.87 309.31 m
+65.06 0 l
+o
+np
+42.87 311.19 m
+65.06 0 l
+o
+np
+42.87 313.07 m
+65.06 0 l
+o
+np
+42.87 314.95 m
+65.06 0 l
+o
+np
+42.87 316.83 m
+65.06 0 l
+o
+np
+42.87 318.70 m
+65.06 0 l
+o
+np
+42.87 320.58 m
+65.06 0 l
+o
+np
+42.87 322.46 m
+65.06 0 l
+o
+np
+42.87 324.34 m
+65.06 0 l
+o
+np
+42.87 326.22 m
+65.06 0 l
+o
+np
+42.87 328.09 m
+65.06 0 l
+o
+np
+42.87 329.97 m
+65.06 0 l
+o
+np
+42.87 331.85 m
+65.06 0 l
+o
+np
+42.87 333.73 m
+65.06 0 l
+o
+np
+42.87 335.61 m
+65.06 0 l
+o
+np
+42.87 337.48 m
+65.06 0 l
+o
+np
+42.87 339.36 m
+65.06 0 l
+o
+np
+42.87 341.24 m
+65.06 0 l
+o
+np
+42.87 343.12 m
+65.06 0 l
+o
+np
+42.87 345.00 m
+65.06 0 l
+o
+np
+42.87 346.87 m
+65.06 0 l
+o
+np
+42.87 348.75 m
+65.06 0 l
+o
+np
+42.87 350.63 m
+65.06 0 l
+o
+np
+42.87 352.51 m
+65.06 0 l
+o
+np
+42.87 354.39 m
+65.06 0 l
+o
+np
+42.87 356.26 m
+65.06 0 l
+o
+np
+42.87 358.14 m
+65.06 0 l
+o
+np
+42.87 360.02 m
+65.06 0 l
+o
+np
+42.87 361.90 m
+65.06 0 l
+o
+np
+47.63 73.44 m
+0 289.58 l
+o
+np
+55.57 73.44 m
+0 289.58 l
+o
+np
+63.50 73.44 m
+0 289.58 l
+o
+np
+71.44 73.44 m
+0 289.58 l
+o
+np
+79.37 73.44 m
+0 289.58 l
+o
+np
+87.30 73.44 m
+0 289.58 l
+o
+np
+95.24 73.44 m
+0 289.58 l
+o
+np
+103.17 73.44 m
+0 289.58 l
+o
+gsave
+43.67 73.63 translate
+63.47 289.21 scale
+8 dict dup begin
+  /ImageType 1 def
+  /Width 8 def
+  /Height 154 def
+  /BitsPerComponent 8 def
+  /Decode [0 1 0 1 0 1] def
+  /DataSource currentfile /ASCIIHexDecode filter def
+  /ImageMatrix [8 0 0 -154 0 154] def
+end
+image
+3c77a93d7bad55a9dc58b0e32953842a5686468bbd66ccff509fd2ffffff5dbaedffffff264e7f306192478dbf5dbaed366c9e3a74a63c77a94080b23d79ab3b76a85dbaed52a4d64080b2ffffff4b95c866ccff4a93c5488fc14589bc5dbaed366c9e3b76a84282b552a4d6ffffff4b95c8ffffffffffff356b9d3a73a53f7daf4991c32e5d8f2a56865dbaedffffff4386b94e9cce407fb1ffffff376ea03e7caeffffffffffff52a4d63b76a83f7eb04488ba3164953870a14d98cbffffff3d7bad3f7eb0ffffffffffff3971a33971a366ccffffffff55a9dcffffffffffffffffff468bbd4589bc4589bc4b95c8ffffffffffffffffffffffffffffffffffffffffffffffff3d7aac4589bc3d79ab468bbd4284b64589bc5dbaedffffff488fc1ffffff4b95c8ffffff4181b34b95c858b0e3ffffff4284b652a4d64d98cb4d98cb4284b6468bbd66ccffffffff66ccffffffffffffffffffff58b0e3ffffffffffffffffff4080b258b0e34e9cce5dbaed66ccff66ccffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5dbaedffffff66ccffffffffffffffffffff4589bc55a9dc4e9cce5dbaedffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3972a43e7bad4d98cb4385b73c78aa5dbaed488fc1ffffff326597316395407fb13f7eb02853832c5a8b488fc15dbaedffffffffffffffffffffffffffffffffffffffffffffffff66ccffffffffffffffffffffffffffffffffffffffffffff66ccffffffffffffffffffffffffffffffffffffffffffff4d98cbffffff4991c352a4d64d98cb509fd24a93c5ffffffffffffffffff66ccffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff58b0e3509fd2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff55a9dcffffffffffffffffff66ccffffffff66ccffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3f7daf509fd266ccff3a75a73f7eb04d98cb66ccffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff66ccffffffffffffffffffffffffffffffffffffff58b0e3ffffff55a9dc66ccffffffffffffff4d98cb275081ffffffffffffffffffffffffffffffffffff4a93c5275081ffffffffffff1e41711b3b6b66ccffffffff0a235100113dffffffffffff407fb1366c9e66ccffffffff4991c366ccff4b95c8ffffff3c77a93973a566ccff468bbd244c7c3a75a7ffffffffffffffffffffffffffffffffffffffffffffffff55a9dcffffff2d5c8d2e5e8fffffffffffff4589bc5dbaedffffff4d98cb488fc14589bc4589bc4385b7366b9d4488ba55a9dcffffff3b75a74589bc366c9e3264961e40702e5e8fffffffffffff2a55862e5d8e66ccff66ccff4386b94d98cbffffffffffff55a9dc55a9dcffffffffffff4386b966ccffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff55a9dc58b0e3ffffffffffffffffffffffff58b0e3ffffff58b0e3488fc1ffffff55a9dc58b0e3ffffff66ccffffffffffffff5dbaed4991c3478dbf356a9c4385b72e5e8f326597306091316294316395366d9e3e7bad66ccffffffff4d98cbffffff58b0e3ffffffffffffffffffffffff4589bcffffff3a74a63a75a752a4d6ffffff488fc14e9cce55a9dcffffff4991c3ffffff478dbf4a93c566ccffffffffffffffffffff509fd23c77a966ccffffffff52a4d666ccff356b9d34689a2e5c8e356b9d3972a43367982f5e903265962954852b58893367993972a42b578822477755a9dc66ccff2b57883264952b57882b58893a75a7407fb1468bbd509fd252a4d64488ba3468993468992b58892953844d98cbffffff244c7c1f42723a74a63367982349791c3d6c5dbaed509fd24589bc3e7bad3870a13b75a75dbaed5dbaed52a4d666ccff2247772b58893265962d5b8d254d7d254d7e4386b966ccff3061934181b33971a33870a1336798366d9e4d98cbffffffffffffffffff3e7cae4d98cb4e9cceffffff3a73a5488fc1ffffffffffffffffff66ccffffffffffffffffffffffffff102b5a1431600c26540d27551a3b6a1634630e28561b3c6b366c9e3c77a9336798356b9c264e7e2c5a8b3f7daf58b0e33972a43a74a63e7bad3f7eb03d7aac4488ba4589bc52a4d6254d7e254d7e285383264f801f42721e41714b95c85dbaed52a4d6ffffffffffffffffff254c7d2c598a4a93c5ffffff5dbaedffffff4a93c54e9cceffffff52a4d6ffffffffffff1634630c2553ffffffffffff264f80224878ffffffffffff204575204474285283254e7e224878254d7e376fa0509fd2264f802e5d8e2e5d8e2b58891e4171264f7f3060914284b6509fd24284b6488fc13a75a74b95c852a4d63f7eb055a9dcffffffffffffffffffffffff58b0e3ffffffffffffffffff214575264f801837661c3e6d285283234a7a254d7d366c9effffffffffffffffffffffff376ea04589bc66ccffffffff2a5687264e7f356b9d3367983366983d7bad4e9cce5dbaed55a9dc55a9dc4284b63d7aac4d98cb407fb131649558b0e33d7aac3870a258b0e34589bc2b5788244b7c3164953b75a7376d9f3972a43f7daf3d7bad3f7eb03d79ab3b77a952a4d6>
+grestore
+0.00 0.00 538.58 368.50 cl
+113.41 73.44 257.81 363.02 cl
+/bg { 0.9216 0.9216 0.9216 srgb } def
+113.41 73.44 144.40 289.59 r p2
+1 1 1 srgb
+1.07 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+113.41 74.56 m
+144.40 0 l
+o
+np
+113.41 76.44 m
+144.40 0 l
+o
+np
+113.41 78.32 m
+144.40 0 l
+o
+np
+113.41 80.20 m
+144.40 0 l
+o
+np
+113.41 82.08 m
+144.40 0 l
+o
+np
+113.41 83.95 m
+144.40 0 l
+o
+np
+113.41 85.83 m
+144.40 0 l
+o
+np
+113.41 87.71 m
+144.40 0 l
+o
+np
+113.41 89.59 m
+144.40 0 l
+o
+np
+113.41 91.47 m
+144.40 0 l
+o
+np
+113.41 93.34 m
+144.40 0 l
+o
+np
+113.41 95.22 m
+144.40 0 l
+o
+np
+113.41 97.10 m
+144.40 0 l
+o
+np
+113.41 98.98 m
+144.40 0 l
+o
+np
+113.41 100.86 m
+144.40 0 l
+o
+np
+113.41 102.73 m
+144.40 0 l
+o
+np
+113.41 104.61 m
+144.40 0 l
+o
+np
+113.41 106.49 m
+144.40 0 l
+o
+np
+113.41 108.37 m
+144.40 0 l
+o
+np
+113.41 110.25 m
+144.40 0 l
+o
+np
+113.41 112.12 m
+144.40 0 l
+o
+np
+113.41 114.00 m
+144.40 0 l
+o
+np
+113.41 115.88 m
+144.40 0 l
+o
+np
+113.41 117.76 m
+144.40 0 l
+o
+np
+113.41 119.64 m
+144.40 0 l
+o
+np
+113.41 121.51 m
+144.40 0 l
+o
+np
+113.41 123.39 m
+144.40 0 l
+o
+np
+113.41 125.27 m
+144.40 0 l
+o
+np
+113.41 127.15 m
+144.40 0 l
+o
+np
+113.41 129.03 m
+144.40 0 l
+o
+np
+113.41 130.90 m
+144.40 0 l
+o
+np
+113.41 132.78 m
+144.40 0 l
+o
+np
+113.41 134.66 m
+144.40 0 l
+o
+np
+113.41 136.54 m
+144.40 0 l
+o
+np
+113.41 138.42 m
+144.40 0 l
+o
+np
+113.41 140.29 m
+144.40 0 l
+o
+np
+113.41 142.17 m
+144.40 0 l
+o
+np
+113.41 144.05 m
+144.40 0 l
+o
+np
+113.41 145.93 m
+144.40 0 l
+o
+np
+113.41 147.81 m
+144.40 0 l
+o
+np
+113.41 149.68 m
+144.40 0 l
+o
+np
+113.41 151.56 m
+144.40 0 l
+o
+np
+113.41 153.44 m
+144.40 0 l
+o
+np
+113.41 155.32 m
+144.40 0 l
+o
+np
+113.41 157.20 m
+144.40 0 l
+o
+np
+113.41 159.07 m
+144.40 0 l
+o
+np
+113.41 160.95 m
+144.40 0 l
+o
+np
+113.41 162.83 m
+144.40 0 l
+o
+np
+113.41 164.71 m
+144.40 0 l
+o
+np
+113.41 166.59 m
+144.40 0 l
+o
+np
+113.41 168.46 m
+144.40 0 l
+o
+np
+113.41 170.34 m
+144.40 0 l
+o
+np
+113.41 172.22 m
+144.40 0 l
+o
+np
+113.41 174.10 m
+144.40 0 l
+o
+np
+113.41 175.98 m
+144.40 0 l
+o
+np
+113.41 177.85 m
+144.40 0 l
+o
+np
+113.41 179.73 m
+144.40 0 l
+o
+np
+113.41 181.61 m
+144.40 0 l
+o
+np
+113.41 183.49 m
+144.40 0 l
+o
+np
+113.41 185.37 m
+144.40 0 l
+o
+np
+113.41 187.24 m
+144.40 0 l
+o
+np
+113.41 189.12 m
+144.40 0 l
+o
+np
+113.41 191.00 m
+144.40 0 l
+o
+np
+113.41 192.88 m
+144.40 0 l
+o
+np
+113.41 194.76 m
+144.40 0 l
+o
+np
+113.41 196.63 m
+144.40 0 l
+o
+np
+113.41 198.51 m
+144.40 0 l
+o
+np
+113.41 200.39 m
+144.40 0 l
+o
+np
+113.41 202.27 m
+144.40 0 l
+o
+np
+113.41 204.15 m
+144.40 0 l
+o
+np
+113.41 206.02 m
+144.40 0 l
+o
+np
+113.41 207.90 m
+144.40 0 l
+o
+np
+113.41 209.78 m
+144.40 0 l
+o
+np
+113.41 211.66 m
+144.40 0 l
+o
+np
+113.41 213.54 m
+144.40 0 l
+o
+np
+113.41 215.41 m
+144.40 0 l
+o
+np
+113.41 217.29 m
+144.40 0 l
+o
+np
+113.41 219.17 m
+144.40 0 l
+o
+np
+113.41 221.05 m
+144.40 0 l
+o
+np
+113.41 222.93 m
+144.40 0 l
+o
+np
+113.41 224.80 m
+144.40 0 l
+o
+np
+113.41 226.68 m
+144.40 0 l
+o
+np
+113.41 228.56 m
+144.40 0 l
+o
+np
+113.41 230.44 m
+144.40 0 l
+o
+np
+113.41 232.32 m
+144.40 0 l
+o
+np
+113.41 234.19 m
+144.40 0 l
+o
+np
+113.41 236.07 m
+144.40 0 l
+o
+np
+113.41 237.95 m
+144.40 0 l
+o
+np
+113.41 239.83 m
+144.40 0 l
+o
+np
+113.41 241.71 m
+144.40 0 l
+o
+np
+113.41 243.58 m
+144.40 0 l
+o
+np
+113.41 245.46 m
+144.40 0 l
+o
+np
+113.41 247.34 m
+144.40 0 l
+o
+np
+113.41 249.22 m
+144.40 0 l
+o
+np
+113.41 251.10 m
+144.40 0 l
+o
+np
+113.41 252.97 m
+144.40 0 l
+o
+np
+113.41 254.85 m
+144.40 0 l
+o
+np
+113.41 256.73 m
+144.40 0 l
+o
+np
+113.41 258.61 m
+144.40 0 l
+o
+np
+113.41 260.49 m
+144.40 0 l
+o
+np
+113.41 262.36 m
+144.40 0 l
+o
+np
+113.41 264.24 m
+144.40 0 l
+o
+np
+113.41 266.12 m
+144.40 0 l
+o
+np
+113.41 268.00 m
+144.40 0 l
+o
+np
+113.41 269.88 m
+144.40 0 l
+o
+np
+113.41 271.75 m
+144.40 0 l
+o
+np
+113.41 273.63 m
+144.40 0 l
+o
+np
+113.41 275.51 m
+144.40 0 l
+o
+np
+113.41 277.39 m
+144.40 0 l
+o
+np
+113.41 279.27 m
+144.40 0 l
+o
+np
+113.41 281.14 m
+144.40 0 l
+o
+np
+113.41 283.02 m
+144.40 0 l
+o
+np
+113.41 284.90 m
+144.40 0 l
+o
+np
+113.41 286.78 m
+144.40 0 l
+o
+np
+113.41 288.66 m
+144.40 0 l
+o
+np
+113.41 290.53 m
+144.40 0 l
+o
+np
+113.41 292.41 m
+144.40 0 l
+o
+np
+113.41 294.29 m
+144.40 0 l
+o
+np
+113.41 296.17 m
+144.40 0 l
+o
+np
+113.41 298.05 m
+144.40 0 l
+o
+np
+113.41 299.92 m
+144.40 0 l
+o
+np
+113.41 301.80 m
+144.40 0 l
+o
+np
+113.41 303.68 m
+144.40 0 l
+o
+np
+113.41 305.56 m
+144.40 0 l
+o
+np
+113.41 307.44 m
+144.40 0 l
+o
+np
+113.41 309.31 m
+144.40 0 l
+o
+np
+113.41 311.19 m
+144.40 0 l
+o
+np
+113.41 313.07 m
+144.40 0 l
+o
+np
+113.41 314.95 m
+144.40 0 l
+o
+np
+113.41 316.83 m
+144.40 0 l
+o
+np
+113.41 318.70 m
+144.40 0 l
+o
+np
+113.41 320.58 m
+144.40 0 l
+o
+np
+113.41 322.46 m
+144.40 0 l
+o
+np
+113.41 324.34 m
+144.40 0 l
+o
+np
+113.41 326.22 m
+144.40 0 l
+o
+np
+113.41 328.09 m
+144.40 0 l
+o
+np
+113.41 329.97 m
+144.40 0 l
+o
+np
+113.41 331.85 m
+144.40 0 l
+o
+np
+113.41 333.73 m
+144.40 0 l
+o
+np
+113.41 335.61 m
+144.40 0 l
+o
+np
+113.41 337.48 m
+144.40 0 l
+o
+np
+113.41 339.36 m
+144.40 0 l
+o
+np
+113.41 341.24 m
+144.40 0 l
+o
+np
+113.41 343.12 m
+144.40 0 l
+o
+np
+113.41 345.00 m
+144.40 0 l
+o
+np
+113.41 346.87 m
+144.40 0 l
+o
+np
+113.41 348.75 m
+144.40 0 l
+o
+np
+113.41 350.63 m
+144.40 0 l
+o
+np
+113.41 352.51 m
+144.40 0 l
+o
+np
+113.41 354.39 m
+144.40 0 l
+o
+np
+113.41 356.26 m
+144.40 0 l
+o
+np
+113.41 358.14 m
+144.40 0 l
+o
+np
+113.41 360.02 m
+144.40 0 l
+o
+np
+113.41 361.90 m
+144.40 0 l
+o
+np
+118.17 73.44 m
+0 289.58 l
+o
+np
+126.11 73.44 m
+0 289.58 l
+o
+np
+134.04 73.44 m
+0 289.58 l
+o
+np
+141.97 73.44 m
+0 289.58 l
+o
+np
+149.91 73.44 m
+0 289.58 l
+o
+np
+157.84 73.44 m
+0 289.58 l
+o
+np
+165.78 73.44 m
+0 289.58 l
+o
+np
+173.71 73.44 m
+0 289.58 l
+o
+np
+181.65 73.44 m
+0 289.58 l
+o
+np
+189.58 73.44 m
+0 289.58 l
+o
+np
+197.51 73.44 m
+0 289.58 l
+o
+np
+205.45 73.44 m
+0 289.58 l
+o
+np
+213.38 73.44 m
+0 289.58 l
+o
+np
+221.32 73.44 m
+0 289.58 l
+o
+np
+229.25 73.44 m
+0 289.58 l
+o
+np
+237.18 73.44 m
+0 289.58 l
+o
+np
+245.12 73.44 m
+0 289.58 l
+o
+np
+253.05 73.44 m
+0 289.58 l
+o
+gsave
+114.21 73.63 translate
+142.81 289.21 scale
+8 dict dup begin
+  /ImageType 1 def
+  /Width 18 def
+  /Height 154 def
+  /BitsPerComponent 8 def
+  /Decode [0 1 0 1 0 1] def
+  /DataSource currentfile /ASCIIHexDecode filter def
+  /ImageMatrix [18 0 0 -154 0 154] def
+end
+image
+28528352a4d666ccff58b0e3ffffffffffff3d7bad4284b6ffffffffffff4e9bcd3e7bad356b9c56acdf4e9bcdffffffffffff4181b3326596509fd255a9dc66ccffffffffffffff58b0e34488baffffffffffffffffff458abd366c9e56acdf5fbdf0ffffff5fbdf0478dc058b0e35dbaed58b0e34589bcffffff52a4d64589bc468bbdffffffffffff56acdfffffff56acdf478dc04991c451a2d5ffffffffffff3b75a752a4d658b0e328528352a4d666ccff3870a23d7bad66ccffffffff4b95c8ffffff4283b52954853a75a75fbdf0ffffff4991c466ccffffffff4e9cceffffffffffffffffffffffff66ccffffffffffffff326496ffffffffffffffffffffffff4b95c8ffffffffffff4589bc55a9dc52a4d6264f7f58b0e3ffffff3e7cae366c9e66ccffffffff4b95c856acdf56acdf295484478dc0ffffffffffff56acdf356b9d55a9dc58b0e33d7badffffff66ccff244b7c2a5687ffffff66ccff34699a5fbdf02c5a8b32659628528251a2d5ffffff4e9bcd346899509fd2ffffff3972a45dbaedffffff264f80275181ffffffffffff4991c45fbdf02f5e8f2e5e8f1a3a6951a2d5ffffff51a2d53a73a566ccffffffff468bbdffffffffffff3d79ab4589bcffffffffffff3e7bad5fbdf03870a13061934283b54e9bcd51a2d5356b9c3d7aac58b0e3ffffff55a9dcffffffffffff66ccff66ccff5dbaedffffffffffff458abd234979407fb13a75a75fbdf04b95c8ffffffffffffffffffffffff478dbfffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffff1d3f6fffffffffffffffffffffffff509fd2509fd255a9dc4181b34e9cce4e9cce52a4d658b0e34b95c8509fd229548451a2d5ffffff4991c42b578856acdfffffff51a2d5376e9fffffffffffff376ea0ffffffffffffffffffffffffffffffffffff478dc0ffffff14305f2852825fbdf056acdfffffff4e9bcd34699affffffffffff4d98cb5dbaedffffff5dbaedffffffffffffffffff33679856acdf1f42723c77a94b95c8ffffffffffff5fbdf0316394ffffffffffffffffffffffffffffffffffff509fd2ffffffffffff5fbdf0ffffff18386714305f51a2d5ffffffffffffffffff3b77a9ffffffffffff55a9dcffffffffffff4b95c84080b25dbaedffffff3c78aaffffff1e41714487ba4991c4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff509fd2ffffffffffffffffff66ccffffffffffffffffffffffffffffffffffffffffffff1f43734283b556acdfffffff4e9bcd376fa04991c3ffffffffffffffffffffffffffffffffffffffffffffffffffffff356a9cffffff326496ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3b76a8ffffff183867ffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1f4272366b9d4e9bcd09224fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff56acdfffffffffffffffffff2c5a8b1d3f6f376fa0051c494a93c566ccff55a9dc4488ba52a4d666ccff55a9dc478dbf58b0e3488fc11a3a69478dc03f7daf1e407029538456acdfffffff478dc04b95c8509fd24b95c84080b2ffffffffffff264e7f2c598affffffffffff102a58051c490b2451061d4a00123e244b7bffffff34699affffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffff5fbdf03c78aa1633623c78aa316394ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff143160356a9c316394254d7e316395214677ffffff356b9cffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0458abd407fb11c3d6dffffff2f5f91ffffff4e9cce52a4d655a9dcffffffffffffffffff3f7daf5dbaed55a9dc0d2654275181478dc0254c7d2751823c78aa4283b55fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff56acdfffffffffffffffffff458abd193969ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff66ccff1d3f6e458abd4b95c83d7aac4b95c8ffffffffffffffffffffffff66ccffffffff58b0e3ffffffffffffffffffffffffffffffffffff1d3f6e2f5e8fffffff5fbdf05fbdf051a2d54385b74991c4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2750801b3b6a1e4070ffffff51a2d55fbdf0458abdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1e4070ffffffffffffffffffffffff275182ffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff08204e112d5bffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2e5d8e1e41704e9bcd356b9c56acdf1a3a6a3367992e5e8fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff407fb11b3c6cffffff5fbdf05fbdf0224777ffffff3c78aaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff51a2d51d3f6f5fbdf051a2d52c5a8b458abd478dc056acdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff13305e295485ffffffffffffffffff4e9bcdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff28528316346356acdfffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff336798112c5b478dc03871a2ffffff3f7daf3870a15fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf04e9bcdffffff56acdfffffff2c598a254d7e3870a1ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff51a2d5ffffff5fbdf0ffffff3a74a5224878356b9cffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4b95c8ffffffffffffffffffffffff193867ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff071f4cffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffff1a3a69ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf04e9bcdffffff4991c4ffffff56acdf214777407fb1ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff51a2d5ffffff3c78aa4487ba376ea02d5b8cffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff56acdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf01634634e9bcdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf05fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff458abdffffff51a2d5ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffff55a9dc66ccffffffff52a4d64b95c85dbaedffffffffffff66ccffffffffffffff4487ba5fbdf056acdfffffffffffff4991c456acdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff56acdfffffffffffffffffffffffffffffffffffff51a2d5ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffff5fbdf04e9bcdffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf05fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffff4991c4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff51a2d5ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff66ccffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff66ccffffffffffffffffffffffffffffffffffffff3d7aacffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff51a2d5ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf056acdfffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff478dc0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2c5a8bffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff478dc04991c4326495ffffff254d7effffffffffffffffffffffffffffff051c49ffffffffffff66ccffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4386b94181b3ffffff4385b74589bcffffffffffff3e7cae3870a1ffffffffffffffffffffffffffffffffffffffffffffffffffffff4991c34080b2ffffff3e7cae468bbdffffffffffff4181b33d7aacffffffffffffffffffffffffffffffffffffffffffffffffffffff051d4a031845ffffff0217440d2654ffffffffffff021744011642ffffffffffffffffffffffffffffffffffffffffffffffffffffff2c5a8b234879ffffff4d98cb58b0e3ffffffffffff193968204575ffffffffffffffffffffffffffffffffffffffffffffffffffffff1c3d6d234979488fc1356b9d4d98cb5dbaedffffff4282b5478dbfffffffffffffffffff5fbdf0ffffff5fbdf0ffffff4e9bcdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffff3265963b77a9509fd23c78aa4d98cb5dbaedffffff3971a33b76a8ffffffffffffffffffffffffffffff3c78aaffffff4487ba4488ba376e9f366c9e376ea034689a366c9e509fd24d98cb58b0e366ccffffffffffffff4b95c83f7dafffffffffffffffffff4181b33061932954852e5d8e316394234a7a3468994386b95dbaed488fc14488ba5fbdf0ffffff3c78aa254e7effffffffffffffffff3871a2ffffff3973a54282b54d98cb3468994589bc58b0e3ffffff3a74a63f7dafffffffffffff5fbdf051a2d551a2d5ffffff5fbdf056acdfffffff4282b5468bbd66ccff4488ba58b0e3ffffffffffff66ccff66ccffffffffffffffffffff5fbdf0ffffff478dc0ffffff4e9bcdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff56acdfffffff5fbdf0ffffff55a9dc66ccffffffff58b0e3ffffffffffffffffff58b0e35dbaedffffffffffffffffffffffffffffff264e7fffffff51a2d5ffffff55a9dc509fd2509fd24d98cb66ccff509fd2ffffff4a93c55dbaedffffffffffff56acdf5fbdf04e9bcd4181b3ffffff458abd4b95c83b77a93e7cae4991c352a4d666ccff52a4d6ffffff5dbaed55a9dcffffffffffff4487baffffffffffffffffffffffff56acdf3265963972a44488ba3164953973a52d5c8d356b9c3b77a9407fb13f7daf458abd5fbdf04283b54385b7366d9f4b95c8ffffff4283b558b0e3488fc158b0e3ffffff509fd266ccffffffffffffff509fd2509fd2ffffffffffffffffffffffffffffffffffff5fbdf0458abd5dbaed4b95c84e9cce4a93c552a4d666ccff4a93c54e9cce4e9cce4386b95fbdf0ffffff51a2d54991c456acdf5fbdf0ffffffffffff66ccff66ccff468bbd58b0e355a9dcffffff58b0e3ffffff509fd2509fd25fbdf04b95c851a2d5478dc04385b74e9bcd51a2d54487ba5dbaed4d98cbffffffffffff4b95c84e9cceffffffffffff509fd24a93c5ffffffffffff56acdf3973a45fbdf03b76a8ffffff51a2d53e7cae3a75a74080b23972a43b75a74386b935699b3f7daf3e7cae3a75a756acdfffffff4283b53e7bad407fb1478dc0ffffff51a2d53163954282b54385b734699b3a73a54d98cb4e9cce509fd252a4d652a4d64e9bcdffffff4e9bcd458abd5fbdf04b95c8ffffff478dc02d5c8d3972a43f7daf306192478dbf5dbaed3265963870a166ccff52a4d651a2d5ffffff4991c451a2d54b95c85fbdf0ffffff5fbdf052a4d6509fd24d98cb366b9d4386b9509fd24282b54282b54b95c8509fd2ffffff5fbdf0ffffff366c9e56acdfffffffffffff51a2d52750804282b54991c33060923d79ab4385b7509fd24d98cb4e9cce509fd24e9bcd5fbdf03b76a8376fa05fbdf04e9bcdffffff56acdf4284b63a74a6478dbf3b77a9509fd266ccff4b95c84385b735699b3973a551a2d5ffffff56acdf3f7daf366c9e4283b5ffffff4181b3376d9f488fc14991c3478dbf66ccff5dbaed52a4d6ffffffffffffffffff4991c45fbdf05fbdf05fbdf0ffffff4991c4ffffff4b95c855a9dc55a9dc66ccff3468994b95c8ffffff4991c352a4d64d98cbffffffffffff5fbdf0ffffff458abd4e9bcd5fbdf0ffffffffffff58b0e33f7daf3d79ab4d98cb275182356b9cffffffffffff4181b34e9cce56acdf5fbdf04283b5407fb1376ea02247785fbdf04487baffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf01a3a6a193968183665163362173665244b7c122d5c0e27551c3d6d1b3b6b29558656acdf1c3d6d132f5e2247782c598affffff244b7c2247773265963870a22c598a4181b34e9cce306193356a9b34699a31639456acdf4e9bcd4385b751a2d54385b7204474ffffff4e9bcd2d5c8d3f7daf4991c33972a466ccffffffff3a73a53e7bad66ccffffffff51a2d55fbdf04181b3ffffff4991c4ffffffffffff56acdf3061934d98cb55a9dc2247784284b658b0e330619234689933679934699a4b95c8ffffff4487ba2d5b8c4b95c83d7aac4b95c84b95c8275182ffffffffffff66ccffffffffffffffffffffffffffffffffffffffffffffffffff4487baffffffffffffffffffffffffffffffffffffffffff5dbaed66ccff66ccffffffff509fd2ffffff66ccff66ccff56acdfffffff3265972e5d8f478dc056acdfffffffffffff366d9effffffffffff0d2755ffffffffffff112d5b122d5cffffffffffffffffffffffff56acdf5fbdf0ffffffffffffffffffffffff28528234699a366d9e295485234a7a2b5889285283264e7f2c598a2852832d5c8d4385b72f5f913468992a56872a5586407fb14991c421467734699b3f7eb0295485407fb13b75a7214676264e7e3972a4366c9e2a5687356a9c1e40702a56871d3f6f34699affffff376fa0407fb13f7daf4080b24386b94386b955a9dc4e9cce3b77a966ccffffffff51a2d5ffffff3265974181b3458abdffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffff58b0e3ffffffffffffffffffffffffffffff56acdfffffff5fbdf00319462e5d8f336798244b7b1a3a691939681c3d6d2146762d5b8c102b5a0e28561a39691b3b6b2f5f915fbdf01634630b24520f2957316395ffffff3163951e4070ffffffffffff4181b3ffffffffffffffffffffffffffffffffffffffffffffffff4487baffffff5fbdf0ffffffffffff5fbdf03870a2407fb14b95c83971a34181b3244c7c3870a24181b34284b63a74a6285383458abd3f7daf2b58882a56873f7daf4e9bcd4e9bcd34699a4080b24991c34a93c53d7aac4385b7ffffff3a74a64d98cb55a9dc5fbdf056acdf4385b73a75a756acdfffffff51a2d51b3c6b193968356a9c3a75a73366983d79ab4e9cce2c5a8b34699b52a4d64e9cceffffffffffff244a7b4385b756acdfffffff56acdf5fbdf03265974589bc55a9dc3972a44282b5386fa13b76a84589bc468bbd4a93c53870a14b95c82e5d8e3a74a53264964b95c851a2d54b95c8>
+grestore
+0.00 0.00 538.58 368.50 cl
+263.29 73.44 344.22 363.02 cl
+/bg { 0.9216 0.9216 0.9216 srgb } def
+263.29 73.44 80.93 289.59 r p2
+1 1 1 srgb
+1.07 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+263.29 74.56 m
+80.93 0 l
+o
+np
+263.29 76.44 m
+80.93 0 l
+o
+np
+263.29 78.32 m
+80.93 0 l
+o
+np
+263.29 80.20 m
+80.93 0 l
+o
+np
+263.29 82.08 m
+80.93 0 l
+o
+np
+263.29 83.95 m
+80.93 0 l
+o
+np
+263.29 85.83 m
+80.93 0 l
+o
+np
+263.29 87.71 m
+80.93 0 l
+o
+np
+263.29 89.59 m
+80.93 0 l
+o
+np
+263.29 91.47 m
+80.93 0 l
+o
+np
+263.29 93.34 m
+80.93 0 l
+o
+np
+263.29 95.22 m
+80.93 0 l
+o
+np
+263.29 97.10 m
+80.93 0 l
+o
+np
+263.29 98.98 m
+80.93 0 l
+o
+np
+263.29 100.86 m
+80.93 0 l
+o
+np
+263.29 102.73 m
+80.93 0 l
+o
+np
+263.29 104.61 m
+80.93 0 l
+o
+np
+263.29 106.49 m
+80.93 0 l
+o
+np
+263.29 108.37 m
+80.93 0 l
+o
+np
+263.29 110.25 m
+80.93 0 l
+o
+np
+263.29 112.12 m
+80.93 0 l
+o
+np
+263.29 114.00 m
+80.93 0 l
+o
+np
+263.29 115.88 m
+80.93 0 l
+o
+np
+263.29 117.76 m
+80.93 0 l
+o
+np
+263.29 119.64 m
+80.93 0 l
+o
+np
+263.29 121.51 m
+80.93 0 l
+o
+np
+263.29 123.39 m
+80.93 0 l
+o
+np
+263.29 125.27 m
+80.93 0 l
+o
+np
+263.29 127.15 m
+80.93 0 l
+o
+np
+263.29 129.03 m
+80.93 0 l
+o
+np
+263.29 130.90 m
+80.93 0 l
+o
+np
+263.29 132.78 m
+80.93 0 l
+o
+np
+263.29 134.66 m
+80.93 0 l
+o
+np
+263.29 136.54 m
+80.93 0 l
+o
+np
+263.29 138.42 m
+80.93 0 l
+o
+np
+263.29 140.29 m
+80.93 0 l
+o
+np
+263.29 142.17 m
+80.93 0 l
+o
+np
+263.29 144.05 m
+80.93 0 l
+o
+np
+263.29 145.93 m
+80.93 0 l
+o
+np
+263.29 147.81 m
+80.93 0 l
+o
+np
+263.29 149.68 m
+80.93 0 l
+o
+np
+263.29 151.56 m
+80.93 0 l
+o
+np
+263.29 153.44 m
+80.93 0 l
+o
+np
+263.29 155.32 m
+80.93 0 l
+o
+np
+263.29 157.20 m
+80.93 0 l
+o
+np
+263.29 159.07 m
+80.93 0 l
+o
+np
+263.29 160.95 m
+80.93 0 l
+o
+np
+263.29 162.83 m
+80.93 0 l
+o
+np
+263.29 164.71 m
+80.93 0 l
+o
+np
+263.29 166.59 m
+80.93 0 l
+o
+np
+263.29 168.46 m
+80.93 0 l
+o
+np
+263.29 170.34 m
+80.93 0 l
+o
+np
+263.29 172.22 m
+80.93 0 l
+o
+np
+263.29 174.10 m
+80.93 0 l
+o
+np
+263.29 175.98 m
+80.93 0 l
+o
+np
+263.29 177.85 m
+80.93 0 l
+o
+np
+263.29 179.73 m
+80.93 0 l
+o
+np
+263.29 181.61 m
+80.93 0 l
+o
+np
+263.29 183.49 m
+80.93 0 l
+o
+np
+263.29 185.37 m
+80.93 0 l
+o
+np
+263.29 187.24 m
+80.93 0 l
+o
+np
+263.29 189.12 m
+80.93 0 l
+o
+np
+263.29 191.00 m
+80.93 0 l
+o
+np
+263.29 192.88 m
+80.93 0 l
+o
+np
+263.29 194.76 m
+80.93 0 l
+o
+np
+263.29 196.63 m
+80.93 0 l
+o
+np
+263.29 198.51 m
+80.93 0 l
+o
+np
+263.29 200.39 m
+80.93 0 l
+o
+np
+263.29 202.27 m
+80.93 0 l
+o
+np
+263.29 204.15 m
+80.93 0 l
+o
+np
+263.29 206.02 m
+80.93 0 l
+o
+np
+263.29 207.90 m
+80.93 0 l
+o
+np
+263.29 209.78 m
+80.93 0 l
+o
+np
+263.29 211.66 m
+80.93 0 l
+o
+np
+263.29 213.54 m
+80.93 0 l
+o
+np
+263.29 215.41 m
+80.93 0 l
+o
+np
+263.29 217.29 m
+80.93 0 l
+o
+np
+263.29 219.17 m
+80.93 0 l
+o
+np
+263.29 221.05 m
+80.93 0 l
+o
+np
+263.29 222.93 m
+80.93 0 l
+o
+np
+263.29 224.80 m
+80.93 0 l
+o
+np
+263.29 226.68 m
+80.93 0 l
+o
+np
+263.29 228.56 m
+80.93 0 l
+o
+np
+263.29 230.44 m
+80.93 0 l
+o
+np
+263.29 232.32 m
+80.93 0 l
+o
+np
+263.29 234.19 m
+80.93 0 l
+o
+np
+263.29 236.07 m
+80.93 0 l
+o
+np
+263.29 237.95 m
+80.93 0 l
+o
+np
+263.29 239.83 m
+80.93 0 l
+o
+np
+263.29 241.71 m
+80.93 0 l
+o
+np
+263.29 243.58 m
+80.93 0 l
+o
+np
+263.29 245.46 m
+80.93 0 l
+o
+np
+263.29 247.34 m
+80.93 0 l
+o
+np
+263.29 249.22 m
+80.93 0 l
+o
+np
+263.29 251.10 m
+80.93 0 l
+o
+np
+263.29 252.97 m
+80.93 0 l
+o
+np
+263.29 254.85 m
+80.93 0 l
+o
+np
+263.29 256.73 m
+80.93 0 l
+o
+np
+263.29 258.61 m
+80.93 0 l
+o
+np
+263.29 260.49 m
+80.93 0 l
+o
+np
+263.29 262.36 m
+80.93 0 l
+o
+np
+263.29 264.24 m
+80.93 0 l
+o
+np
+263.29 266.12 m
+80.93 0 l
+o
+np
+263.29 268.00 m
+80.93 0 l
+o
+np
+263.29 269.88 m
+80.93 0 l
+o
+np
+263.29 271.75 m
+80.93 0 l
+o
+np
+263.29 273.63 m
+80.93 0 l
+o
+np
+263.29 275.51 m
+80.93 0 l
+o
+np
+263.29 277.39 m
+80.93 0 l
+o
+np
+263.29 279.27 m
+80.93 0 l
+o
+np
+263.29 281.14 m
+80.93 0 l
+o
+np
+263.29 283.02 m
+80.93 0 l
+o
+np
+263.29 284.90 m
+80.93 0 l
+o
+np
+263.29 286.78 m
+80.93 0 l
+o
+np
+263.29 288.66 m
+80.93 0 l
+o
+np
+263.29 290.53 m
+80.93 0 l
+o
+np
+263.29 292.41 m
+80.93 0 l
+o
+np
+263.29 294.29 m
+80.93 0 l
+o
+np
+263.29 296.17 m
+80.93 0 l
+o
+np
+263.29 298.05 m
+80.93 0 l
+o
+np
+263.29 299.92 m
+80.93 0 l
+o
+np
+263.29 301.80 m
+80.93 0 l
+o
+np
+263.29 303.68 m
+80.93 0 l
+o
+np
+263.29 305.56 m
+80.93 0 l
+o
+np
+263.29 307.44 m
+80.93 0 l
+o
+np
+263.29 309.31 m
+80.93 0 l
+o
+np
+263.29 311.19 m
+80.93 0 l
+o
+np
+263.29 313.07 m
+80.93 0 l
+o
+np
+263.29 314.95 m
+80.93 0 l
+o
+np
+263.29 316.83 m
+80.93 0 l
+o
+np
+263.29 318.70 m
+80.93 0 l
+o
+np
+263.29 320.58 m
+80.93 0 l
+o
+np
+263.29 322.46 m
+80.93 0 l
+o
+np
+263.29 324.34 m
+80.93 0 l
+o
+np
+263.29 326.22 m
+80.93 0 l
+o
+np
+263.29 328.09 m
+80.93 0 l
+o
+np
+263.29 329.97 m
+80.93 0 l
+o
+np
+263.29 331.85 m
+80.93 0 l
+o
+np
+263.29 333.73 m
+80.93 0 l
+o
+np
+263.29 335.61 m
+80.93 0 l
+o
+np
+263.29 337.48 m
+80.93 0 l
+o
+np
+263.29 339.36 m
+80.93 0 l
+o
+np
+263.29 341.24 m
+80.93 0 l
+o
+np
+263.29 343.12 m
+80.93 0 l
+o
+np
+263.29 345.00 m
+80.93 0 l
+o
+np
+263.29 346.87 m
+80.93 0 l
+o
+np
+263.29 348.75 m
+80.93 0 l
+o
+np
+263.29 350.63 m
+80.93 0 l
+o
+np
+263.29 352.51 m
+80.93 0 l
+o
+np
+263.29 354.39 m
+80.93 0 l
+o
+np
+263.29 356.26 m
+80.93 0 l
+o
+np
+263.29 358.14 m
+80.93 0 l
+o
+np
+263.29 360.02 m
+80.93 0 l
+o
+np
+263.29 361.90 m
+80.93 0 l
+o
+np
+268.05 73.44 m
+0 289.58 l
+o
+np
+275.99 73.44 m
+0 289.58 l
+o
+np
+283.92 73.44 m
+0 289.58 l
+o
+np
+291.86 73.44 m
+0 289.58 l
+o
+np
+299.79 73.44 m
+0 289.58 l
+o
+np
+307.72 73.44 m
+0 289.58 l
+o
+np
+315.66 73.44 m
+0 289.58 l
+o
+np
+323.59 73.44 m
+0 289.58 l
+o
+np
+331.53 73.44 m
+0 289.58 l
+o
+np
+339.46 73.44 m
+0 289.58 l
+o
+gsave
+264.09 73.63 translate
+79.34 289.21 scale
+8 dict dup begin
+  /ImageType 1 def
+  /Width 10 def
+  /Height 154 def
+  /BitsPerComponent 8 def
+  /Decode [0 1 0 1 0 1] def
+  /DataSource currentfile /ASCIIHexDecode filter def
+  /ImageMatrix [10 0 0 -154 0 154] def
+end
+image
+ffffffffffffffffffffffff5cb8eaffffffffffffffffffffffffffffffffffffffffff5cb8ea2e5d8e3871a3ffffff2b58895cb8ea5cb8eaffffff4b95c8ffffff316495366b9d54a6d9ffffffffffffffffffffffffffffffffffffffffffffffffffffff54a6d9ffffffffffffffffffffffffffffffffffffffffff275182ffffffffffff4182b42b5889ffffffffffffffffffffffffffffff2b58891d3f6e3c78aaffffffffffffffffff4b95c8ffffffffffffffffff306293366b9d3a73a52f5e90ffffff366c9effffffffffffffffff5fbdf0376ea02954843264964488ba4182b4ffffff4f9ccfffffff5fbdf0ffffff54a6d94f9ccfffffffffffffffffffffffffffffffffffffffffffffffffffffff224777336697366c9e295586ffffff54a6d93a75a7ffffffffffffffffffffffffffffff2f5f91ffffffffffff4890c354a6d93f7daf5fbdf03a75a74b95c8ffffffffffffffffffffffff366c9e5cb8eaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3060922853832e5e8fffffff4385b7ffffffffffffffffffffffffffffff1c3e6e326496000536ffffffffffffffffffffffffffffffffffffffffff1d3f6e2b58890e29574890c3ffffffffffffffffffffffffffffffffffff2c5a8b224878285383ffffffffffffffffffffffffffffff51a2d5ffffffffffff3f7db05cb8eaffffffffffffffffffffffffffffffffffffffffff54a6d92146762c5a8bffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffff4181b3356b9cffffffffffffffffffffffffffffffffffffffffffffffff51a2d556acdf254d7e356a9b4f9ccf3972a4ffffffffffff4f9ccf3d7aacffffff56acdf0008370000330e2957193868244b7b2349793e7badffffff244a7b4e9bcdffffffffffffffffffffffffffffffffffffffffffffffff306092458abd316394ffffff54a6d9ffffffffffffffffffffffffffffff4b95c856acdfffffffffffffffffffffffffffffffffffffffffffffffff5fbdf05fbdf01e41714182b44b95c85cb8ea5cb8eaffffff5cb8ea4182b45fbdf05fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff54a6d9ffffffffffffffffffffffffffffffffffffffffff4385b7ffffff4f9ccfffffffffffffffffff4890c3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff51a2d5ffffffffffffffffffffffffffffffffffffffffff5cb8eaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff458abdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5cb8eaffffffffffffffffffffffffffffff5fbdf051a2d5ffffffffffffffffffffffffffffffffffffffffffffffff4385b7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff56acdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4e9bcdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffff4b95c85cb8eaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff306193ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff56acdf4991c4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4e9bcdffffffffffffffffffffffffffffffffffffffffffffffffffffff061d4affffffffffffffffffffffffffffffffffffffffffffffffffffff001440ffffffffffff4385b7ffffffffffffffffffffffffffffff51a2d5163463ffffffffffffffffffffffff54a6d9ffffffffffffffffff2d5c8d1532604f9ccfffffffffffffffffffffffffffffffffffffffffff478dc02a5686ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5cb8eaffffffffffffffffffffffff5cb8eaffffff5cb8ea5fbdf0ffffffffffffffffffffffffffffff3870a1ffffff3f7db03a73a5ffffffffffffffffffffffffffffffffffff306092ffffff3a75a73d7aac326496ffffffffffffffffffffffff3f7db000144000103d000a38051b48ffffffffffffffffffffffffffffff5cb8ea5cb8ea3871a3264f7f1c3d6d5fbdf0ffffffffffffffffffffffffffffff22487820447434699affffff1c3e6effffffffffffffffff54a6d9ffffff4f9ccf2e5c8d2248790e28563c78aa5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffff2e5d8effffffffffff4f9ccf4488ba4385b73f7db02751812349793c78aa356a9cffffffffffff468cbe3972a4ffffff234a7a3972a4366c9effffff56acdf51a2d54f9ccfffffffffffff3366972c5a8bffffff3871a3468cbe4b95c8ffffffffffffffffffffffff4f9ccf1d3e6e1d3f6f2f5f904f9ccf4991c4ffffffffffffffffffffffff2b5889ffffffffffff20447432649627518151a2d5ffffffffffff54a6d91e4171234a7a122e5d2147770a23505fbdf051a2d554a6d9ffffffffffff326496376d9f4890c33d7aac234a7a478dc0ffffffffffff376d9f5cb8eaffffff356a9b2e5d8effffffffffff4991c45fbdf0468cbeffffff4b95c8ffffffffffffffffff3972a44b95c8224878ffffffffffffffffffffffff061e4b2a55860d2755102b59071f4c4e9bcdffffff3b76a854a6d94385b7ffffff254d7dffffff3d7aac376ea051a2d55fbdf05cb8ea4385b7ffffff376ea0366c9e3265962a56862954854b95c8ffffffffffff4b95c84b95c81f42723264962954851a3a6a2b57883871a2ffffff3265962e5d8e3b76a8468cbe2e5e8f376d9f336697326496407fb15fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffff54a6d9ffffffffffffffffff4488baffffffffffff4385b7ffffffffffff54a6d95cb8ea5cb8ea4b95c8ffffff4080b2ffffff4283b5ffffffffffffffffff4488baffffffffffffffffffffffff54a6d9ffffffffffff5cb8eaffffffffffffffffffffffffffffffffffffffffff5fbdf05fbdf0ffffffffffffffffff3870a13c78aaffffffffffff4890c356acdfffffffffffffffffff3a75a74890c3468cbe376ea0234a7a356a9cffffffffffffffffffffffffffffff021744061e4b0922501d3f6f264e7f132e5d56acdf0d2755153261112c5b0b23510d27551736651735651431603a75a7326496ffffffffffffffffff1c3d6d2f5e902b58892d5b8c2955865fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffff4487ba56acdf34699a2f5f90ffffff366c9e4890c3ffffffffffff4f9ccfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff34699affffff4b95c8468cbeffffff2146762b57885cb8ea2751812c5a8bffffffffffff3162942b5889356a9bffffffffffffffffffffffffffffff3870a13a74a5306293193969326496326496275181ffffff2147773f7db02f5f914487ba1836652248782e5c8d13305e0f2a581e4070173564112c5b51a2d5ffffff4890c3356a9b4385b7ffffff336799ffffff3870a14f9ccf000837458abd316394ffffff4b95c8ffffffffffffffffff376d9fffffff1d3f6f2e5d8f1532611736650d26541735641f43721532611a3a6a163463ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff356a9c5fbdf01c3d6c3e7bad2c5a8b244b7b4890c3244b7b275080244b7b4b95c85fbdf0ffffffffffffffffffffffffffffffffffffffffffffffff51a2d5ffffff4488ba2e5d8e295484ffffffffffffffffffffffffffffffffffff5fbdf03060922f5e903e7bad2043733972a4ffffff2e5d8e295485>
+grestore
+0.00 0.00 538.58 368.50 cl
+349.70 73.44 430.63 363.02 cl
+/bg { 0.9216 0.9216 0.9216 srgb } def
+349.70 73.44 80.93 289.59 r p2
+1 1 1 srgb
+1.07 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+349.70 74.56 m
+80.93 0 l
+o
+np
+349.70 76.44 m
+80.93 0 l
+o
+np
+349.70 78.32 m
+80.93 0 l
+o
+np
+349.70 80.20 m
+80.93 0 l
+o
+np
+349.70 82.08 m
+80.93 0 l
+o
+np
+349.70 83.95 m
+80.93 0 l
+o
+np
+349.70 85.83 m
+80.93 0 l
+o
+np
+349.70 87.71 m
+80.93 0 l
+o
+np
+349.70 89.59 m
+80.93 0 l
+o
+np
+349.70 91.47 m
+80.93 0 l
+o
+np
+349.70 93.34 m
+80.93 0 l
+o
+np
+349.70 95.22 m
+80.93 0 l
+o
+np
+349.70 97.10 m
+80.93 0 l
+o
+np
+349.70 98.98 m
+80.93 0 l
+o
+np
+349.70 100.86 m
+80.93 0 l
+o
+np
+349.70 102.73 m
+80.93 0 l
+o
+np
+349.70 104.61 m
+80.93 0 l
+o
+np
+349.70 106.49 m
+80.93 0 l
+o
+np
+349.70 108.37 m
+80.93 0 l
+o
+np
+349.70 110.25 m
+80.93 0 l
+o
+np
+349.70 112.12 m
+80.93 0 l
+o
+np
+349.70 114.00 m
+80.93 0 l
+o
+np
+349.70 115.88 m
+80.93 0 l
+o
+np
+349.70 117.76 m
+80.93 0 l
+o
+np
+349.70 119.64 m
+80.93 0 l
+o
+np
+349.70 121.51 m
+80.93 0 l
+o
+np
+349.70 123.39 m
+80.93 0 l
+o
+np
+349.70 125.27 m
+80.93 0 l
+o
+np
+349.70 127.15 m
+80.93 0 l
+o
+np
+349.70 129.03 m
+80.93 0 l
+o
+np
+349.70 130.90 m
+80.93 0 l
+o
+np
+349.70 132.78 m
+80.93 0 l
+o
+np
+349.70 134.66 m
+80.93 0 l
+o
+np
+349.70 136.54 m
+80.93 0 l
+o
+np
+349.70 138.42 m
+80.93 0 l
+o
+np
+349.70 140.29 m
+80.93 0 l
+o
+np
+349.70 142.17 m
+80.93 0 l
+o
+np
+349.70 144.05 m
+80.93 0 l
+o
+np
+349.70 145.93 m
+80.93 0 l
+o
+np
+349.70 147.81 m
+80.93 0 l
+o
+np
+349.70 149.68 m
+80.93 0 l
+o
+np
+349.70 151.56 m
+80.93 0 l
+o
+np
+349.70 153.44 m
+80.93 0 l
+o
+np
+349.70 155.32 m
+80.93 0 l
+o
+np
+349.70 157.20 m
+80.93 0 l
+o
+np
+349.70 159.07 m
+80.93 0 l
+o
+np
+349.70 160.95 m
+80.93 0 l
+o
+np
+349.70 162.83 m
+80.93 0 l
+o
+np
+349.70 164.71 m
+80.93 0 l
+o
+np
+349.70 166.59 m
+80.93 0 l
+o
+np
+349.70 168.46 m
+80.93 0 l
+o
+np
+349.70 170.34 m
+80.93 0 l
+o
+np
+349.70 172.22 m
+80.93 0 l
+o
+np
+349.70 174.10 m
+80.93 0 l
+o
+np
+349.70 175.98 m
+80.93 0 l
+o
+np
+349.70 177.85 m
+80.93 0 l
+o
+np
+349.70 179.73 m
+80.93 0 l
+o
+np
+349.70 181.61 m
+80.93 0 l
+o
+np
+349.70 183.49 m
+80.93 0 l
+o
+np
+349.70 185.37 m
+80.93 0 l
+o
+np
+349.70 187.24 m
+80.93 0 l
+o
+np
+349.70 189.12 m
+80.93 0 l
+o
+np
+349.70 191.00 m
+80.93 0 l
+o
+np
+349.70 192.88 m
+80.93 0 l
+o
+np
+349.70 194.76 m
+80.93 0 l
+o
+np
+349.70 196.63 m
+80.93 0 l
+o
+np
+349.70 198.51 m
+80.93 0 l
+o
+np
+349.70 200.39 m
+80.93 0 l
+o
+np
+349.70 202.27 m
+80.93 0 l
+o
+np
+349.70 204.15 m
+80.93 0 l
+o
+np
+349.70 206.02 m
+80.93 0 l
+o
+np
+349.70 207.90 m
+80.93 0 l
+o
+np
+349.70 209.78 m
+80.93 0 l
+o
+np
+349.70 211.66 m
+80.93 0 l
+o
+np
+349.70 213.54 m
+80.93 0 l
+o
+np
+349.70 215.41 m
+80.93 0 l
+o
+np
+349.70 217.29 m
+80.93 0 l
+o
+np
+349.70 219.17 m
+80.93 0 l
+o
+np
+349.70 221.05 m
+80.93 0 l
+o
+np
+349.70 222.93 m
+80.93 0 l
+o
+np
+349.70 224.80 m
+80.93 0 l
+o
+np
+349.70 226.68 m
+80.93 0 l
+o
+np
+349.70 228.56 m
+80.93 0 l
+o
+np
+349.70 230.44 m
+80.93 0 l
+o
+np
+349.70 232.32 m
+80.93 0 l
+o
+np
+349.70 234.19 m
+80.93 0 l
+o
+np
+349.70 236.07 m
+80.93 0 l
+o
+np
+349.70 237.95 m
+80.93 0 l
+o
+np
+349.70 239.83 m
+80.93 0 l
+o
+np
+349.70 241.71 m
+80.93 0 l
+o
+np
+349.70 243.58 m
+80.93 0 l
+o
+np
+349.70 245.46 m
+80.93 0 l
+o
+np
+349.70 247.34 m
+80.93 0 l
+o
+np
+349.70 249.22 m
+80.93 0 l
+o
+np
+349.70 251.10 m
+80.93 0 l
+o
+np
+349.70 252.97 m
+80.93 0 l
+o
+np
+349.70 254.85 m
+80.93 0 l
+o
+np
+349.70 256.73 m
+80.93 0 l
+o
+np
+349.70 258.61 m
+80.93 0 l
+o
+np
+349.70 260.49 m
+80.93 0 l
+o
+np
+349.70 262.36 m
+80.93 0 l
+o
+np
+349.70 264.24 m
+80.93 0 l
+o
+np
+349.70 266.12 m
+80.93 0 l
+o
+np
+349.70 268.00 m
+80.93 0 l
+o
+np
+349.70 269.88 m
+80.93 0 l
+o
+np
+349.70 271.75 m
+80.93 0 l
+o
+np
+349.70 273.63 m
+80.93 0 l
+o
+np
+349.70 275.51 m
+80.93 0 l
+o
+np
+349.70 277.39 m
+80.93 0 l
+o
+np
+349.70 279.27 m
+80.93 0 l
+o
+np
+349.70 281.14 m
+80.93 0 l
+o
+np
+349.70 283.02 m
+80.93 0 l
+o
+np
+349.70 284.90 m
+80.93 0 l
+o
+np
+349.70 286.78 m
+80.93 0 l
+o
+np
+349.70 288.66 m
+80.93 0 l
+o
+np
+349.70 290.53 m
+80.93 0 l
+o
+np
+349.70 292.41 m
+80.93 0 l
+o
+np
+349.70 294.29 m
+80.93 0 l
+o
+np
+349.70 296.17 m
+80.93 0 l
+o
+np
+349.70 298.05 m
+80.93 0 l
+o
+np
+349.70 299.92 m
+80.93 0 l
+o
+np
+349.70 301.80 m
+80.93 0 l
+o
+np
+349.70 303.68 m
+80.93 0 l
+o
+np
+349.70 305.56 m
+80.93 0 l
+o
+np
+349.70 307.44 m
+80.93 0 l
+o
+np
+349.70 309.31 m
+80.93 0 l
+o
+np
+349.70 311.19 m
+80.93 0 l
+o
+np
+349.70 313.07 m
+80.93 0 l
+o
+np
+349.70 314.95 m
+80.93 0 l
+o
+np
+349.70 316.83 m
+80.93 0 l
+o
+np
+349.70 318.70 m
+80.93 0 l
+o
+np
+349.70 320.58 m
+80.93 0 l
+o
+np
+349.70 322.46 m
+80.93 0 l
+o
+np
+349.70 324.34 m
+80.93 0 l
+o
+np
+349.70 326.22 m
+80.93 0 l
+o
+np
+349.70 328.09 m
+80.93 0 l
+o
+np
+349.70 329.97 m
+80.93 0 l
+o
+np
+349.70 331.85 m
+80.93 0 l
+o
+np
+349.70 333.73 m
+80.93 0 l
+o
+np
+349.70 335.61 m
+80.93 0 l
+o
+np
+349.70 337.48 m
+80.93 0 l
+o
+np
+349.70 339.36 m
+80.93 0 l
+o
+np
+349.70 341.24 m
+80.93 0 l
+o
+np
+349.70 343.12 m
+80.93 0 l
+o
+np
+349.70 345.00 m
+80.93 0 l
+o
+np
+349.70 346.87 m
+80.93 0 l
+o
+np
+349.70 348.75 m
+80.93 0 l
+o
+np
+349.70 350.63 m
+80.93 0 l
+o
+np
+349.70 352.51 m
+80.93 0 l
+o
+np
+349.70 354.39 m
+80.93 0 l
+o
+np
+349.70 356.26 m
+80.93 0 l
+o
+np
+349.70 358.14 m
+80.93 0 l
+o
+np
+349.70 360.02 m
+80.93 0 l
+o
+np
+349.70 361.90 m
+80.93 0 l
+o
+np
+354.46 73.44 m
+0 289.58 l
+o
+np
+362.39 73.44 m
+0 289.58 l
+o
+np
+370.33 73.44 m
+0 289.58 l
+o
+np
+378.26 73.44 m
+0 289.58 l
+o
+np
+386.20 73.44 m
+0 289.58 l
+o
+np
+394.13 73.44 m
+0 289.58 l
+o
+np
+402.07 73.44 m
+0 289.58 l
+o
+np
+410.00 73.44 m
+0 289.58 l
+o
+np
+417.93 73.44 m
+0 289.58 l
+o
+np
+425.87 73.44 m
+0 289.58 l
+o
+gsave
+350.49 73.63 translate
+79.34 289.21 scale
+8 dict dup begin
+  /ImageType 1 def
+  /Width 10 def
+  /Height 154 def
+  /BitsPerComponent 8 def
+  /Decode [0 1 0 1 0 1] def
+  /DataSource currentfile /ASCIIHexDecode filter def
+  /ImageMatrix [10 0 0 -154 0 154] def
+end
+image
+ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffff4b95c8ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4991c4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffff458abdffffff56acdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff458abd5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff458abdffffffffffffffffffffffff56acdfffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4991c4376fa05fbdf04991c45fbdf04181b3ffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f6091ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3e7badffffffffffff51a2d5ffffff51a2d5ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff51a2d5ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4e9bcdffffffffffff316394ffffffffffffffffffffffffffffffffffffffffffffffffffffff366b9dffffffffffffffffffffffffffffffffffffffffffffffff56acdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff51a2d5ffffffffffffffffffffffffffffffffffff56acdfffffffffffffffffffffffffffffffffffffffffff4e9bcd4487ba56acdf458abdffffff4e9bcd326495ffffffffffffffffff56acdfffffffffffffffffffffffff193968ffffffffffffffffffffffffffffffffffff163463ffffffffffffffffffffffffffffffffffffffffffffffffffffff122e5dffffffffffffffffffffffffffffffffffffffffffffffffffffff1c3d6dffffffffffffffffffffffffffffffffffffffffffffffffffffff143160ffffffffffffffffffffffffffffffffffffffffffffffffffffff173665ffffffffffffffffffffffffffffffffffffffffffffffffffffff183766ffffff5fbdf0ffffffffffffffffffffffffffffff021743ffffffffffffffffffffffffffffffffffff56acdfffffffffffffffffffffffff0e27550319465fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1b3c6cffffffffffffffffffffffffffffffffffffffffffffffffffffff193867ffffffffffffffffffffffffffffffffffff2852830e2856295484ffffffffffffffffffffffffffffffffffffffffffffffff1d3f6f3b76a8ffffffffffffffffffffffffffffffffffffffffff5fbdf0183665ffffffffffff254d7dffffffffffffffffff224878163463234a7a366c9e356a9c153260122e5cffffffffffffffffff275081458abd4283b551a2d5ffffff3f7daf234a7affffffffffffffffff2f5f90204474295485244b7b3971a31633622a568734699a2e5e8f2d5c8d275081285282376fa04991c44991c41532610c2654ffffff3f7daf407fb11c3e6d2751823f7daf316394214576224777ffffffffffffffffffffffff2a5687244b7b4b95c8ffffff3e7bad4385b7ffffff56acdfffffffffffff3973a42d5c8d458abd34689934699b3367981d406f5fbdf04b95c851a2d53b76a8336798376fa03163942c598a275081ffffff3a74a5478dc03c78aa3b76a84283b5458abd478dc04181b3366b9d1c3e6e4487ba51a2d556acdfffffffffffffffffffffffffffffffffffff163362ffffffffffffffffffffffffffffffffffffffffffffffffffffff1c3e6effffffffffffffffff1b3c6b09214fffffffffffffffffffffffffffffffffffffffffff56acdf366d9f2146764991c451a2d53e7bad3971a3ffffffffffffffffff5fbdf0ffffffffffffffffffffffff4181b3ffffff1a3a69ffffffffffffffffff3367982f5f913b76a83367992d5c8d2e5e8fffffff4b95c83e7bad407fb1366b9d3b76a8ffffff458abd4b95c83b76a82247785fbdf0458abd4991c43265962a5687458abd51a2d52a5687275080ffffff4b95c84283b54385b72a5687275081478dc04991c4326596ffffffffffffffffff407fb1458abd2b5889264f8056acdfffffffffffff5fbdf0ffffff366b9d3870a1326597ffffffffffff2a5686ffffff1e4070ffffffffffffffffffffffffffffff275182234979ffffffffffff34699b56acdf306193264f80264e7f2c598a3468992045754991c451a2d5346899ffffffffffff254c7d3060922a5586244b7b214575336798234a7a122d5c3871a22b5889122e5c132f5e0f2a585fbdf0ffffff4991c4ffffff09214fffffffffffffffffffffffffffffffffffff5fbdf0ffffff56acdf193868ffffffffffffffffffffffffffffffffffffffffffffffffffffff071f4cffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2b58892750811e42711f4272ffffffffffffffffffffffffffffffffffff1e4271102a5814315f122d5c4e9bcd4991c4ffffffffffff3973a4ffffffffffff244c7c224777234a7bffffffffffffffffffffffffffffffffffffffffff316294234979214575ffffffffffffffffffffffffffffffffffffffffff2852832d5c8d295485ffffffffffffffffffffffffffffffffffffffffff2b5889234a7a234a7affffffffffffffffffffffffffffffffffffffffff3c78aa244b7b254d7effffffffffffffffffffffffffffffffffffffffffffffff204474224878ffffffffffffffffffffffffffffffffffffffffff0c2553112c5a0e2857ffffffffffffffffffffffffffffffffffffffffff2247783163952d5b8dffffffffffffffffffffffffffffffffffffffffff264f802a57882b5788ffffffffffffffffffffffffffffffffffffffffff1e41711b3d6c1e4170ffffffffffffffffffffffffffffffffffffffffff1b3c6c275182285384ffffffffffffffffffffffffffffffffffffffffffffffff214777295485ffffffffffffffffffffffffffffffffffffffffff071f4c0d26540e2755ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf056acdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffff56acdfffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4e9bcdffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff56acdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff56acdfffffff5fbdf04e9bcdffffffffffff5fbdf0ffffff5fbdf0ffffff56acdf51a2d54e9bcdffffff4e9bcd51a2d5ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf05fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fbdf0ffffffffffffffffff5fbdf0458abd5fbdf0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff>
+grestore
+0.00 0.00 538.58 368.50 cl
+42.87 56.23 107.93 73.44 cl
+42.87 56.23 107.93 73.44 cl
+/bg { 0.8510 0.8510 0.8510 srgb } def
+42.87 56.23 65.06 17.21 r p2
+/Font1 findfont 9 s
+0.1020 0.1020 0.1020 srgb
+53.89 61.60 (Endoph) 0 ta
+-0.270 (yte) tb gr
+42.87 56.23 107.93 73.44 cl
+42.87 56.23 107.93 73.44 cl
+0.00 0.00 538.58 368.50 cl
+113.41 56.23 257.81 73.44 cl
+113.41 56.23 257.81 73.44 cl
+/bg { 0.8510 0.8510 0.8510 srgb } def
+113.41 56.23 144.40 17.21 r p2
+/Font1 findfont 9 s
+0.1020 0.1020 0.1020 srgb
+168.10 61.60 (Epiph) 0 ta
+-0.270 (yte) tb gr
+113.41 56.23 257.81 73.44 cl
+113.41 56.23 257.81 73.44 cl
+0.00 0.00 538.58 368.50 cl
+263.29 56.23 344.22 73.44 cl
+263.29 56.23 344.22 73.44 cl
+/bg { 0.8510 0.8510 0.8510 srgb } def
+263.29 56.23 80.93 17.21 r p2
+/Font1 findfont 9 s
+0.1020 0.1020 0.1020 srgb
+303.76 61.60 (Litter) .5 0 t
+263.29 56.23 344.22 73.44 cl
+263.29 56.23 344.22 73.44 cl
+0.00 0.00 538.58 368.50 cl
+349.70 56.23 430.63 73.44 cl
+349.70 56.23 430.63 73.44 cl
+/bg { 0.8510 0.8510 0.8510 srgb } def
+349.70 56.23 80.93 17.21 r p2
+/Font1 findfont 9 s
+0.1020 0.1020 0.1020 srgb
+390.16 61.60 (Soil) .5 0 t
+349.70 56.23 430.63 73.44 cl
+349.70 56.23 430.63 73.44 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.2000 0.2000 0.2000 srgb
+1.07 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+47.63 53.49 m
+0 2.74 l
+o
+np
+55.57 53.49 m
+0 2.74 l
+o
+np
+63.50 53.49 m
+0 2.74 l
+o
+np
+71.44 53.49 m
+0 2.74 l
+o
+np
+79.37 53.49 m
+0 2.74 l
+o
+np
+87.30 53.49 m
+0 2.74 l
+o
+np
+95.24 53.49 m
+0 2.74 l
+o
+np
+103.17 53.49 m
+0 2.74 l
+o
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+/Font1 findfont 8 s
+0.3020 0.3020 0.3020 srgb
+50.51 51.30 ( 1-Acer) 1 90 t
+58.44 51.30 ( 2-Acer) 1 90 t
+66.37 51.30 ( 3-Acer) 1 90 t
+74.31 51.30 ( 4-Acer) 1 90 t
+82.24 51.30 ( 5-Acer) 1 90 t
+90.18 18.62 ( 1-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+98.11 18.62 ( 2-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+106.04 18.62 ( 3-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.2000 0.2000 0.2000 srgb
+1.07 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+118.17 53.49 m
+0 2.74 l
+o
+np
+126.11 53.49 m
+0 2.74 l
+o
+np
+134.04 53.49 m
+0 2.74 l
+o
+np
+141.97 53.49 m
+0 2.74 l
+o
+np
+149.91 53.49 m
+0 2.74 l
+o
+np
+157.84 53.49 m
+0 2.74 l
+o
+np
+165.78 53.49 m
+0 2.74 l
+o
+np
+173.71 53.49 m
+0 2.74 l
+o
+np
+181.65 53.49 m
+0 2.74 l
+o
+np
+189.58 53.49 m
+0 2.74 l
+o
+np
+197.51 53.49 m
+0 2.74 l
+o
+np
+205.45 53.49 m
+0 2.74 l
+o
+np
+213.38 53.49 m
+0 2.74 l
+o
+np
+221.32 53.49 m
+0 2.74 l
+o
+np
+229.25 53.49 m
+0 2.74 l
+o
+np
+237.18 53.49 m
+0 2.74 l
+o
+np
+245.12 53.49 m
+0 2.74 l
+o
+np
+253.05 53.49 m
+0 2.74 l
+o
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+/Font1 findfont 8 s
+0.3020 0.3020 0.3020 srgb
+121.04 51.30 ( 1-Acer) 1 90 t
+128.98 51.30 ( 1-Acer) 1 90 t
+136.91 51.30 ( 2-Acer) 1 90 t
+144.85 51.30 ( 2-Acer) 1 90 t
+152.78 51.30 ( 3-Acer) 1 90 t
+160.72 51.30 ( 4-Acer) 1 90 t
+168.65 51.30 ( 4-Acer) 1 90 t
+176.58 51.30 ( 5-Acer) 1 90 t
+184.52 51.30 ( 5-Acer) 1 90 t
+192.45 18.62 ( 1-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+200.39 18.62 ( 1-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+208.32 18.62 ( 2-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+216.25 18.62 ( 2-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+224.19 18.62 ( 3-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+232.12 18.62 ( 3-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+240.06 18.62 ( 4-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+247.99 18.62 ( 5-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+255.92 18.62 ( 5-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.2000 0.2000 0.2000 srgb
+1.07 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+268.05 53.49 m
+0 2.74 l
+o
+np
+275.99 53.49 m
+0 2.74 l
+o
+np
+283.92 53.49 m
+0 2.74 l
+o
+np
+291.86 53.49 m
+0 2.74 l
+o
+np
+299.79 53.49 m
+0 2.74 l
+o
+np
+307.72 53.49 m
+0 2.74 l
+o
+np
+315.66 53.49 m
+0 2.74 l
+o
+np
+323.59 53.49 m
+0 2.74 l
+o
+np
+331.53 53.49 m
+0 2.74 l
+o
+np
+339.46 53.49 m
+0 2.74 l
+o
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+/Font1 findfont 8 s
+0.3020 0.3020 0.3020 srgb
+270.92 51.30 ( 1-Acer) 1 90 t
+278.86 51.30 ( 2-Acer) 1 90 t
+286.79 51.30 ( 3-Acer) 1 90 t
+294.73 51.30 ( 4-Acer) 1 90 t
+302.66 51.30 ( 5-Acer) 1 90 t
+310.60 18.62 ( 1-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+318.53 18.62 ( 2-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+326.46 18.62 ( 3-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+334.40 18.62 ( 4-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+342.33 18.62 ( 5-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.2000 0.2000 0.2000 srgb
+1.07 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+354.46 53.49 m
+0 2.74 l
+o
+np
+362.39 53.49 m
+0 2.74 l
+o
+np
+370.33 53.49 m
+0 2.74 l
+o
+np
+378.26 53.49 m
+0 2.74 l
+o
+np
+386.20 53.49 m
+0 2.74 l
+o
+np
+394.13 53.49 m
+0 2.74 l
+o
+np
+402.07 53.49 m
+0 2.74 l
+o
+np
+410.00 53.49 m
+0 2.74 l
+o
+np
+417.93 53.49 m
+0 2.74 l
+o
+np
+425.87 53.49 m
+0 2.74 l
+o
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+/Font1 findfont 8 s
+0.3020 0.3020 0.3020 srgb
+357.33 51.30 ( 1-Acer) 1 90 t
+365.27 51.30 ( 2-Acer) 1 90 t
+373.20 51.30 ( 3-Acer) 1 90 t
+381.13 51.30 ( 4-Acer) 1 90 t
+389.07 51.30 ( 5-Acer) 1 90 t
+397.00 18.62 ( 1-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+404.94 18.62 ( 2-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+412.87 18.62 ( 3-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+420.81 18.62 ( 4-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+428.74 18.62 ( 5-Car) 90 ta
+0.240 (y) tb
+-0.160 (a) tb gr
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+/Font1 findfont 4 s
+0.3020 0.3020 0.3020 srgb
+22.83 73.13 (O) 0 ta
+-0.160 (TU_95) tb gr
+20.60 75.01 (O) 0 ta
+-0.160 (TU_937) tb gr
+22.83 76.88 (O) 0 ta
+-0.160 (TU_66) tb gr
+22.83 78.76 (O) 0 ta
+-0.160 (TU_11) tb gr
+20.60 80.64 (O) 0 ta
+-0.160 (TU_153) tb gr
+25.05 82.52 (O) 0 ta
+-0.160 (TU_4) tb gr
+25.05 84.40 (O) 0 ta
+-0.160 (TU_3) tb gr
+20.60 86.27 (O) 0 ta
+-0.160 (TU_125) tb gr
+22.83 88.15 (O) 0 ta
+-0.160 (TU_10) tb gr
+25.05 90.03 (O) 0 ta
+-0.160 (TU_8) tb gr
+22.83 91.91 (O) 0 ta
+-0.160 (TU_12) tb gr
+22.83 93.79 (O) 0 ta
+-0.160 (TU_87) tb gr
+22.83 95.66 (O) 0 ta
+-0.160 (TU_99) tb gr
+22.83 97.54 (O) 0 ta
+-0.160 (TU_29) tb gr
+18.38 99.42 (O) 0 ta
+-0.160 (TU_2236) tb gr
+22.83 101.30 (O) 0 ta
+-0.160 (TU_62) tb gr
+25.05 103.18 (O) 0 ta
+-0.160 (TU_5) tb gr
+22.83 105.05 (O) 0 ta
+-0.160 (TU_91) tb gr
+22.83 106.93 (O) 0 ta
+-0.160 (TU_79) tb gr
+22.83 108.81 (O) 0 ta
+-0.160 (TU_88) tb gr
+22.83 110.69 (O) 0 ta
+-0.160 (TU_58) tb gr
+22.83 112.57 (O) 0 ta
+-0.160 (TU_82) tb gr
+22.83 114.44 (O) 0 ta
+-0.160 (TU_56) tb gr
+20.60 116.32 (O) 0 ta
+-0.160 (TU_108) tb gr
+20.60 118.20 (O) 0 ta
+-0.160 (TU_103) tb gr
+22.83 120.08 (O) 0 ta
+-0.160 (TU_69) tb gr
+22.83 121.96 (O) 0 ta
+-0.160 (TU_77) tb gr
+22.83 123.83 (O) 0 ta
+-0.160 (TU_83) tb gr
+20.60 125.71 (O) 0 ta
+-0.160 (TU_116) tb gr
+20.60 127.59 (O) 0 ta
+-0.160 (TU_251) tb gr
+22.83 129.47 (O) 0 ta
+-0.160 (TU_20) tb gr
+22.83 131.35 (O) 0 ta
+-0.160 (TU_68) tb gr
+18.38 133.22 (O) 0 ta
+-0.160 (TU_3326) tb gr
+20.60 135.10 (O) 0 ta
+-0.160 (TU_271) tb gr
+22.83 136.98 (O) 0 ta
+-0.160 (TU_48) tb gr
+20.60 138.86 (O) 0 ta
+-0.160 (TU_135) tb gr
+20.60 140.74 (O) 0 ta
+-0.160 (TU_461) tb gr
+20.60 142.61 (O) 0 ta
+-0.160 (TU_142) tb gr
+22.83 144.49 (O) 0 ta
+-0.160 (TU_28) tb gr
+20.60 146.37 (O) 0 ta
+-0.160 (TU_189) tb gr
+20.60 148.25 (O) 0 ta
+-0.160 (TU_183) tb gr
+22.83 150.13 (O) 0 ta
+-0.160 (TU_34) tb gr
+22.83 152.00 (O) 0 ta
+-0.160 (TU_72) tb gr
+22.83 153.88 (O) 0 ta
+-0.160 (TU_35) tb gr
+25.05 155.76 (O) 0 ta
+-0.160 (TU_2) tb gr
+18.38 157.64 (O) 0 ta
+-0.160 (TU_2737) tb gr
+20.60 159.52 (O) 0 ta
+-0.160 (TU_188) tb gr
+25.05 161.39 (O) 0 ta
+-0.160 (TU_7) tb gr
+20.60 163.27 (O) 0 ta
+-0.160 (TU_167) tb gr
+22.83 165.15 (O) 0 ta
+-0.160 (TU_57) tb gr
+22.83 167.03 (O) 0 ta
+-0.160 (TU_89) tb gr
+22.83 168.91 (O) 0 ta
+-0.160 (TU_14) tb gr
+22.83 170.78 (O) 0 ta
+-0.160 (TU_25) tb gr
+22.83 172.66 (O) 0 ta
+-0.160 (TU_24) tb gr
+18.38 174.54 (O) 0 ta
+-0.160 (TU_1091) tb gr
+20.60 176.42 (O) 0 ta
+-0.160 (TU_136) tb gr
+22.83 178.30 (O) 0 ta
+-0.160 (TU_63) tb gr
+20.60 180.17 (O) 0 ta
+-0.160 (TU_143) tb gr
+20.60 182.05 (O) 0 ta
+-0.160 (TU_139) tb gr
+22.83 183.93 (O) 0 ta
+-0.160 (TU_27) tb gr
+20.60 185.81 (O) 0 ta
+-0.160 (TU_181) tb gr
+20.60 187.69 (O) 0 ta
+-0.160 (TU_246) tb gr
+20.60 189.56 (O) 0 ta
+-0.160 (TU_166) tb gr
+18.38 191.44 (O) 0 ta
+-0.160 (TU_1225) tb gr
+18.38 193.32 (O) 0 ta
+-0.160 (TU_1167) tb gr
+20.60 195.20 (O) 0 ta
+-0.160 (TU_101) tb gr
+22.83 197.08 (O) 0 ta
+-0.160 (TU_26) tb gr
+20.60 198.95 (O) 0 ta
+-0.160 (TU_946) tb gr
+22.83 200.83 (O) 0 ta
+-0.160 (TU_92) tb gr
+20.60 202.71 (O) 0 ta
+-0.160 (TU_292) tb gr
+22.83 204.59 (O) 0 ta
+-0.160 (TU_90) tb gr
+22.83 206.47 (O) 0 ta
+-0.160 (TU_19) tb gr
+22.83 208.34 (O) 0 ta
+-0.160 (TU_93) tb gr
+22.83 210.22 (O) 0 ta
+-0.160 (TU_85) tb gr
+18.38 212.10 (O) 0 ta
+-0.160 (TU_1918) tb gr
+20.60 213.98 (O) 0 ta
+-0.160 (TU_126) tb gr
+20.60 215.86 (O) 0 ta
+-0.160 (TU_241) tb gr
+20.60 217.73 (O) 0 ta
+-0.160 (TU_155) tb gr
+20.60 219.61 (O) 0 ta
+-0.160 (TU_138) tb gr
+20.60 221.49 (O) 0 ta
+-0.160 (TU_268) tb gr
+20.60 223.37 (O) 0 ta
+-0.160 (TU_278) tb gr
+20.60 225.25 (O) 0 ta
+-0.160 (TU_207) tb gr
+22.83 227.12 (O) 0 ta
+-0.160 (TU_76) tb gr
+20.60 229.00 (O) 0 ta
+-0.160 (TU_212) tb gr
+20.60 230.88 (O) 0 ta
+-0.160 (TU_217) tb gr
+20.60 232.76 (O) 0 ta
+-0.160 (TU_152) tb gr
+20.60 234.64 (O) 0 ta
+-0.160 (TU_148) tb gr
+20.60 236.51 (O) 0 ta
+-0.160 (TU_487) tb gr
+20.60 238.39 (O) 0 ta
+-0.160 (TU_202) tb gr
+20.60 240.27 (O) 0 ta
+-0.160 (TU_120) tb gr
+22.83 242.15 (O) 0 ta
+-0.160 (TU_41) tb gr
+22.83 244.03 (O) 0 ta
+-0.160 (TU_54) tb gr
+20.60 245.90 (O) 0 ta
+-0.160 (TU_208) tb gr
+22.83 247.78 (O) 0 ta
+-0.160 (TU_65) tb gr
+20.60 249.66 (O) 0 ta
+-0.160 (TU_185) tb gr
+20.60 251.54 (O) 0 ta
+-0.160 (TU_216) tb gr
+20.60 253.42 (O) 0 ta
+-0.160 (TU_119) tb gr
+20.60 255.29 (O) 0 ta
+-0.160 (TU_174) tb gr
+20.60 257.17 (O) 0 ta
+-0.160 (TU_192) tb gr
+22.83 259.05 (O) 0 ta
+-0.160 (TU_42) tb gr
+22.83 260.93 (O) 0 ta
+-0.160 (TU_17) tb gr
+20.60 262.81 (O) 0 ta
+-0.160 (TU_210) tb gr
+20.60 264.68 (O) 0 ta
+-0.160 (TU_169) tb gr
+20.60 266.56 (O) 0 ta
+-0.160 (TU_140) tb gr
+20.60 268.44 (O) 0 ta
+-0.160 (TU_224) tb gr
+20.60 270.32 (O) 0 ta
+-0.160 (TU_158) tb gr
+20.60 272.20 (O) 0 ta
+-0.160 (TU_206) tb gr
+18.38 274.07 (O) 0 ta
+-0.160 (TU_1888) tb gr
+20.60 275.95 (O) 0 ta
+-0.160 (TU_121) tb gr
+22.83 277.83 (O) 0 ta
+-0.160 (TU_84) tb gr
+22.83 279.71 (O) 0 ta
+-0.160 (TU_15) tb gr
+22.83 281.59 (O) 0 ta
+-0.160 (TU_73) tb gr
+20.60 283.46 (O) 0 ta
+-0.160 (TU_111) tb gr
+20.60 285.34 (O) 0 ta
+-0.160 (TU_124) tb gr
+22.83 287.22 (O) 0 ta
+-0.160 (TU_32) tb gr
+22.83 289.10 (O) 0 ta
+-0.160 (TU_44) tb gr
+22.83 290.98 (O) 0 ta
+-0.160 (TU_33) tb gr
+22.83 292.85 (O) 0 ta
+-0.160 (TU_51) tb gr
+22.83 294.73 (O) 0 ta
+-0.160 (TU_81) tb gr
+22.83 296.61 (O) 0 ta
+-0.160 (TU_40) tb gr
+25.05 298.49 (O) 0 ta
+-0.160 (TU_9) tb gr
+22.83 300.37 (O) 0 ta
+-0.160 (TU_70) tb gr
+22.83 302.24 (O) 0 ta
+-0.160 (TU_31) tb gr
+22.83 304.12 (O) 0 ta
+-0.160 (TU_43) tb gr
+22.83 306.00 (O) 0 ta
+-0.160 (TU_50) tb gr
+18.38 307.88 (O) 0 ta
+-0.160 (TU_2826) tb gr
+22.83 309.76 (O) 0 ta
+-0.160 (TU_21) tb gr
+20.60 311.63 (O) 0 ta
+-0.160 (TU_118) tb gr
+22.83 313.51 (O) 0 ta
+-0.160 (TU_23) tb gr
+22.83 315.39 (O) 0 ta
+-0.160 (TU_52) tb gr
+25.05 317.27 (O) 0 ta
+-0.160 (TU_1) tb gr
+22.83 319.15 (O) 0 ta
+-0.160 (TU_30) tb gr
+22.83 321.02 (O) 0 ta
+-0.160 (TU_16) tb gr
+22.83 322.90 (O) 0 ta
+-0.160 (TU_13) tb gr
+22.83 324.78 (O) 0 ta
+-0.160 (TU_60) tb gr
+20.60 326.66 (O) 0 ta
+-0.160 (TU_102) tb gr
+22.83 328.54 (O) 0 ta
+-0.160 (TU_80) tb gr
+20.60 330.41 (O) 0 ta
+-0.160 (TU_213) tb gr
+20.60 332.29 (O) 0 ta
+-0.160 (TU_105) tb gr
+22.83 334.17 (O) 0 ta
+-0.160 (TU_18) tb gr
+22.83 336.05 (O) 0 ta
+-0.160 (TU_47) tb gr
+22.83 337.93 (O) 0 ta
+-0.160 (TU_45) tb gr
+22.83 339.80 (O) 0 ta
+-0.160 (TU_53) tb gr
+22.83 341.68 (O) 0 ta
+-0.160 (TU_55) tb gr
+22.83 343.56 (O) 0 ta
+-0.160 (TU_49) tb gr
+20.60 345.44 (O) 0 ta
+-0.160 (TU_107) tb gr
+22.83 347.32 (O) 0 ta
+-0.160 (TU_22) tb gr
+18.38 349.19 (O) 0 ta
+-0.160 (TU_2144) tb gr
+20.60 351.07 (O) 0 ta
+-0.160 (TU_647) tb gr
+18.38 352.95 (O) 0 ta
+-0.160 (TU_2712) tb gr
+22.83 354.83 (O) 0 ta
+-0.160 (TU_64) tb gr
+18.38 356.71 (O) 0 ta
+-0.160 (TU_2933) tb gr
+18.38 358.58 (O) 0 ta
+-0.160 (TU_1047) tb gr
+22.83 360.46 (O) 0 ta
+-0.160 (TU_75) tb gr
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.2000 0.2000 0.2000 srgb
+1.07 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+40.13 74.56 m
+2.74 0 l
+o
+np
+40.13 76.44 m
+2.74 0 l
+o
+np
+40.13 78.32 m
+2.74 0 l
+o
+np
+40.13 80.20 m
+2.74 0 l
+o
+np
+40.13 82.08 m
+2.74 0 l
+o
+np
+40.13 83.95 m
+2.74 0 l
+o
+np
+40.13 85.83 m
+2.74 0 l
+o
+np
+40.13 87.71 m
+2.74 0 l
+o
+np
+40.13 89.59 m
+2.74 0 l
+o
+np
+40.13 91.47 m
+2.74 0 l
+o
+np
+40.13 93.34 m
+2.74 0 l
+o
+np
+40.13 95.22 m
+2.74 0 l
+o
+np
+40.13 97.10 m
+2.74 0 l
+o
+np
+40.13 98.98 m
+2.74 0 l
+o
+np
+40.13 100.86 m
+2.74 0 l
+o
+np
+40.13 102.73 m
+2.74 0 l
+o
+np
+40.13 104.61 m
+2.74 0 l
+o
+np
+40.13 106.49 m
+2.74 0 l
+o
+np
+40.13 108.37 m
+2.74 0 l
+o
+np
+40.13 110.25 m
+2.74 0 l
+o
+np
+40.13 112.12 m
+2.74 0 l
+o
+np
+40.13 114.00 m
+2.74 0 l
+o
+np
+40.13 115.88 m
+2.74 0 l
+o
+np
+40.13 117.76 m
+2.74 0 l
+o
+np
+40.13 119.64 m
+2.74 0 l
+o
+np
+40.13 121.51 m
+2.74 0 l
+o
+np
+40.13 123.39 m
+2.74 0 l
+o
+np
+40.13 125.27 m
+2.74 0 l
+o
+np
+40.13 127.15 m
+2.74 0 l
+o
+np
+40.13 129.03 m
+2.74 0 l
+o
+np
+40.13 130.90 m
+2.74 0 l
+o
+np
+40.13 132.78 m
+2.74 0 l
+o
+np
+40.13 134.66 m
+2.74 0 l
+o
+np
+40.13 136.54 m
+2.74 0 l
+o
+np
+40.13 138.42 m
+2.74 0 l
+o
+np
+40.13 140.29 m
+2.74 0 l
+o
+np
+40.13 142.17 m
+2.74 0 l
+o
+np
+40.13 144.05 m
+2.74 0 l
+o
+np
+40.13 145.93 m
+2.74 0 l
+o
+np
+40.13 147.81 m
+2.74 0 l
+o
+np
+40.13 149.68 m
+2.74 0 l
+o
+np
+40.13 151.56 m
+2.74 0 l
+o
+np
+40.13 153.44 m
+2.74 0 l
+o
+np
+40.13 155.32 m
+2.74 0 l
+o
+np
+40.13 157.20 m
+2.74 0 l
+o
+np
+40.13 159.07 m
+2.74 0 l
+o
+np
+40.13 160.95 m
+2.74 0 l
+o
+np
+40.13 162.83 m
+2.74 0 l
+o
+np
+40.13 164.71 m
+2.74 0 l
+o
+np
+40.13 166.59 m
+2.74 0 l
+o
+np
+40.13 168.46 m
+2.74 0 l
+o
+np
+40.13 170.34 m
+2.74 0 l
+o
+np
+40.13 172.22 m
+2.74 0 l
+o
+np
+40.13 174.10 m
+2.74 0 l
+o
+np
+40.13 175.98 m
+2.74 0 l
+o
+np
+40.13 177.85 m
+2.74 0 l
+o
+np
+40.13 179.73 m
+2.74 0 l
+o
+np
+40.13 181.61 m
+2.74 0 l
+o
+np
+40.13 183.49 m
+2.74 0 l
+o
+np
+40.13 185.37 m
+2.74 0 l
+o
+np
+40.13 187.24 m
+2.74 0 l
+o
+np
+40.13 189.12 m
+2.74 0 l
+o
+np
+40.13 191.00 m
+2.74 0 l
+o
+np
+40.13 192.88 m
+2.74 0 l
+o
+np
+40.13 194.76 m
+2.74 0 l
+o
+np
+40.13 196.63 m
+2.74 0 l
+o
+np
+40.13 198.51 m
+2.74 0 l
+o
+np
+40.13 200.39 m
+2.74 0 l
+o
+np
+40.13 202.27 m
+2.74 0 l
+o
+np
+40.13 204.15 m
+2.74 0 l
+o
+np
+40.13 206.02 m
+2.74 0 l
+o
+np
+40.13 207.90 m
+2.74 0 l
+o
+np
+40.13 209.78 m
+2.74 0 l
+o
+np
+40.13 211.66 m
+2.74 0 l
+o
+np
+40.13 213.54 m
+2.74 0 l
+o
+np
+40.13 215.41 m
+2.74 0 l
+o
+np
+40.13 217.29 m
+2.74 0 l
+o
+np
+40.13 219.17 m
+2.74 0 l
+o
+np
+40.13 221.05 m
+2.74 0 l
+o
+np
+40.13 222.93 m
+2.74 0 l
+o
+np
+40.13 224.80 m
+2.74 0 l
+o
+np
+40.13 226.68 m
+2.74 0 l
+o
+np
+40.13 228.56 m
+2.74 0 l
+o
+np
+40.13 230.44 m
+2.74 0 l
+o
+np
+40.13 232.32 m
+2.74 0 l
+o
+np
+40.13 234.19 m
+2.74 0 l
+o
+np
+40.13 236.07 m
+2.74 0 l
+o
+np
+40.13 237.95 m
+2.74 0 l
+o
+np
+40.13 239.83 m
+2.74 0 l
+o
+np
+40.13 241.71 m
+2.74 0 l
+o
+np
+40.13 243.58 m
+2.74 0 l
+o
+np
+40.13 245.46 m
+2.74 0 l
+o
+np
+40.13 247.34 m
+2.74 0 l
+o
+np
+40.13 249.22 m
+2.74 0 l
+o
+np
+40.13 251.10 m
+2.74 0 l
+o
+np
+40.13 252.97 m
+2.74 0 l
+o
+np
+40.13 254.85 m
+2.74 0 l
+o
+np
+40.13 256.73 m
+2.74 0 l
+o
+np
+40.13 258.61 m
+2.74 0 l
+o
+np
+40.13 260.49 m
+2.74 0 l
+o
+np
+40.13 262.36 m
+2.74 0 l
+o
+np
+40.13 264.24 m
+2.74 0 l
+o
+np
+40.13 266.12 m
+2.74 0 l
+o
+np
+40.13 268.00 m
+2.74 0 l
+o
+np
+40.13 269.88 m
+2.74 0 l
+o
+np
+40.13 271.75 m
+2.74 0 l
+o
+np
+40.13 273.63 m
+2.74 0 l
+o
+np
+40.13 275.51 m
+2.74 0 l
+o
+np
+40.13 277.39 m
+2.74 0 l
+o
+np
+40.13 279.27 m
+2.74 0 l
+o
+np
+40.13 281.14 m
+2.74 0 l
+o
+np
+40.13 283.02 m
+2.74 0 l
+o
+np
+40.13 284.90 m
+2.74 0 l
+o
+np
+40.13 286.78 m
+2.74 0 l
+o
+np
+40.13 288.66 m
+2.74 0 l
+o
+np
+40.13 290.53 m
+2.74 0 l
+o
+np
+40.13 292.41 m
+2.74 0 l
+o
+np
+40.13 294.29 m
+2.74 0 l
+o
+np
+40.13 296.17 m
+2.74 0 l
+o
+np
+40.13 298.05 m
+2.74 0 l
+o
+np
+40.13 299.92 m
+2.74 0 l
+o
+np
+40.13 301.80 m
+2.74 0 l
+o
+np
+40.13 303.68 m
+2.74 0 l
+o
+np
+40.13 305.56 m
+2.74 0 l
+o
+np
+40.13 307.44 m
+2.74 0 l
+o
+np
+40.13 309.31 m
+2.74 0 l
+o
+np
+40.13 311.19 m
+2.74 0 l
+o
+np
+40.13 313.07 m
+2.74 0 l
+o
+np
+40.13 314.95 m
+2.74 0 l
+o
+np
+40.13 316.83 m
+2.74 0 l
+o
+np
+40.13 318.70 m
+2.74 0 l
+o
+np
+40.13 320.58 m
+2.74 0 l
+o
+np
+40.13 322.46 m
+2.74 0 l
+o
+np
+40.13 324.34 m
+2.74 0 l
+o
+np
+40.13 326.22 m
+2.74 0 l
+o
+np
+40.13 328.09 m
+2.74 0 l
+o
+np
+40.13 329.97 m
+2.74 0 l
+o
+np
+40.13 331.85 m
+2.74 0 l
+o
+np
+40.13 333.73 m
+2.74 0 l
+o
+np
+40.13 335.61 m
+2.74 0 l
+o
+np
+40.13 337.48 m
+2.74 0 l
+o
+np
+40.13 339.36 m
+2.74 0 l
+o
+np
+40.13 341.24 m
+2.74 0 l
+o
+np
+40.13 343.12 m
+2.74 0 l
+o
+np
+40.13 345.00 m
+2.74 0 l
+o
+np
+40.13 346.87 m
+2.74 0 l
+o
+np
+40.13 348.75 m
+2.74 0 l
+o
+np
+40.13 350.63 m
+2.74 0 l
+o
+np
+40.13 352.51 m
+2.74 0 l
+o
+np
+40.13 354.39 m
+2.74 0 l
+o
+np
+40.13 356.26 m
+2.74 0 l
+o
+np
+40.13 358.14 m
+2.74 0 l
+o
+np
+40.13 360.02 m
+2.74 0 l
+o
+np
+40.13 361.90 m
+2.74 0 l
+o
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+/Font1 findfont 11 s
+0 0 0 srgb
+236.75 7.90 (Sample) .5 0 t
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+/Font1 findfont 11 s
+0 0 0 srgb
+13.38 206.62 (O) 90 ta
+-0.440 (TU) tb gr
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+/bg { 1 1 1 srgb } def
+441.59 155.71 91.52 125.04 r p2
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+gsave
+447.07 161.19 translate
+17.28 86.40 scale
+8 dict dup begin
+  /ImageType 1 def
+  /Width 17 def
+  /Height 86 def
+  /BitsPerComponent 8 def
+  /Decode [0 1 0 1 0 1] def
+  /DataSource currentfile /ASCIIHexDecode filter def
+  /ImageMatrix [17 0 0 -86 0 86] def
+end
+image
+000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000033000335000335000335000335000335000335000335000335000335000335000335000335000335000335000335000335000335000636000636000636000636000636000636000636000636000636000636000636000636000636000636000636000636000636000a39000a39000a39000a39000a39000a39000a39000a39000a39000a39000a39000a39000a39000a39000a39000a39000a39000e3b000e3b000e3b000e3b000e3b000e3b000e3b000e3b000e3b000e3b000e3b000e3b000e3b000e3b000e3b000e3b000e3b00113d00113d00113d00113d00113d00113d00113d00113d00113d00113d00113d00113d00113d00113d00113d00113d00113d01133f01133f01133f01133f01133f01133f01133f01133f01133f01133f01133f01133f01133f01133f01133f01133f01133f021542021542021542021542021542021542021542021542021542021542021542021542021542021542021542021542021542021744021744021744021744021744021744021744021744021744021744021744021744021744021744021744021744021744031946031946031946031946031946031946031946031946031946031946031946031946031946031946031946031946031946051b48051b48051b48051b48051b48051b48051b48051b48051b48051b48051b48051b48051b48051b48051b48051b48051b48061e4b061e4b061e4b061e4b061e4b061e4b061e4b061e4b061e4b061e4b061e4b061e4b061e4b061e4b061e4b061e4b061e4b08204d08204d08204d08204d08204d08204d08204d08204d08204d08204d08204d08204d08204d08204d08204d08204d08204d09214e09214e09214e09214e09214e09214e09214e09214e09214e09214e09214e09214e09214e09214e09214e09214e09214e0a24510a24510a24510a24510a24510a24510a24510a24510a24510a24510a24510a24510a24510a24510a24510a24510a24510c26530c26530c26530c26530c26530c26530c26530c26530c26530c26530c26530c26530c26530c26530c26530c26530c26530d28550d28550d28550d28550d28550d28550d28550d28550d28550d28550d28550d28550d28550d28550d28550d28550d28550f2a580f2a580f2a580f2a580f2a580f2a580f2a580f2a580f2a580f2a580f2a580f2a580f2a580f2a580f2a580f2a580f2a58112c5a112c5a112c5a112c5a112c5a112c5a112c5a112c5a112c5a112c5a112c5a112c5a112c5a112c5a112c5a112c5a112c5a122e5d122e5d122e5d122e5d122e5d122e5d122e5d122e5d122e5d122e5d122e5d122e5d122e5d122e5d122e5d122e5d122e5d13305f13305f13305f13305f13305f13305f13305f13305f13305f13305f13305f13305f13305f13305f13305f13305f13305f1532611532611532611532611532611532611532611532611532611532611532611532611532611532611532611532611532611635641635641635641635641635641635641635641635641635641635641635641635641635641635641635641635641635641837661837661837661837661837661837661837661837661837661837661837661837661837661837661837661837661837661939681939681939681939681939681939681939681939681939681939681939681939681939681939681939681939681939681b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1b3c6b1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1c3e6d1d406f1d406f1d406f1d406f1d406f1d406f1d406f1d406f1d406f1d406f1d406f1d406f1d406f1d406f1d406f1d406f1d406f1f42721f42721f42721f42721f42721f42721f42721f42721f42721f42721f42721f42721f42721f42721f42721f42721f4272204575204575204575204575204575204575204575204575204575204575204575204575204575204575204575204575204575224777224777224777224777224777224777224777224777224777224777224777224777224777224777224777224777224777234979234979234979234979234979234979234979234979234979234979234979234979234979234979234979234979234979244c7c244c7c244c7c244c7c244c7c244c7c244c7c244c7c244c7c244c7c244c7c244c7c244c7c244c7c244c7c244c7c244c7c264e7e264e7e264e7e264e7e264e7e264e7e264e7e264e7e264e7e264e7e264e7e264e7e264e7e264e7e264e7e264e7e264e7e2750802750802750802750802750802750802750802750802750802750802750802750802750802750802750802750802750802853832853832853832853832853832853832853832853832853832853832853832853832853832853832853832853832853832a55852a55852a55852a55852a55852a55852a55852a55852a55852a55852a55852a55852a55852a55852a55852a55852a55852b58882b58882b58882b58882b58882b58882b58882b58882b58882b58882b58882b58882b58882b58882b58882b58882b58882c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2c5a8a2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2d5c8d2f5f902f5f902f5f902f5f902f5f902f5f902f5f902f5f902f5f902f5f902f5f902f5f902f5f902f5f902f5f902f5f902f5f9030619330619330619330619330619330619330619330619330619330619330619330619330619330619330619330619330619331639531639531639531639531639531639531639531639531639531639531639531639531639531639531639531639531639533659733659733659733659733659733659733659733659733659733659733659733659733659733659733659733659733659734689a34689a34689a34689a34689a34689a34689a34689a34689a34689a34689a34689a34689a34689a34689a34689a34689a356a9c356a9c356a9c356a9c356a9c356a9c356a9c356a9c356a9c356a9c356a9c356a9c356a9c356a9c356a9c356a9c356a9c376d9f376d9f376d9f376d9f376d9f376d9f376d9f376d9f376d9f376d9f376d9f376d9f376d9f376d9f376d9f376d9f376d9f3870a23870a23870a23870a23870a23870a23870a23870a23870a23870a23870a23870a23870a23870a23870a23870a23870a23a72a43a72a43a72a43a72a43a72a43a72a43a72a43a72a43a72a43a72a43a72a43a72a43a72a43a72a43a72a43a72a43a72a43b74a63b74a63b74a63b74a63b74a63b74a63b74a63b74a63b74a63b74a63b74a63b74a63b74a63b74a63b74a63b74a63b74a63c77a93c77a93c77a93c77a93c77a93c77a93c77a93c77a93c77a93c77a93c77a93c77a93c77a93c77a93c77a93c77a93c77a93d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3d7aac3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae3e7cae407fb1407fb1407fb1407fb1407fb1407fb1407fb1407fb1407fb1407fb1407fb1407fb1407fb1407fb1407fb1407fb1407fb14182b44182b44182b44182b44182b44182b44182b44182b44182b44182b44182b44182b44182b44182b44182b44182b44182b44384b64384b64384b64384b64384b64384b64384b64384b64384b64384b64384b64384b64384b64384b64384b64384b64384b64486b84486b84486b84486b84486b84486b84486b84486b84486b84486b84486b84486b84486b84486b84486b84486b84486b84589bb4589bb4589bb4589bb4589bb4589bb4589bb4589bb4589bb4589bb4589bb4589bb4589bb4589bb4589bb4589bb4589bb468cbe468cbe468cbe468cbe468cbe468cbe468cbe468cbe468cbe468cbe468cbe468cbe468cbe468cbe468cbe468cbe468cbe478ec1478ec1478ec1478ec1478ec1478ec1478ec1478ec1478ec1478ec1478ec1478ec1478ec1478ec1478ec1478ec1478ec14891c44891c44891c44891c44891c44891c44891c44891c44891c44891c44891c44891c44891c44891c44891c44891c44891c44a93c64a93c64a93c64a93c64a93c64a93c64a93c64a93c64a93c64a93c64a93c64a93c64a93c64a93c64a93c64a93c64a93c64b96c94b96c94b96c94b96c94b96c94b96c94b96c94b96c94b96c94b96c94b96c94b96c94b96c94b96c94b96c94b96c94b96c94c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4c98cb4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4e9bce4f9ed14f9ed14f9ed14f9ed14f9ed14f9ed14f9ed14f9ed14f9ed14f9ed14f9ed14f9ed14f9ed14f9ed14f9ed14f9ed14f9ed151a1d451a1d451a1d451a1d451a1d451a1d451a1d451a1d451a1d451a1d451a1d451a1d451a1d451a1d451a1d451a1d451a1d452a3d652a3d652a3d652a3d652a3d652a3d652a3d652a3d652a3d652a3d652a3d652a3d652a3d652a3d652a3d652a3d652a3d654a6d954a6d954a6d954a6d954a6d954a6d954a6d954a6d954a6d954a6d954a6d954a6d954a6d954a6d954a6d954a6d954a6d955a9dc55a9dc55a9dc55a9dc55a9dc55a9dc55a9dc55a9dc55a9dc55a9dc55a9dc55a9dc55a9dc55a9dc55a9dc55a9dc55a9dc56abde56abde56abde56abde56abde56abde56abde56abde56abde56abde56abde56abde56abde56abde56abde56abde56abde57aee157aee157aee157aee157aee157aee157aee157aee157aee157aee157aee157aee157aee157aee157aee157aee157aee158b1e458b1e458b1e458b1e458b1e458b1e458b1e458b1e458b1e458b1e458b1e458b1e458b1e458b1e458b1e458b1e458b1e45ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65ab3e65bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95bb6e95cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5cb9ec5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5ebcef5fbef15fbef15fbef15fbef15fbef15fbef15fbef15fbef15fbef15fbef15fbef15fbef15fbef15fbef15fbef15fbef15fbef160c1f460c1f460c1f460c1f460c1f460c1f460c1f460c1f460c1f460c1f460c1f460c1f460c1f460c1f460c1f460c1f460c1f462c4f762c4f762c4f762c4f762c4f762c4f762c4f762c4f762c4f762c4f762c4f762c4f762c4f762c4f762c4f762c4f762c4f763c7fa63c7fa63c7fa63c7fa63c7fa63c7fa63c7fa63c7fa63c7fa63c7fa63c7fa63c7fa63c7fa63c7fa63c7fa63c7fa63c7fa65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc65c9fc66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff66ccff>
+grestore
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+/Font1 findfont 9 s
+0 0 0 srgb
+469.83 177.43 (6.103516e-05) 0 0 t
+469.83 203.03 (9.765625e-04) 0 0 t
+469.83 228.64 (1.562500e-02) 0 0 t
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+/Font1 findfont 11 s
+0 0 0 srgb
+447.07 266.16 (Propor) 0 ta
+0.440 (tion) tb gr
+447.07 254.28 ( of Substr) 0 ta
+-0.110 (ate) tb gr
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+1 1 1 srgb
+0.38 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+447.07 180.66 m
+3.45 0 l
+o
+np
+447.07 206.27 m
+3.45 0 l
+o
+np
+447.07 231.87 m
+3.45 0 l
+o
+np
+460.89 180.66 m
+3.46 0 l
+o
+np
+460.89 206.27 m
+3.46 0 l
+o
+np
+460.89 231.87 m
+3.46 0 l
+o
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+0.00 0.00 538.58 368.50 cl
+ep
+%%Trailer
+%%Pages: 1
+%%EOF
