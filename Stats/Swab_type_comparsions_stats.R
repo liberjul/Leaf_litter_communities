@@ -52,14 +52,14 @@ model <- TukeyHSD(bd_out_swab)
 model
 
 
-phy_swab <- phyloseq(otu_table(rare_otu[,union(cot_r, syn_r) + 1], taxa_are_rows = T))
+phy_swab <- phyloseq(otu_table(rare_otu[,union(cot, syn) + 1], taxa_are_rows = T))
 
 phy_sam_table <- sample_data(
   data.frame(
     row.names = sample_names(phy_swab),
     Swab_type=c(rep("Cotton", length(cot)),
                 rep("Synthetic", length(syn))),
-    Leaf = c(1:5, 7:10, 1:6, 8:10),
+    Leaf = c(1:5, 7:10, 1:10),
     stringsAsFactors=FALSE))
 
 phy_swab <- merge_phyloseq(phy_swab, phy_sam_table)

@@ -2,6 +2,7 @@ library(ggplot2)
 library(vegan)
 library(phyloseq)
 library(ggpubr)
+library(tidyverse)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
 map_wo_negs <- as.matrix(read.csv("./Data/DEM_map_wo_negs.csv", stringsAsFactors = F))
@@ -44,13 +45,13 @@ richness <- richness + geom_boxplot(alpha=0) + #geom_jitter() +
   theme(legend.position = "none")
 richness
 ggsave("./Figures/Richness_metrics_swab_type.png", richness, width = 8, height = 6, units = "in")
-ggsave("./Figures_Numbered/Figure 6.pdf",
+ggsave("./Figures_Numbered/Figure_4.pdf",
        richness + scale_color_manual(values = c("#a6a6a6","#595959")),
        width = 90, height = 60, units = "mm")
-ggsave("./Figures_Color/Figure 6.pdf",
+ggsave("./Figures_Color/Figure_4.pdf",
        richness + scale_color_manual(values = c("#88CCEE","#332288")),
        width = 90, height = 60, units = "mm")
-ggsave("./Figures_Color/Figure 6.eps",
+ggsave("./Figures_Color/Figure_4.eps",
        richness + scale_color_manual(values = c("#88CCEE","#332288")),
        width = 90, height = 60, units = "mm")
 
@@ -76,6 +77,9 @@ swab_bp <- ggplot(swab_df,
   theme(legend.position = "none")
 swab_bp
 ggsave("./Figures/swab_read_count_boxplot.png", swab_bp, width = 6, height = 4, units = "in")
+ggsave("./Figures_Numbered/Figure_S5.pdf", swab_bp, width = 6, height = 4, units = "in")
+ggsave("./Figures_Color/Figure_S5.pdf", swab_bp, width = 6, height = 4, units = "in")
+ggsave("./Figures/Figure_S5.pdf", swab_bp, width = 6, height = 4, units = "in")
 
 
 

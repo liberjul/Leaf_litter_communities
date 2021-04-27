@@ -1,7 +1,7 @@
-library(ggplot2)
+# library(ggplot2)
 library(vegan)
 library(phyloseq)
-library(dplyr)
+library(tidyverse)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
 wts_wo_negs <- c(rep(18,18), rep(10,10), rep(8, 8), rep(10, 10)) # Vector for weighting abundance by number of samples per substrate
@@ -101,6 +101,7 @@ ps_heatmap
 ggsave("./Figures/physeq_heatmap.png", ps_heatmap, width=10, height = 8, units="in") # Save plot
 ggsave("./Figures/physeq_heatmap.pdf", ps_heatmap, width=210, height = 150, units="mm") # Save plot
 ggsave("./Figures_Color/Figure_1.pdf", ps_heatmap, width=210, height = 150, units="mm") # Save plot
+ggsave("./Figures_Numbered/Figure_1.pdf", ps_heatmap, width=210, height = 150, units="mm")
 ggsave("./Figures_Color/Figure_1.png", ps_heatmap, width=210, height = 150, units="mm") # Save plot
 ggsave("./Figures_Color/Figure_1.eps", ps_heatmap, width=210, height = 150, units="mm") # Save plot
 
