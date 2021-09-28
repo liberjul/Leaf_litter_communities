@@ -111,15 +111,13 @@ genus_barplot <- ggplot(prop_long_gen_filt, # Ggplot barplot of proportions
         text = element_text(size = 10),
         legend.key.size = unit(.5, "line"),
         legend.spacing = unit(0, "pt"),
-        # legend.key.height = unit(13, "pt"),
-        legend.margin = margin(t = 80, unit = "pt"),
-        # legend.spacing.y = unit(6.0, 'pt')
+        legend.margin = margin(t = 80, unit = "pt")
         ) +
   guides(fill = guide_legend(reverse = TRUE, ncol =1)) # Reverse legend to match
 
 genus_barplot # Show plot
 
-# ggsave("./Figures/top30_genera_gg_constax.png", genus_barplot, width=14, height = 8, units="in") # Save plot
+ggsave("./Figures/top30_genera_gg_constax.png", genus_barplot, width=14, height = 7, units="in") # Save plot
 
 veganCovEllipse<-function (cov, center = c(0, 0), scale = 1, npoints = 100)  # Make ellipses plottable
 {
@@ -202,7 +200,7 @@ p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
   scale_color_discrete(labels=c("Endophytes","Epiphytes","Litter", "Soil"))
 p_bc
 
-# ggsave("./Figures/bc_NDMS_all_samples.png", p_bc, width = 8, height = 6, units="in")
+ggsave("./Figures/bc_NDMS_all_samples.png", p_bc, width = 10, height = 6, units="in")
 
 MDS_dat_swab <- metaMDS(t(rare_otu[,1:18]), distance = "bray")
 MDS_points <- MDS_dat_swab$points
@@ -268,6 +266,8 @@ p_bray_swab <- ggplot(data = NMDS_swab, aes(x=MDS1, y=MDS2)) +
   labs(shape="Site", color="Swab Material", alpha="Host Species",
        x = "NMDS1", y = "NMDS2")
 p_bray_swab
+
+ggsave("./Figures/bc_swab_NMDS_plot.png", p_bray_swab, width = 10, height = 6, units="in")
 
 g <- (genus_barplot + labs(tag = "A")) / ((p_bc + labs(tag = "B")) +
                                             (p_bray_swab + labs(tag = "C")))

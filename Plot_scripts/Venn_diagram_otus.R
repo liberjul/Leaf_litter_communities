@@ -49,7 +49,7 @@ temp <- venn.diagram(
   filename = NULL,
   output=TRUE,
   lwd = 2,
-  fill=NULL,
+  fill=myCol,
   cex=0.8,
   fontface="bold",
   cat.fontface="bold",
@@ -61,7 +61,11 @@ temp <- venn.diagram(
   cat.cex=0.7
 )
 setEPS()
-postscript(file = "./Figures_Color/Figure 2.eps", width = 7.48, height = 7.48, fonts="sans", )
+postscript(file = "./Figures_Color/Figure 2.eps", width = 7.48, height = 7.48, fonts="sans")
+grid.draw(temp)
+dev.off()
+
+png(file = "./Figures_Numbered/Figure 2.png", width=6.5, height=6.5, units="in", res=400)
 grid.draw(temp)
 dev.off()
 
@@ -69,6 +73,9 @@ pdf("./Figures_Color/Figure 2.pdf", width = 7.48, height = 7.48)
 grid.draw(temp)
 dev.off()
 
+pdf("./Figures_Numbered/Figure 2.pdf", width = 7.48, height = 7.48)
+grid.draw(temp)
+dev.off()
 
 myCol <- brewer.pal(4, "Greys")
 temp <- venn.diagram(

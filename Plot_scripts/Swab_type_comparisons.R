@@ -39,15 +39,15 @@ phy_swab
 richness <- plot_richness(phy_swab, x="Swab_type", color="Swab_type", measures=c("Observed", "Shannon", "InvSimpson"))
 richness <- richness + geom_boxplot(alpha=0) + #geom_jitter() +
   labs(x = "Swab Material", color = "Swab Material") +
-  scale_x_discrete(breaks = c("Cotton", "Synthetic"),
-                   labels = c("C", "S")) +
+  # scale_x_discrete(breaks = c("Cotton", "Synthetic"),
+  #                  labels = c("C", "S")) +
   theme_pubr() +
   theme(legend.position = "none")
 richness
 ggsave("./Figures/Richness_metrics_swab_type.png", richness, width = 8, height = 6, units = "in")
 ggsave("./Figures_Numbered/Figure_4.pdf",
-       richness + scale_color_manual(values = c("#a6a6a6","#595959")),
-       width = 90, height = 60, units = "mm")
+       richness,
+       width = 8, height = 6, units = "in")
 ggsave("./Figures_Color/Figure_4.pdf",
        richness + scale_color_manual(values = c("#88CCEE","#332288")),
        width = 90, height = 60, units = "mm")

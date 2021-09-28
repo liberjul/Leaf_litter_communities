@@ -64,7 +64,7 @@ phy_sam_table <- sample_data(
 
 phy_swab <- merge_phyloseq(phy_swab, phy_sam_table)
 
-diver_df <- cbind(estimate_richness(phy_swab, measures = c("Shannon", "InvSimpson")),
+diver_df <- cbind(estimate_richness(phy_swab, measures = c("Shannon", "InvSimpson", "Observed")),
                   sample_data(phy_swab))
 
 diver_df                       
@@ -77,3 +77,9 @@ m2 <- lmer(InvSimpson ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
 summary(m2)
 confint(m2)
 anova(m2)
+
+m3 <- lmer(Observed ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
+summary(m3)
+confint(m3)
+anova(m3)
+

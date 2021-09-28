@@ -185,10 +185,21 @@ ado_bray_int <- adonis2(t(rare_otu) ~ Substrate * Plant_species * Site,
                         MDS_dat_df, method="bray")
 ado_bray_int
 write.csv(ado_bray_int, "./Stats/ado_bray_int_stats_table.csv")
+
 ado_jac_int <- adonis2(t(rare_otu) ~ Substrate * Plant_species * Site,
                        MDS_dat_df, method="jaccard")
 ado_jac_int
 write.csv(ado_jac_int, "./Stats/ado_jac_int_stats_table.csv")
+
+ado_bray_int_block <- adonis2(t(rare_otu) ~ Substrate * Plant_species, strata = Site,
+                             MDS_dat_df, method="bray")
+ado_bray_int_block
+write.csv(ado_bray_int_block, "./Stats/ado_bray_int_block_stats_table.csv")
+
+ado_jac_int_block <- adonis2(t(rare_otu) ~ Substrate * Plant_species, strata = Site,
+                       MDS_dat_df, method="jaccard")
+ado_jac_int_block
+write.csv(ado_jac_int_block, "./Stats/ado_jac_int_block_stats_table.csv")
 
 a <- pairwise.perm.manova(dist_bray,MDS_dat_df$Substrate,nperm=999)
 a

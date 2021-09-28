@@ -12,9 +12,9 @@ indicator_dat <- read.csv("./Stats/indic_species_5_per.csv") %>%
 
 prop_otu_dat <- rare_otu # Assign the table to new df to maintain shape
 
-# for (i in 1:dim(rare_otu)[2]){ # for each column
-#   prop_otu_dat[,i] <- rare_otu[,i]/(sum(rare_otu[,i])*wts_wo_negs[i]) # Calculate proportions and scale by # of samples per substrate
-# }
+for (i in 1:dim(rare_otu)[2]){ # for each column
+  prop_otu_dat[,i] <- rare_otu[,i]/(sum(rare_otu[,i])*wts_wo_negs[i]) # Calculate proportions and scale by # of samples per substrate
+}
 # prop_otu_dat_trim <- prop_otu_dat[rowSums(prop_otu_dat) > 4 * 0.001,] # Take OTUs with substrate-weighted abundance > 0.1%
 
 prop_otu_dat_trim <- prop_otu_dat[rownames(prop_otu_dat) %in% indicator_dat$OTU,]
@@ -56,8 +56,8 @@ phy_sample_table <- data.frame(Substrate = map_wo_negs["Substrate",], # Convert 
 phy_sample_table <- phy_sample_table %>%
   mutate(Name = paste(Site, # Make name variable from site and plant species
                       unlist(strsplit(Plant_species, " "))[c(T, F)],
-                      sep = "-")) %>%
-  arrange(Substrate, Plant_species, Site) # Sort by variables
+                      sep = "-"))
+  # arrange(Substrate, Plant_species, Site) # Sort by variables
 rownames(phy_sample_table) <- sample_names(physeq) # Make sample names row names
 phy_sample_table <- sample_data(phy_sample_table) # Convert to physeq sample table
 phy_sample_table # Check table
@@ -81,7 +81,7 @@ indicator_dat %>%
   arrange(index) %>%
   mutate(name = paste(OTU, taxonomic_id, sep=" "))-> sorted_indic
 sorted_indic
-
+options(scipen=0)
 ps_heatmap <- plot_heatmap(physeq1, method = NULL, distance = NULL, "Name",
                            taxa.order = rev(sorted_indic$name), # With manual OTU sorting
                            low="#66CCFF", high="#000033", na.value="white") # Make heatmap
