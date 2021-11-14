@@ -57,7 +57,7 @@ phy_sample_table <- phy_sample_table %>%
   mutate(Name = paste(Site, # Make name variable from site and plant species
                       unlist(strsplit(Plant_species, " "))[c(T, F)],
                       sep = "-"))
-  # arrange(Substrate, Plant_species, Site) # Sort by variables
+# arrange(Substrate, Plant_species, Site) # Sort by variables
 rownames(phy_sample_table) <- sample_names(physeq) # Make sample names row names
 phy_sample_table <- sample_data(phy_sample_table) # Convert to physeq sample table
 phy_sample_table # Check table

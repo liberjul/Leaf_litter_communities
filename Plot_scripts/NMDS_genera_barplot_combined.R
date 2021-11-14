@@ -92,10 +92,10 @@ genus_barplot <- ggplot(prop_long_gen_filt, # Ggplot barplot of proportions
   scale_x_discrete(breaks = prop_long_gen_filt$Sample, # Replace sample names with shortened sample descriptions
                    labels = prop_long_gen_filt$Name) +
   facet_grid(~Substrate,
-            switch = "x",
-            scales = "free_x",
-            space = "free_x",
-            labeller = labeller(Substrate=facet_labs)) +
+             switch = "x",
+             scales = "free_x",
+             space = "free_x",
+             labeller = labeller(Substrate=facet_labs)) +
   theme_pubr() +
   scale_fill_manual(values= palette_CB9) + # Use palette
   ylim(0,1) +
@@ -112,7 +112,7 @@ genus_barplot <- ggplot(prop_long_gen_filt, # Ggplot barplot of proportions
         legend.key.size = unit(.5, "line"),
         legend.spacing = unit(0, "pt"),
         legend.margin = margin(t = 80, unit = "pt")
-        ) +
+  ) +
   guides(fill = guide_legend(reverse = TRUE, ncol =1)) # Reverse legend to match
 
 genus_barplot # Show plot
@@ -180,15 +180,6 @@ p_bc <- ggplot(data = NMDS_bray, aes(MDS1, MDS2)) + # Make plot
            size = 12*(5/14)) +
   theme_pubr() +
   guides(fill=FALSE) +
-  # ggtitle("Bray-Curtis") +
-  # theme(plot.title = element_text(hjust=0.5),
-  #       legend.position = "right",
-  #       legend.justification = "left",
-  #       legend.text = element_text(size=7),
-  #       legend.spacing = unit(0, "pt"),
-  #       legend.key.height = unit(10, "pt"),
-  #       text = element_text(size = 10),
-  #       legend.margin=margin(t = 0, unit='pt')) +
   theme(plot.title = element_text(hjust=0.5),
         legend.position = "right",
         legend.justification = "left",
@@ -281,3 +272,52 @@ ggsave("./Figures_Color/Figure 3.eps", g, width = 15, height = 13, units = "in")
 ggsave("./Figures_Color/Figure 3.pdf", g, width = 10, height = 8, units = "in")
 ggsave("./Figures_Color/Figure 3.png", g, width = 10, height = 8, units = "in")
 ggsave("./Figures_Numbered/Figure_3.pdf", g, width = 10, height = 8, units = "in")
+
+bc.d = vegdist(t(rare_otu), method="bray")
+bc.pcoa = cmdscale(bc.d, eig=T)
+
+NMDS_bray$PCoA.1<-bc.pcoa$points[,1]
+NMDS_bray$PCoA.2<-bc.pcoa$points[,2]
+ax1.v.bc = round(bc.pcoa$eig[1]/sum(bc.pcoa$eig)*100, digits = 2)
+ax2.v.bc = round(bc.pcoa$eig[2]/sum(bc.pcoa$eig)*100, digits = 2)
+
+
+p_bc_pcoa <- ggplot(data = NMDS_bray, aes(PCoA.1, PCoA.2)) + # Make plot
+  geom_point(aes(color = group, shape = site),size = 3) +
+  geom_point(aes(color = group, fill = group, alpha = species, shape=site),size = 3) +
+  # geom_path(data=df_ell_bc, aes(x=NMDS1, y=NMDS2,color=group), size=0.5, linetype=2) +
+  # geom_segment(data = segs,
+  #              mapping = aes(x = MDS1.x, y = MDS2.x,
+  #                            xend = MDS1.y, yend = MDS2.y,
+  #                            color = group)) +
+  # geom_text(data = NMDS_bray.mean,
+  #           aes(x = MDS1, y = MDS2, label = c("Endophytes","Epiphytes","Litter", "Soil")),
+  #           size = 11*(5/14)) +
+  labs(alpha="Host species", color="Substrate", shape="Site",
+       x = paste0("PC1: (", ax1.v.bc, "%)"), y = paste0("PC2: (", ax2.v.bc, "%)")) +
+  scale_shape_manual(values = 21:25) +
+  scale_alpha_manual(values=c(0,1), guide =
+                       guide_legend(label.theme = element_text(size = 12, angle = 0, face = "italic"),
+                                    override.aes = list(pch = 21,
+                                                        color = 1,
+                                                        alpha = 1,
+                                                        fill = c(NA, 1)))) +
+  # annotate(geom = "text", hjust = 0,
+  #          x = min(NMDS_bray$MDS1), y = min(NMDS_bray$MDS2),
+  #          label = paste("Stress =", round(MDS_stress, 4)),
+  #          size = 12*(5/14)) +
+  theme_pubr() +
+  guides(fill=FALSE) +
+  theme(plot.title = element_text(hjust=0.5),
+        legend.position = "right",
+        legend.justification = "left",
+        legend.text = element_text(size = 12),
+        legend.spacing = unit(0, "pt"),
+        legend.key.height = unit(13, "pt"),
+        text = element_text(size = 12)#,
+        # legend.margin=margin(t = 0, unit='pt')
+  ) +
+  scale_color_discrete(labels=c("Endophytes","Epiphytes","Litter", "Soil"))
+p_bc_pcoa
+
+ggsave("./Figures/bc_pcoa_all_samples_simple.png", units="in", width = 8, height = 6)

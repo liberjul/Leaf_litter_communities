@@ -4,6 +4,8 @@ library(phyloseq)
 library(ggpubr)
 library(lme4)
 library(lmerTest)
+library(lmtest)
+library(car)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
 sl <- c(1:9, 11, 13:14, 16:21, 25:36, 38, 40:44, 48:55, 57:58) # Slice for non-negative or failed samples
@@ -67,19 +69,34 @@ phy_swab <- merge_phyloseq(phy_swab, phy_sam_table)
 diver_df <- cbind(estimate_richness(phy_swab, measures = c("Shannon", "InvSimpson", "Observed")),
                   sample_data(phy_swab))
 
-diver_df                       
-m1 <- lmer(Shannon ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
+diver_df   
+hist(diver_df$Shannon^2)
+hist(sqrt(diver_df$InvSimpson))
+hist(diver_df$Observed^2)
+
+shapiro.test(diver_df$Shannon)
+shapiro.test(diver_df$Shannon^2)
+
+shapiro.test(diver_df$InvSimpson)
+shapiro.test(sqrt(diver_df$InvSimpson))
+
+shapiro.test(diver_df$Observed)
+shapiro.test(diver_df$Observed^2)
+
+m1 <- lmer(Shannon^2 ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
 summary(m1)
-confint(m1)
+abs(confint(m1))^0.5 * sign(confint(m1))
 anova(m1)
+leveneTest(residuals(m1) ~ diver_df$Swab_type)
 
-m2 <- lmer(InvSimpson ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
+m2 <- lmer(sqrt(InvSimpson) ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
 summary(m2)
-confint(m2)
+confint(m2)^2 * sign(confint(m2))
 anova(m2)
+leveneTest(residuals(m2) ~ diver_df$Swab_type)
 
-m3 <- lmer(Observed ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
+m3 <- lmer(Observed^2 ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
 summary(m3)
-confint(m3)
+abs(confint(m3))^0.5 * sign(confint(m3))
 anova(m3)
-
+leveneTest(residuals(m3) ~ diver_df$Swab_type)

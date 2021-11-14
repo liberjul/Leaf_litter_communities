@@ -3,6 +3,8 @@ library(vegan)
 library(phyloseq)
 library(ggpubr)
 library(tidyverse)
+library(lme4)
+library(lmerTest)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
 map_wo_negs <- as.matrix(read.csv("./Data/DEM_map_wo_negs.csv", stringsAsFactors = F))
@@ -36,13 +38,48 @@ class(phy_sam_table)
 phy_swab <- merge_phyloseq(phy_swab, phy_sam_table)
 phy_swab
 
+diver_df <- cbind(estimate_richness(phy_swab, measures = c("Shannon", "InvSimpson", "Observed")),
+                  sample_data(phy_swab))
+
+diver_df                       
+m1 <- lmer(Shannon^2 ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
+summary(m1) -> sum_m1
+sum_m1
+abs(confint(m1))^0.5 * sign(confint(m1))
+anova(m1) -> aov_m1
+aov_m1$`Pr(>F)`
+
+m2 <- lmer(sqrt(InvSimpson) ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
+summary(m2) -> sum_m2
+sum_m2
+confint(m2)^2 * sign(confint(m2))
+anova(m2) -> aov_m2
+
+m3 <- lmer(Observed^2 ~ Swab_type + (1|Leaf), diver_df, REML=FALSE)
+summary(m3) -> sum_m3
+sum_m3
+abs(confint(m3))^0.5 * sign(confint(m3))
+anova(m3) -> aov_m3
+
+swab_richness_stats <- data.frame(variable = c("Shannon", "InvSimpson", "Observed"),
+                                  value = c(4.5, 37, 370),
+                                  text = c(paste0("F = ", round(aov_m1$`F value`, 2),
+                                                  ", p = ", round(aov_m1$`Pr(>F)`, 2)),
+                                           paste0("F = ", round(aov_m2$`F value`, 2),
+                                                  ", p = ", round(aov_m2$`Pr(>F)`, 2)),
+                                           paste0("F = ", round(aov_m3$`F value`, 2),
+                                                  ", p = ", round(aov_m3$`Pr(>F)`, 2))),
+                                  Swab_type = "Cotton")
+
 richness <- plot_richness(phy_swab, x="Swab_type", color="Swab_type", measures=c("Observed", "Shannon", "InvSimpson"))
 richness <- richness + geom_boxplot(alpha=0) + #geom_jitter() +
   labs(x = "Swab Material", color = "Swab Material") +
   # scale_x_discrete(breaks = c("Cotton", "Synthetic"),
   #                  labels = c("C", "S")) +
   theme_pubr() +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  geom_text(data=swab_richness_stats,
+            aes(y=value, x = Swab_type, label=text), color = "black", hjust=0)
 richness
 ggsave("./Figures/Richness_metrics_swab_type.png", richness, width = 8, height = 6, units = "in")
 ggsave("./Figures_Numbered/Figure_4.pdf",

@@ -4,10 +4,11 @@ library(RVAideMemoire)
 library(indicspecies)
 library(ggpubr)
 library(bbmle)
-library(randomForest)
-library(rfUtilities)
-library(compositions)
-library(caret)
+library(lmtest)
+# library(randomForest)
+# library(rfUtilities)
+# library(compositions)
+# library(caret)
 
 setwd("C:/Users/julia/OneDrive - Michigan State University/Documents/MSU/Undergrad/Fall 2018/PLP 847/miseq_dat/Leaf_litter_communities")
 wts_wo_negs <- c(rep(18,18), rep(10,10), rep(8, 8), rep(10, 10)) # Vector for weighting abundance by number of samples per substrate
@@ -35,126 +36,37 @@ otu_dat_wo_negs <- as.matrix(otu_dat[,sl + 1]) # Keep non-negative samples for O
 map_wo_negs <- as.matrix(read.csv("./Data/DEM_map_wo_negs.csv", stringsAsFactors = F))
 rare_otu <- as.matrix(read.csv("./Data/Rare_otu_table.csv"))
 
-clr_otu <- clr(otu_dat_wo_negs)
-clr_otu_df <- as.data.frame(clr_otu)
-map_wo_negs_t <- t(map_wo_negs)
-identical(colnames(clr_otu_df), rownames(map_wo_negs_t))
-# Add classification variable and sample names
-otus_clr_Comp <- data.frame(t(clr_otu_df))
-otus_clr_Comp$Sample <- rownames(otus_clr_Comp)
-otus_clr_Comp$Substrate <- as.factor(map_wo_negs_t[rownames(otus_clr_Comp), "Substrate"])
-# otus_clr_Comp$Substrate <- as.numeric(
-#   factor(
-#     otus_clr_Comp$Substrate, labels = 1:4))
-otus_clr_Comp$Substrate
-head(otus_clr_Comp)
-
-### Train the RF model
-set.seed(4563)
-RF_501 <- randomForest(x=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
-                       y=otus_clr_Comp$Substrate,
-                       ntree=501,
-                       #mtry = 20,
-                       importance=TRUE,
-                       proximity=TRUE)
-
-str(RF_501)
-plot(RF_501)
-
-set.seed(3453)
-RF_1001 <- randomForest(x=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
-                        y=otus_clr_Comp$Substrate,
-                        ntree=1001,
-                        #mtry = 20,
-                        importance=TRUE,
-                        proximity=TRUE)
-
-str(RF_1001)
-plot(RF_1001)
-
-importance(RF_501)
-##Plot  Mean Decrease Gini and Mean Decrease Accuracy
-varImpPlot(RF_501) # From caret
-### Model Fit Analysis
-oob_error_data_Comp <- data.frame(
-  Trees=rep(1:nrow(RF_501$err.rate), times=5),
-  Type=rep(c("OOB", "Endo", "Epi", "Lit", "Soil"), each=nrow(RF_501$err.rate)),
-  Error=c(RF_501$err.rate[,"OOB"],
-          RF_501$err.rate[,"Endo"],
-          RF_501$err.rate[,"Epi"],
-          RF_501$err.rate[,"Lit"],
-          RF_501$err.rate[,"Soil"]))
-
-plot_oob_error_Comp = ggplot(data=oob_error_data_Comp, aes(x=Trees, y=Error)) +
-  ggtitle("Model Errors") +
-  theme_bw() +
-  annotate("text", x=250, y=0.75, label=paste("OOB estimate: ",
-                                              round(RF_501$err.rate[nrow(RF_501$err.rate),1]*100,
-                                                    digits=2), "%"), size=3) +
-  geom_line(aes(color=Type)) +
-  theme(legend.key.height = unit(0.2, "cm"), legend.key.width = unit(0.3, "cm")) +
-  theme(legend.title = element_text(size = 9, face = "bold"), legend.text = element_text(size = 7)) +
-  theme(plot.title = element_text(size = 10, face = "bold", hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 0, size = 7,hjust = 0.5, vjust = 0.5)) +
-  theme(axis.text.y = element_text(angle = 0, size = 8, hjust = 0.5, vjust = 0.5)) +
-  theme(axis.title = element_text(angle = 0, size = 8, face = "bold")) +
-  #guides(color=guide_legend(ncol=1)) +
-  theme(legend.position="bottom")
-
-plot_oob_error_Comp
-ggsave("oob_error_plot.png", plot_oob_error_Comp, width = 6, height = 5, units = "in")
-
-print(RF_501)
-
-sqrt(ncol(otus_clr_Comp))
-oob_values <- c()
-mtry_values <- seq(from = 50, to = 70, by = 1)
-length(mtry_values)
-length(oob_values)
-oob_values
-
-for(i in mtry_values) {
-  print(i)
-  temp.model <- randomForest(x=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
-                             y=as.factor(otus_clr_Comp$Substrate),
-                             mtry=i, ntree=501)
-  oob_values <- c(oob_values, temp.model$err.rate[nrow(temp.model$err.rate),1])
-  print(temp.model$err.rate[nrow(temp.model$err.rate),1])
-}
-
-oob_values
-match(min(oob_values),oob_values)
-mtry_values[match(min(oob_values),oob_values)]
-
-set.seed(857)
-RF_501_optm <- randomForest(x=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
-                            y=otus_clr_Comp$Substrate,
-                            ntree=501,
-                            mtry = mtry_values[match(min(oob_values),oob_values)],
-                            importance=TRUE,
-                            proximity=TRUE)
-
-RF_501_optm
-
-RF_bact_sig_Comp <- rf.significance(x=RF_501, xdata=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
-                                    nperm=99,
-                                    ntree=501)
-RF_bact_sig_Comp
-
-RF_sig_Comp_optm <- rf.significance(x=RF_501_optm, xdata=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
-                                    nperm=1000,
-                                    ntree=501)
-RF_sig_Comp_optm
 
 ### Hypothesis testing for all samples and groupings
 sim_out <- simper(t(rare_otu), as.factor(map_wo_negs["Substrate",]), permutations = 100, parallel = 2)
-dist_bray <- vegdist(t(rare_otu), method="bray")
-dist_jac <- vegdist(t(rare_otu), method="jaccard")
 
-bc.pcoa <- cmdscale(dist_bray, eig=T)
-ax1.v.bc=bc.pcoa$eig[1]/sum(bc.pcoa$eig)
-ax2.v.bc=bc.pcoa$eig[2]/sum(bc.pcoa$eig)
+bc.d = vegdist(t(rare_otu), method="bray")
+sor.d = vegdist(t(rare_otu), method = "bray", binary = T)
+jac.d = vegdist(t(rare_otu), method="jaccard")
+
+bc.pcoa = cmdscale(bc.d, eig=T)
+ax1.v.bc = bc.pcoa$eig[1]/sum(bc.pcoa$eig)
+ax2.v.bc = bc.pcoa$eig[2]/sum(bc.pcoa$eig)
+
+sor.pcoa = cmdscale(sor.d, eig=T)
+ax1.v.sor = sor.pcoa$eig[1]/sum(sor.pcoa$eig)
+ax2.v.sor = sor.pcoa$eig[2]/sum(sor.pcoa$eig)
+
+jac.pcoa = cmdscale(jac.d, eig=T)
+ax1.v.jac = jac.pcoa$eig[1]/sum(jac.pcoa$eig)
+ax2.v.jac = jac.pcoa$eig[2]/sum(jac.pcoa$eig)
+
+ax1.v.bc
+ax1.v.sor
+ax1.v.jac
+
 ax2.v.bc
+ax2.v.sor
+ax2.v.jac
+
+ax1.v.bc + ax2.v.bc
+ax1.v.sor + ax2.v.sor
+ax1.v.jac + ax2.v.jac
 
 bd_out <- betadisper(dist_bray, as.factor(map_wo_negs["Substrate",]))
 model <- anova(bd_out)
@@ -192,17 +104,24 @@ ado_jac_int
 write.csv(ado_jac_int, "./Stats/ado_jac_int_stats_table.csv")
 
 ado_bray_int_block <- adonis2(t(rare_otu) ~ Substrate * Plant_species, strata = Site,
-                             MDS_dat_df, method="bray")
+                              MDS_dat_df, method="bray")
 ado_bray_int_block
 write.csv(ado_bray_int_block, "./Stats/ado_bray_int_block_stats_table.csv")
 
 ado_jac_int_block <- adonis2(t(rare_otu) ~ Substrate * Plant_species, strata = Site,
-                       MDS_dat_df, method="jaccard")
+                             MDS_dat_df, method="jaccard")
 ado_jac_int_block
 write.csv(ado_jac_int_block, "./Stats/ado_jac_int_block_stats_table.csv")
 
-a <- pairwise.perm.manova(dist_bray,MDS_dat_df$Substrate,nperm=999)
-a
+ppm_sub <- pairwise.perm.manova(dist_bray,MDS_dat_df$Substrate,nperm=999)
+ppm_sub
+
+MDS_dat_df %>%
+  mutate(host_substrate = paste(Plant_species, Substrate, sep = "_")) -> MDS_dat_df
+ppm_host_sub <- pairwise.perm.manova(dist_bray,MDS_dat_df$host_substrate,nperm=999)
+ppm_host_sub
+
+write.csv(ppm_host_sub$p.value, "./Tables/pairwise_PERMANOVA_table_with_host.csv")
 
 
 am_model <- anosim(dist_bray, grouping=MDS_dat_df$Substrate,permutations=1000)
@@ -241,20 +160,142 @@ diver_df <- data.frame(shannon = diversity(t(rare_otu), index = "shannon"),
                        Site = as.factor(map_wo_negs["Site",]))
 tibble(diver_df)
 
-m1 <- lm(shannon ~ Substrate + Plant_species + Site, diver_df)
+hist((diver_df$shannon)^2)
+hist(log(diver_df$inv_simp))
+shapiro.test((diver_df$shannon)^2)
+shapiro.test(log(diver_df$inv_simp))
+
+m1 <- lm(shannon^2 ~ Substrate + Plant_species + Site, diver_df)
 summary(m1)
-m2 <- lm(shannon ~ Substrate * Plant_species * Site, diver_df)
+bptest(m1)
+m2 <- lm(shannon^2 ~ Substrate * Plant_species * Site, diver_df)
 summary(m2)
-m3 <- lm(inv_simp ~ Substrate + Plant_species + Site, diver_df)
+bptest(m2)
+m3 <- lm(log(inv_simp) ~ Substrate + Plant_species + Site, diver_df)
 summary(m3)
-m4 <- lm(inv_simp ~ Substrate * Plant_species * Site, diver_df)
+bptest(m3)
+m4 <- lm(log(inv_simp) ~ Substrate * Plant_species * Site, diver_df)
 summary(m4)
+bptest(m4)
 
 AICctab(m1, m2)
 AICctab(m3, m4)
 
-a1 <- aov(shannon ~ Substrate + Plant_species + Site, diver_df)
+a1 <- aov(shannon^2 ~ Substrate + Plant_species + Site, diver_df)
 summary(a1)
 
-a2 <- aov(inv_simp ~ Substrate + Plant_species + Site, diver_df)
-summary(a2)
+a2 <- aov(log(inv_simp) ~ Substrate + Plant_species + Site, diver_df)
+summary(a2) -> b
+b
+b[[1]]$`Pr(>F)`
+# 
+# clr_otu <- clr(otu_dat_wo_negs)
+# clr_otu_df <- as.data.frame(clr_otu)
+# map_wo_negs_t <- t(map_wo_negs)
+# identical(colnames(clr_otu_df), rownames(map_wo_negs_t))
+# # Add classification variable and sample names
+# otus_clr_Comp <- data.frame(t(clr_otu_df))
+# otus_clr_Comp$Sample <- rownames(otus_clr_Comp)
+# otus_clr_Comp$Substrate <- as.factor(map_wo_negs_t[rownames(otus_clr_Comp), "Substrate"])
+# # otus_clr_Comp$Substrate <- as.numeric(
+# #   factor(
+# #     otus_clr_Comp$Substrate, labels = 1:4))
+# otus_clr_Comp$Substrate
+# head(otus_clr_Comp)
+# 
+# ### Train the RF model
+# set.seed(4563)
+# RF_501 <- randomForest(x=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
+#                        y=otus_clr_Comp$Substrate,
+#                        ntree=501,
+#                        #mtry = 20,
+#                        importance=TRUE,
+#                        proximity=TRUE)
+# 
+# str(RF_501)
+# plot(RF_501)
+# 
+# set.seed(3453)
+# RF_1001 <- randomForest(x=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
+#                         y=otus_clr_Comp$Substrate,
+#                         ntree=1001,
+#                         #mtry = 20,
+#                         importance=TRUE,
+#                         proximity=TRUE)
+# 
+# str(RF_1001)
+# plot(RF_1001)
+# 
+# importance(RF_501)
+# ##Plot  Mean Decrease Gini and Mean Decrease Accuracy
+# varImpPlot(RF_501) # From caret
+# ### Model Fit Analysis
+# oob_error_data_Comp <- data.frame(
+#   Trees=rep(1:nrow(RF_501$err.rate), times=5),
+#   Type=rep(c("OOB", "Endo", "Epi", "Lit", "Soil"), each=nrow(RF_501$err.rate)),
+#   Error=c(RF_501$err.rate[,"OOB"],
+#           RF_501$err.rate[,"Endo"],
+#           RF_501$err.rate[,"Epi"],
+#           RF_501$err.rate[,"Lit"],
+#           RF_501$err.rate[,"Soil"]))
+# 
+# plot_oob_error_Comp = ggplot(data=oob_error_data_Comp, aes(x=Trees, y=Error)) +
+#   ggtitle("Model Errors") +
+#   theme_bw() +
+#   annotate("text", x=250, y=0.75, label=paste("OOB estimate: ",
+#                                               round(RF_501$err.rate[nrow(RF_501$err.rate),1]*100,
+#                                                     digits=2), "%"), size=3) +
+#   geom_line(aes(color=Type)) +
+#   theme(legend.key.height = unit(0.2, "cm"), legend.key.width = unit(0.3, "cm")) +
+#   theme(legend.title = element_text(size = 9, face = "bold"), legend.text = element_text(size = 7)) +
+#   theme(plot.title = element_text(size = 10, face = "bold", hjust = 0.5)) +
+#   theme(axis.text.x = element_text(angle = 0, size = 7,hjust = 0.5, vjust = 0.5)) +
+#   theme(axis.text.y = element_text(angle = 0, size = 8, hjust = 0.5, vjust = 0.5)) +
+#   theme(axis.title = element_text(angle = 0, size = 8, face = "bold")) +
+#   #guides(color=guide_legend(ncol=1)) +
+#   theme(legend.position="bottom")
+# 
+# plot_oob_error_Comp
+# ggsave("oob_error_plot.png", plot_oob_error_Comp, width = 6, height = 5, units = "in")
+# 
+# print(RF_501)
+# 
+# sqrt(ncol(otus_clr_Comp))
+# oob_values <- c()
+# mtry_values <- seq(from = 50, to = 70, by = 1)
+# length(mtry_values)
+# length(oob_values)
+# oob_values
+# 
+# for(i in mtry_values) {
+#   print(i)
+#   temp.model <- randomForest(x=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
+#                              y=as.factor(otus_clr_Comp$Substrate),
+#                              mtry=i, ntree=501)
+#   oob_values <- c(oob_values, temp.model$err.rate[nrow(temp.model$err.rate),1])
+#   print(temp.model$err.rate[nrow(temp.model$err.rate),1])
+# }
+# 
+# oob_values
+# match(min(oob_values),oob_values)
+# mtry_values[match(min(oob_values),oob_values)]
+# 
+# set.seed(857)
+# RF_501_optm <- randomForest(x=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
+#                             y=otus_clr_Comp$Substrate,
+#                             ntree=501,
+#                             mtry = mtry_values[match(min(oob_values),oob_values)],
+#                             importance=TRUE,
+#                             proximity=TRUE)
+# 
+# RF_501_optm
+# 
+# RF_bact_sig_Comp <- rf.significance(x=RF_501, xdata=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
+#                                     nperm=99,
+#                                     ntree=501)
+# RF_bact_sig_Comp
+# 
+# RF_sig_Comp_optm <- rf.significance(x=RF_501_optm, xdata=otus_clr_Comp[,1:(ncol(otus_clr_Comp)-2)],
+#                                     nperm=1000,
+#                                     ntree=501)
+# RF_sig_Comp_optm
